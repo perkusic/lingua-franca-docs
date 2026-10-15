@@ -25,6 +25,11 @@ The rebuild was run in the cloud workspace and again with `python3` 3.10 on this
 
 ## Identity and numbering
 
+**Since 15 October 2026 (afternoon), identity is read from the HTML:** every figure is written `<figure id="<stable id>">`, and `extract.py` matches the editions by that id, not by position or caption. A figure may sit in a different place in each edition, or exist in only one (recorded under `editions` in the manifest). The extractor stops with a named error if a `<figure>` lacks an id, contains other than one `<svg>`, lacks a caption, or reuses an id. `assemble.py` checks each skeleton's placeholders before rebuilding and names unknown ids, duplicated placeholders, figures without a placeholder, missing SVG files and order changes. Rerunning the new extractor on the current HTMLs produced a byte-identical `manifest.json`, the same 43 SVGs and the same skeletons.
+
+The paragraph below records how the ids were first chosen.
+
+
 Each figure has a stable identifier derived once from the reference edition's caption title (`fig-` plus up to five significant words). The identifier is the file name and the placeholder; it carries no number. Today's numbers are recorded in `manifest.json` only for cross-checking. The numbers printed in captions and body text are still literal text in the skeletons: assigning them at assembly is a later step, not done here.
 
 ## Files
