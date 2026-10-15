@@ -498,6 +498,13 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   mas recusa rodar de novo num arquivo já processado. Ao renumerar figuras, os hrefs não mudam (ids estáveis); só o
   texto do link muda. Figura nova: dê-lhe `id` estável na `<figure>`.
 
+- **Repositório GitHub (15/out/2026).** `perkusic/lingua-franca-docs`, público, branch `main`: cópia byte a byte da pasta
+  (sem os `.docx` do ChatGPT nem `Claude outputs/`). Cada push roda `.github/workflows/check.yml`
+  (`assemble.py --check` e `.github/scripts/check_html.py`: ids duplicados, links internos sem destino, referências
+  sem citação). `extract.py` agora identifica as figuras pelo `id` da `<figure>` (não pela posição) e `assemble.py`
+  nomeia placeholders desconhecidos, duplicados, ausentes ou fora de ordem. OneDrive e GitHub são cópias
+  independentes: ao editar, atualize as duas e confira os SHA-256.
+
 ## Como quero as edições
 
 - Edite os arquivos diretamente e devolva os arquivos editados.
