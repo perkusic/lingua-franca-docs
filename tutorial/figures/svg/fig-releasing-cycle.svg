@@ -1,0 +1,22 @@
+<svg viewBox="0 0 760 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One PTAG releasing a zero-delay cycle">
+<defs><marker id="ahN" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+<rect x="228" y="14" width="304" height="46" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.2"/>
+<text x="380" y="34" text-anchor="middle" class="svgtxt" font-size="11.5" font-weight="500" fill="#042C53">NET(A) = (20,0)</text>
+<text x="380" y="50" text-anchor="middle" class="svgtxt" font-size="9" fill="#185FA5">EIMT ties at (20,0) &middot; strict clears at (50,0)</text>
+<line x1="380" y1="62" x2="380" y2="78" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ahN)"/>
+<rect x="266" y="80" width="228" height="40" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.3"/>
+<text x="380" y="105" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#633806">PTAG (20,0) &rarr; A</text>
+<line x1="330" y1="122" x2="190" y2="164" stroke="#8A867B" stroke-width="1.1" marker-end="url(#ahN)"/>
+<line x1="430" y1="122" x2="570" y2="164" stroke="#8A867B" stroke-width="1.1" marker-end="url(#ahN)"/>
+<text x="380" y="152" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#5C6066">propagated upstream</text>
+<rect x="60" y="166" width="262" height="76" rx="9" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.2"/>
+<text x="191" y="187" text-anchor="middle" class="svgtxt" font-size="11.5" font-weight="500" fill="#04342C">upstream S</text>
+<text x="191" y="205" text-anchor="middle" class="svgtxt" font-size="10" fill="#0F6E56">EIMT(S) = FOREVER &gt; (20,0)</text>
+<text x="191" y="223" text-anchor="middle" class="svgtxt" font-size="10.5" font-weight="500" fill="#04342C">&rarr; full TAG (20,0)</text>
+<rect x="438" y="166" width="262" height="76" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.2"/>
+<text x="569" y="187" text-anchor="middle" class="svgtxt" font-size="11.5" font-weight="500" fill="#633806">upstream B</text>
+<text x="569" y="205" text-anchor="middle" class="svgtxt" font-size="10" fill="#854F0B">EIMT = (20,0) tie &middot; strict = FOREVER</text>
+<text x="569" y="223" text-anchor="middle" class="svgtxt" font-size="10.5" font-weight="500" fill="#633806">&rarr; PTAG (20,0)</text>
+<text x="380" y="268" text-anchor="middle" class="svgtxt" font-size="10" fill="#5C6066">B&rsquo;s strict EIMT is FOREVER because its only immediate upstream is A, and A is skipped as a cycle member</text>
+<text x="380" y="284" text-anchor="middle" class="svgtxt" font-size="10" fill="#5C6066">no visited set: the walk stops because a second visit finds the tag already granted</text>
+</svg>

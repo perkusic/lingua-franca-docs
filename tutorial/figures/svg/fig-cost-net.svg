@@ -1,0 +1,20 @@
+<svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="What one NET triggers inside the RTI">
+<defs><marker id="ahK" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+<rect x="240" y="14" width="280" height="40" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.2"/>
+<text x="380" y="32" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#042C53">NET(g) arrives from federate f</text>
+<text x="380" y="47" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#185FA5">on f&rsquo;s own socket thread; takes the RTI mutex</text>
+<line x1="380" y1="56" x2="380" y2="70" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ahK)"/>
+<rect x="90" y="72" width="580" height="32" rx="8" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.1"/>
+<text x="380" y="92" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#633806">1 &nbsp;clamp: g &larr; min(g, earliest in-transit tag for f) &mdash; &sect;4.11</text>
+<line x1="380" y1="106" x2="380" y2="118" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ahK)"/>
+<rect x="90" y="120" width="580" height="32" rx="8" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.1"/>
+<text x="380" y="140" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#04342C">2 &nbsp;decide for f itself &mdash; or, with no upstreams, record a self-grant</text>
+<line x1="380" y1="154" x2="380" y2="166" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ahK)"/>
+<rect x="90" y="168" width="580" height="32" rx="8" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.1"/>
+<text x="380" y="188" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#04342C">3 &nbsp;row scan min_delays[f][&middot;] &rarr; decide for every transitive downstream</text>
+<line x1="380" y1="202" x2="380" y2="214" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ahK)"/>
+<rect x="90" y="216" width="580" height="32" rx="8" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.1"/>
+<text x="380" y="236" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#633806">4 &nbsp;column scan min_delays[&middot;][f] &rarr; DNET to every transitive upstream</text>
+<rect x="90" y="262" width="580" height="30" rx="8" fill="#F2F0E9" stroke="#8A867B" stroke-width="1"/>
+<text x="380" y="281" text-anchor="middle" class="svgtxt" font-size="10" fill="#5C6066">one global mutex held throughout &mdash; including every socket write the cascade produces</text>
+</svg>

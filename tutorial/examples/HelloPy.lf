@@ -1,0 +1,13 @@
+target Python {
+  timeout: 1 s
+}
+
+main reactor {
+  timer t(0, 500 ms)
+  state count = 0
+
+  reaction(t) {=
+    print(f"Hello at {lf.time.logical_elapsed() // MSEC(1)} ms (tick {self.count})")
+    self.count += 1
+  =}
+}

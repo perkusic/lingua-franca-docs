@@ -1,0 +1,42 @@
+target C {
+  timeout: 10 ms
+}
+
+reactor Controller {
+  input in1: int
+  input in2: int
+  output out: int
+  state a: int = 0
+  state b: int = 0
+
+  reaction(in1) {=
+    self->a = in1->value;
+    printf("  reaction 1: in1 = %d\n", in1->value);
+  =}
+
+  reaction(in2) {=
+    self->b = in2->value;
+    printf("  reaction 2: in2 = %d\n", in2->value);
+  =}
+
+  reaction(in1, in2) -> out {=
+    printf("  reaction 3: writes %d\n", self->a + self->b);
+    lf_set(out, self->a + self->b);
+  =}
+}
+
+main reactor {
+  timer t(0, 10 ms)
+  state n: int = 1
+  c = new Controller()
+
+  reaction(t) -> c.in2, c.in1 {=
+    printf("tag (%lld ms, %u):\n", (long long)(lf_time_logical_elapsed() / MSEC(1)), lf_tag().microstep);
+    lf_set(c.in2, 10 * self->n);
+    lf_set(c.in1, self->n++);
+  =}
+
+  reaction(c.out) {=
+    printf("  main sees out = %d\n", c.out->value);
+  =}
+}

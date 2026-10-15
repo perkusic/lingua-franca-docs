@@ -1,0 +1,60 @@
+target C {
+  timeout: 40 ms,
+  tracing: true
+}
+
+reactor Source {
+  output out: int
+  timer t(0, 20 ms)
+  state n: int = 0
+
+  reaction(t) -> out {=
+    lf_set(out, self->n++);
+  =}
+}
+
+reactor A {
+  input in: int
+  input back: int
+  output out: int
+
+  reaction(in) -> out {=
+    lf_set(out, in->value);
+  =}
+
+  reaction(back) {=
+    printf("A: got %d back at (%lld ms, %u)\n", back->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)), lf_tag().microstep);
+  =}
+}
+
+reactor B {
+  input in: int
+  output back: int
+  output out: int
+
+  reaction(in) -> back, out {=
+    lf_set(back, in->value + 100);
+    lf_set(out, in->value);
+  =}
+}
+
+reactor C {
+  input in: int
+
+  reaction(in) {=
+    printf("C: got %d at (%lld ms, %u)\n", in->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)), lf_tag().microstep);
+  =}
+}
+
+federated reactor {
+  s = new Source()
+  a = new A()
+  b = new B()
+  c = new C()
+  s.out -> a.in
+  a.out -> b.in
+  b.back -> a.back
+  b.out -> c.in after 10 ms
+}

@@ -1,0 +1,32 @@
+target Python {
+  timeout: 1 s,
+  keepalive: true
+}
+
+preamble {=
+  import threading, time
+=}
+
+main reactor {
+  physical action sample
+
+  reaction(startup) -> sample {=
+    def sensor():
+      for i in range(1, 5):
+        time.sleep(0.2)
+        sample.schedule(0, i)   # tagged with the current physical time
+    threading.Thread(target=sensor, daemon=True).start()
+  =}
+
+  reaction(sample) {=
+    if sample.value % 2 == 0:
+      time.sleep(0.02)          # even samples: 20 ms of work at this tag
+  =}
+
+  reaction(sample) {=
+    print(f"sample {sample.value} handled in time")
+  =} deadline(10 ms) {=
+    lag = (lf.time.physical() - lf.time.logical()) // MSEC(1)
+    print(f"sample {sample.value}: deadline missed, lag {lag} ms")
+  =}
+}

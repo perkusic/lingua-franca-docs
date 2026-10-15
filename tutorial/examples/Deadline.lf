@@ -1,0 +1,35 @@
+target C {
+  timeout: 1 s,
+  keepalive: true
+}
+
+preamble {=
+  #include <unistd.h>
+  static void* sensor(void* action) {
+    for (int i = 1; i <= 4; i++) {
+      usleep(200000);
+      lf_schedule_int(action, 0, i);                 // tagged with the current physical time
+    }
+    return NULL;
+  }
+=}
+
+main reactor {
+  physical action sample: int
+  state thread: lf_thread_t
+
+  reaction(startup) -> sample {=
+    lf_thread_create(&self->thread, &sensor, sample);
+  =}
+
+  reaction(sample) {=
+    if (sample->value % 2 == 0) usleep(20000);       // even samples: 20 ms of work at this tag
+  =}
+
+  reaction(sample) {=
+    printf("sample %d handled in time\n", sample->value);
+  =} deadline(10 ms) {=
+    printf("sample %d: deadline missed, lag %lld ms\n", sample->value,
+           (long long)((lf_time_physical() - lf_time_logical()) / MSEC(1)));
+  =}
+}

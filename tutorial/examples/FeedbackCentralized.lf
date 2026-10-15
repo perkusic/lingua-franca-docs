@@ -1,0 +1,57 @@
+target C {
+  timeout: 2 s,
+  tracing: true
+}
+
+preamble {=
+  #include <unistd.h>
+=}
+
+// A: a "sensor" (a physical action fed by a thread) that sends to B and hears back from B.
+reactor A {
+  input back: int
+  output out: int
+  physical action sample: int
+  state thread: lf_thread_t
+
+  preamble {=
+    static void* sensor(void* action) {
+      for (int i = 1; i <= 4; i++) {
+        usleep(300000);                              // a reading every 300 ms of physical time
+        lf_schedule_int(action, 0, i);
+      }
+      return NULL;
+    }
+  =}
+
+  reaction(startup) -> sample {=
+    lf_thread_create(&self->thread, &sensor, sample);
+  =}
+
+  reaction(sample) -> out {=
+    printf("A: sample %d at %lld ms\n", sample->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+    lf_set(out, sample->value);
+  =}
+
+  reaction(back) {=
+    printf("A: feedback %d at %lld ms\n", back->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+  =}
+}
+
+reactor B {
+  input in: int
+  output back: int
+
+  reaction(in) -> back {=
+    lf_set(back, 10 * in->value);
+  =}
+}
+
+federated reactor {
+  a = new A()
+  b = new B()
+  a.out -> b.in
+  b.back -> a.back after 200 ms
+}

@@ -1,0 +1,35 @@
+target C {
+  coordination: decentralized,
+  timeout: 400 ms
+}
+
+reactor Sensor {
+  output out: int
+  timer t(0, 100 ms)
+  state n: int = 0
+
+  reaction(t) -> out {=
+    lf_set(out, self->n++);
+  =} deadline(10 ms) {=
+    printf("Sensor: started more than 10 ms late; D is out of budget\n");
+  =}
+}
+
+reactor Consumer {
+  input in: int
+
+  reaction(in) {=
+    printf("Consumer: %d at %lld ms\n", in->value, (long long)(lf_time_logical_elapsed() / MSEC(1)));
+  =} tardy {=
+    printf("Consumer: %d meant for %lld ms arrived after that tag\n", in->value,
+           (long long)((in->intended_tag.time - lf_time_start()) / MSEC(1)));
+  =}
+}
+
+federated reactor {
+  s = new Sensor()
+  // STA: assume absence as soon as the clock passes the tag
+  @maxwait(0)
+  c = new Consumer()
+  s.out -> c.in after 20 ms  // after must exceed E + L + D
+}

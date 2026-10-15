@@ -1,0 +1,26 @@
+<svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Example federation topology with a zero-delay cycle">
+<defs><marker id="ahM" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+<rect x="236" y="70" width="330" height="116" rx="14" fill="none" stroke="#9A6410" stroke-width="1.1" stroke-dasharray="6 4"/>
+<text x="401" y="203" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#854F0B">zero-delay cycle: total path delay (0,0), no declared delay on the closing hop</text>
+<rect x="30" y="100" width="104" height="52" rx="9" fill="#F2F0E9" stroke="#8A867B" stroke-width="1.1"/>
+<text x="82" y="122" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#1B1E22">S</text>
+<text x="82" y="140" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#5C6066">timer, no upstream</text>
+<rect x="256" y="100" width="104" height="52" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.2"/>
+<text x="308" y="122" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#633806">A</text>
+<text x="308" y="140" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#854F0B">in ZDC</text>
+<rect x="442" y="100" width="104" height="52" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.2"/>
+<text x="494" y="122" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#633806">B</text>
+<text x="494" y="140" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#854F0B">in ZDC</text>
+<rect x="640" y="100" width="90" height="52" rx="9" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.1"/>
+<text x="685" y="122" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#04342C">C</text>
+<text x="685" y="140" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#0F6E56">sink</text>
+<line x1="136" y1="126" x2="252" y2="126" stroke="#5C6066" stroke-width="1.2" marker-end="url(#ahM)"/>
+<text x="194" y="117" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#5C6066">(0,0)</text>
+<path d="M360 114 C 390 88, 412 88, 440 114" fill="none" stroke="#9A6410" stroke-width="1.2" marker-end="url(#ahM)"/>
+<text x="401" y="86" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#854F0B">(0,0)</text>
+<path d="M440 140 C 412 166, 390 166, 362 140" fill="none" stroke="#9A6410" stroke-width="1.2" marker-end="url(#ahM)"/>
+<text x="401" y="176" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#854F0B">(0,0)</text>
+<line x1="548" y1="126" x2="636" y2="126" stroke="#0F6E56" stroke-width="1.2" marker-end="url(#ahM)"/>
+<text x="592" y="117" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#0F6E56">(10ms,0)</text>
+<text x="401" y="34" text-anchor="middle" class="svgtxt" font-size="11" fill="#1B1E22">delays shown as tags: (0,0) is &ldquo;no delay&rdquo;, (0,1) would be <tspan font-family="IBM Plex Mono">after 0</tspan></text>
+</svg>

@@ -1,0 +1,28 @@
+target Python {
+  timeout: 20 ms
+}
+
+reactor Sender {
+  output out
+  timer t(0, 10 ms)
+  state n = 0
+
+  reaction(t) -> out {=
+    out.set(self.n)
+    self.n += 1
+  =}
+}
+
+reactor Receiver {
+  input inp
+
+  reaction(inp) {=
+    print(f"Receiver got {inp.value} at tag ({lf.time.logical_elapsed() // MSEC(1)} ms, {lf.tag().microstep})")
+  =}
+}
+
+federated reactor {
+  s = new Sender()
+  r = new Receiver()
+  s.out -> r.inp after 5 ms
+}

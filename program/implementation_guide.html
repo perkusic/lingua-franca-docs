@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hardware coordination implementation guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBFAF7;--ink:#1B1E22;--muted:#5C6066;--rule:#DDD9CE;--grant:#0F6E56;--grant-bg:#E4F2EC;--prov:#9A6410;--prov-bg:#FAF0DC;--viol:#A32D2D;--viol-bg:#FBEDEA;--code-bg:#F2F0E9;--chip:#EFECE3;--blue:#185FA5;--blue-bg:#E8F0F9}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Source Serif 4",Georgia,serif;font-size:17px;line-height:1.65}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px 96px}
+header.hero{padding:64px 0 36px;border-bottom:2px solid var(--ink)}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:40px;line-height:1.12;margin:14px 0 14px;letter-spacing:-.01em}
+.lede{font-size:19px;color:var(--muted);font-style:italic;margin:0 0 8px}
+h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:26px;margin:4px 0 6px}
+h3{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:19px;margin:32px 0 8px}
+.msg{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.12em;color:var(--grant);text-transform:uppercase;display:block;margin-top:56px}
+p{margin:0 0 16px}
+code{font-family:"IBM Plex Mono",monospace;font-size:.84em;background:var(--chip);padding:1px 5px;border-radius:4px;overflow-wrap:anywhere}
+figure{margin:28px 0}
+figure svg{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--rule);border-radius:10px}
+figcaption{font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);margin-top:10px}
+figcaption b{color:var(--ink);font-weight:500}
+.svgtxt{font-family:"IBM Plex Mono",monospace}
+.tw{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{font-family:"Space Grotesk",sans-serif;font-weight:500;text-align:left;border-bottom:2px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
+td{border-bottom:1px solid var(--rule);padding:8px 10px 8px 0;vertical-align:top}
+.note{border-left:3px solid var(--prov);background:var(--prov-bg);padding:14px 18px;border-radius:0 8px 8px 0;margin:28px 0 8px;font-size:15.5px}
+ol.toc{font-family:"Space Grotesk",sans-serif;font-size:15px;columns:2;gap:40px;padding-left:20px;margin:24px 0 0;list-style:none}
+ol.toc li{margin-bottom:6px}
+ol.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+ol.toc a:hover{border-color:var(--grant);color:var(--grant)}
+a{color:var(--grant)}
+ol.refs{font-size:14.5px;padding-left:28px}
+ol.refs li{margin-bottom:8px;overflow-wrap:anywhere}
+p.small{font-size:14px;color:var(--muted)}
+@media(max-width:640px){h1{font-size:30px}ol.toc{columns:1}body{font-size:16px}}
+@media print{.wrap{max-width:none}a{color:inherit}}
+
+ul{padding-left:22px}ul li{margin-bottom:8px}
+td.id{font-family:"IBM Plex Mono",monospace;font-size:12.5px;white-space:nowrap;color:var(--muted)}
+table.dec td{font-size:14px}
+.st{font-family:"IBM Plex Mono",monospace;font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
+.st.ok{color:var(--grant);background:var(--grant-bg);border-color:#BFE0D3}
+.st.pr{color:var(--prov);background:var(--prov-bg);border-color:#EBD3A6}
+.st.op{color:var(--blue);background:var(--blue-bg);border-color:#BCD3EC}
+.wrap{max-width:900px}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div class="eyebrow">Implementation guide &middot; ZCU106 &middot; 8 October 2026, revision 1</div>
+<h1>Hardware coordination for Lingua Franca: implementation guide</h1>
+<p class="lede">The decisions, the order of work and the acceptance gates for the centralized HW-RTI and the decentralized micro-LF track on the ZCU106.</p>
+<ol class="toc"><li><a href="#s1">Where the project stands</a></li><li><a href="#s2">Decision register</a></li><li><a href="#s3">Plan: stages and gates</a></li><li><a href="#s4">The reactor-chisel boundary</a></li><li><a href="#s5">Contracts</a></li><li><a href="#s6">Validation matrix</a></li><li><a href="#s7">Open questions</a></li><li><a href="#s8">Changes made to the documents</a></li><li><a href="#s9">Documents</a></li></ol>
+</header>
+
+<div class="note"><strong>How to use this guide.</strong> It is the single place where implementation decisions are
+recorded, ordered and justified. Requirements stay in the <a href="../hw-rti/HW-RTI_project_specification.html">HW-RTI specification</a>, which remains
+normative; explorations stay in the design notes; background stays in the <a href="../tutorial/lingua_franca_tutorial.html">tutorial</a>. Each decision has an
+identifier (DEC-nn), a status &mdash; <span class="st ok">decided</span>, <span class="st pr">proposed</span> or <span class="st op">open</span> &mdash; its basis, and the
+documents that carry it. A change of decision is made here first and then propagated to the documents listed. This guide
+replaces the program overview of 7&nbsp;October&nbsp;2026.</div>
+
+<span class="msg" id="s1">&sect; 1</span>
+<h2>Where the project stands</h2>
+<p>The Phase&nbsp;1 platform is the AMD ZCU106 (Zynq UltraScale+ XCZU7EV, four Cortex-A53 cores and two Cortex-R5F cores
+next to the programmable logic). A port of reactor-chisel and the Codesign flow is reported to work on that board; this guide
+takes it as given but has not audited it. HW-RTI is specified and not yet implemented. Two tracks share the hardware:
+<strong>Track A</strong>, the centralized HW-RTI, is specified; <strong>Track B</strong>, decentralized coordination with
+micro-LF and possibly a hardware input engine, is exploratory. Both answer the same question &mdash; when may a participant
+commit to a tag &mdash; with different evidence: logical evidence collected by a coordinator, or local knowledge plus timing
+bounds (<a href="../tutorial/lingua_franca_tutorial.html#s5">tutorial &sect;5 and &sect;5.3</a>).</p>
+<div class="tw"><table>
+<tr><th style="width:24%">Component</th><th style="width:26%">Version</th><th>Role, status</th></tr>
+<tr><td>reactor-c (C runtime and RTI)</td><td><a href="https://github.com/lf-lang/reactor-c/tree/ccd05124e4b2086de045a6857702ae5636da30a6"><code>ccd0512</code></a>, 26&nbsp;Sep&nbsp;2026</td><td>Reference model for HW-RTI decisions; pinned for the differential campaign at M-0.</td></tr>
+<tr><td>reactor-chisel</td><td><a href="https://github.com/erlingrj/reactor-chisel/tree/d94dd2d272ce46145ac13c3c6a141bc2ba9dfca1"><code>d94dd2d</code></a>, 5&nbsp;Jun&nbsp;2024</td><td>Hardware reactors and the <code>TriggerGenerator</code>; integration baseline cited by the ZCU106 note. To be confirmed against the working port.</td></tr>
+<tr><td>LF compiler fork with Codesign</td><td><code>erlingrj/lingua-franca</code> <code>f60c83c</code>, submodule reactor-chisel <code>6c8aecd</code></td><td>Generates the Codesign wrapper; its software side uses the C++ target. The submodule commit differs from <code>d94dd2d</code>: the matched pair must come from the working port (P0).</td></tr>
+<tr><td>reactor-uc (micro-LF)</td><td><a href="https://github.com/lf-lang/reactor-uc/tree/df7cfeae7083509621b8f5080c066051112e2500"><code>df7cfea</code></a>, 7&nbsp;Sep&nbsp;2026</td><td>Reference for the decentralized branch: <code>acquire_tag</code>, <code>last_known_tag</code>, <code>@maxwait</code>, <code>tardy</code>.</td></tr>
+<tr><td><code>lfc</code></td><td>0.13.0</td><td>Compiles the tutorial&rsquo;s examples.</td></tr>
+<tr><td>Board</td><td>ZCU106, XCZU7EV-2FFVC1156E</td><td>230,400 LUTs, 460,800 flip-flops, 312 block RAMs, 96 UltraRAMs, 1,728 DSP slices.</td></tr>
+</table></div>
+
+<span class="msg" id="s2">&sect; 2</span>
+<h2>Decision register</h2>
+<div class="tw"><table class="dec">
+<tr><th style="width:9%">ID</th><th style="width:33%">Decision</th><th style="width:10%">Status</th><th>Basis</th><th style="width:17%">Carried by</th></tr>
+<tr id="dec-01"><td class="id">DEC-01</td><td><strong>Phase&nbsp;1 platform</strong><br>AMD ZCU106 (XCZU7EV-2). Zynq-7020 kept as the area reference for smaller parts.</td><td><span class="st ok">decided</span></td><td>Decision of 8&nbsp;Oct&nbsp;2026; working reactor-chisel port on the board (ZCU106 note &sect;1).</td><td>Spec: meta, G-5, NFR-03, &sect;9.3, ST-4, PT-2, M-6</td></tr>
+<tr id="dec-02"><td class="id">DEC-02</td><td><strong>First coordination policy</strong><br>Centralized, with HW-RTI as the authority to advance.</td><td><span class="st ok">decided</span></td><td>Specification scope; Codesign already has a grant-controlled execution boundary (ZCU106 note &sect;1, &sect;3).</td><td>Spec &sect;1, NG-4</td></tr>
+<tr id="dec-03"><td class="id">DEC-03</td><td><strong>Scope of the first board federation</strong><br>Two reactor-chisel participants, static acyclic topology, positive connection delays, final grants (TAG) only; no PTAG, no zero-delay cycle through a hardware federate.</td><td><span class="st ok">decided</span></td><td>What the hardware interface allows at the baseline (DEC-04); simplest scope that exercises grant and completion end to end.</td><td>This guide, P4; spec FR-20</td></tr>
+<tr id="dec-04"><td class="id">DEC-04</td><td><strong>reactor-chisel boundary</strong><br>A port adapter between HW-RTI and each hardware federate: tag conversion, grant presented as min(TAG,&nbsp;NET), no PTAG forwarded; topology load rejects a hardware federate in a zero-delay cycle.</td><td><span class="st ok">decided</span></td><td>Three incompatibilities at reactor-chisel <code>d94dd2d</code> (&sect;4 below).</td><td>Spec &sect;8.1, FR-20, D-11, UT-9</td></tr>
+<tr id="dec-05"><td class="id">DEC-05</td><td><strong>Widening reactor-chisel instead of adapting</strong><br>Open: adopt the 96-bit tag, accept TAG&nbsp;&gt;&nbsp;NET, later add a PTAG input.</td><td><span class="st op">open</span></td><td>Removes the 2.1&nbsp;s range and enables microsteps and zero-delay cycles in hardware; costs changes in a research fork.</td><td>Spec OQ-8; decide at P0 (M-0)</td></tr>
+<tr id="dec-06"><td class="id">DEC-06</td><td><strong>Tag contract</strong><br>The pair of spec &sect;6.1 (SInt64 ns, UInt32 microstep) is canonical everywhere outside reactor-chisel; reactor-chisel tags are mapped by the adapter (&sect;4).</td><td><span class="st ok">decided</span></td><td>Bit compatibility with the C reference makes traces comparable (spec &sect;6.1).</td><td>Spec &sect;6.1, FR-20</td></tr>
+<tr id="dec-07"><td class="id">DEC-07</td><td><strong>Data plane</strong><br>Application data does not pass through HW-RTI; HW-RTI learns of messages through MSG_SENT; a federate emits LTC only after its outputs are visible (FR-19). Implementation: an ordered fabric with admission acknowledgement visible to the coordinator.</td><td><span class="st pr">proposed</span></td><td>Spec NG-6, &sect;7.1, FR-19; ZCU106 note &sect;4 (ordered router preferred for the first experiment).</td><td>Spec; this guide</td></tr>
+<tr id="dec-08"><td class="id">DEC-08</td><td><strong>Control transport between the A53 and the fabric</strong><br>AXI4-Lite registers and mailboxes (spec &sect;8.2) on an AXI master port of the processing system.</td><td><span class="st ok">decided</span></td><td>Specification &sect;8.2; same mechanism for configuration C-B.</td><td>Spec &sect;8.2</td></tr>
+<tr id="dec-09"><td class="id">DEC-09</td><td><strong>Data transport for software federates</strong><br>AXI4-Stream FIFO behind a polled custom channel (Linux user space through UIO); TCP over loopback for the first software-only baseline.</td><td><span class="st pr">proposed</span></td><td>Ordered, lossless, bounded latency; no protocol stack on chip; existing TCP channel needs no code.</td><td>micro-LF note; this guide B1&ndash;B2</td></tr>
+<tr id="dec-10"><td class="id">DEC-10</td><td><strong>Physical time base</strong><br>One free-running 64-bit counter in the fabric, readable over AXI4-Lite, used by every federate; clock synchronization off.</td><td><span class="st pr">proposed</span></td><td>Clock error zero by construction (spec NG-3); the A53 timers are not visible to the fabric.</td><td>This guide</td></tr>
+<tr id="dec-11"><td class="id">DEC-11</td><td><strong>Reference software</strong><br>reactor-c <code>ccd0512</code> for HW-RTI behaviour (pinned at M-0); reactor-uc <code>df7cfea</code> for the decentralized branch; reactor-chisel and the LF fork as used by the working ZCU106 port.</td><td><span class="st op">open</span></td><td>The baseline commits cited by the ZCU106 note do not form a proven build (&sect;1).</td><td>Spec M-0; this guide P0</td></tr>
+<tr id="dec-12"><td class="id">DEC-12</td><td><strong>Decentralized branch</strong><br>Built after P4 on the same participant infrastructure: known-input first (explicit absence or progress bounds), then bounded waiting with a derived bound B<sub>i</sub>(g) &le; D<sub>i</sub>(g); one advancement authority at a time.</td><td><span class="st pr">proposed</span></td><td>ZCU106 note &sect;7&ndash;9; micro-LF note; the known-input branch is the null-message scheme of Chandy&ndash;Misra and needs a liveness argument for cycles.</td><td>This guide B3&ndash;B4</td></tr>
+<tr id="dec-13"><td class="id">DEC-13</td><td><strong>Decision to distribute</strong><br>OQ-7 answered in writing before M-4, using the B1&ndash;B2 measurements and the target applications.</td><td><span class="st op">open</span></td><td>Spec OQ-7, R-9; ZCU106 note &sect;14 decision gate.</td><td>Spec OQ-7</td></tr>
+<tr id="dec-14"><td class="id">DEC-14</td><td><strong>Known runtime behaviours not to replicate</strong><br>reactor-uc joining-time write (apparent defect); <code>last_known_tag</code> advancing after a dropped event; reactor-chisel unsigned sentinel order.</td><td><span class="st ok">decided</span></td><td>Traced in source (&sect;4; micro-LF note &sect;5).</td><td>This guide; report upstream (open)</td></tr>
+</table></div>
+
+<span class="msg" id="s3">&sect; 3</span>
+<h2>Plan: stages and gates</h2>
+<p>One sequence covers both tracks. Each stage has an acceptance gate; a stage starts only when the gates it depends on have
+passed. The P-stages follow the specification&rsquo;s milestones and add the first board federation (P4) as an early,
+restricted slice of M-5, so that the board, the adapter and the participant interface are exercised before the full decision
+core exists. The B-stages produce the measurements that OQ-7 needs before M-4 and then reuse the participant infrastructure of
+P3&ndash;P4.</p>
+<figure>
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Implementation plan: shared foundations, the centralized track A and the decentralized track B, with the OQ-7 decision before M-4"><defs><marker id="mk-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs><rect x="120.0" y="14.0" width="520" height="40" rx="9" fill="#F2F0E9" stroke="#8A867B" stroke-width="1.1"/><text x="380.0" y="30.887500000000003" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#1B1E22" font-weight="500">P0  foundations: source manifest, matched ZCU106 build, golden model</text><text x="380.0" y="45.0625" text-anchor="middle" class="svgtxt" font-size="9" fill="#8A867B">both tracks</text><text x="175" y="78" text-anchor="middle" class="svgtxt" font-size="11" fill="#042C53" font-weight="600">Track A: centralized (HW-RTI)</text><text x="585" y="78" text-anchor="middle" class="svgtxt" font-size="11" fill="#854F0B" font-weight="600">Track B: decentralized</text><rect x="40.0" y="95.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="175.0" y="109.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">P1  observe the Codesign protocol</text><text x="175.0" y="122.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">S1</text><line x1="175" y1="129" x2="175" y2="140" stroke="#185FA5" stroke-width="1.3" marker-end="url(#mk-g)"/><rect x="40.0" y="141.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="175.0" y="155.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">P2  tag ALU + port adapter</text><text x="175.0" y="168.51250000000002" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">M-1, FR-20</text><line x1="175" y1="175" x2="175" y2="186" stroke="#185FA5" stroke-width="1.3" marker-end="url(#mk-g)"/><rect x="40.0" y="187.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="175.0" y="201.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">P3  static core + participant adapter</text><text x="175.0" y="214.51250000000002" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">M-2, S2</text><line x1="175" y1="221" x2="175" y2="232" stroke="#185FA5" stroke-width="1.3" marker-end="url(#mk-g)"/><rect x="40.0" y="233.0" width="270" height="34" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.1"/><text x="175.0" y="247.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#042C53" font-weight="500">P4  first board federation</text><text x="175.0" y="260.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#185FA5">TAG only, acyclic; S3</text><line x1="175" y1="267" x2="175" y2="278" stroke="#185FA5" stroke-width="1.3" marker-end="url(#mk-g)"/><rect x="40.0" y="279.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="175.0" y="293.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">P5  closure, PTAG, DNET</text><text x="175.0" y="306.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">M-3, M-4; KPI-1 go/no-go</text><line x1="175" y1="313" x2="175" y2="324" stroke="#185FA5" stroke-width="1.3" marker-end="url(#mk-g)"/><rect x="40.0" y="325.0" width="270" height="34" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.1"/><text x="175.0" y="339.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#042C53" font-weight="500">P6  integration, bring-up, evaluation</text><text x="175.0" y="352.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#185FA5">M-5 … M-7 on ZCU106</text><rect x="450.0" y="95.0" width="270" height="34" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.1"/><text x="585.0" y="109.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#854F0B" font-weight="500">B1  micro-LF on the A53 (Linux)</text><text x="585.0" y="122.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#9A6410">POSIX port, TCP loopback</text><rect x="450.0" y="141.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="585.0" y="155.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">B2  AXI-Stream channel + PL time base</text><text x="585.0" y="168.51250000000002" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">custom channel</text><rect x="450.0" y="279.0" width="270" height="34" rx="9" fill="#FAF0DC" stroke="#9A6410" stroke-width="1.1"/><text x="585.0" y="293.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#854F0B" font-weight="500">B3  known-input branch</text><text x="585.0" y="306.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#9A6410">P3–P4 infrastructure; S4</text><rect x="450.0" y="325.0" width="270" height="34" rx="9" fill="#fff" stroke="#8A867B" stroke-width="1.1"/><text x="585.0" y="339.0875" text-anchor="middle" class="svgtxt" font-size="10" fill="#1B1E22" font-weight="500">B4  bounded waiting</text><text x="585.0" y="352.5125" text-anchor="middle" class="svgtxt" font-size="8.5" fill="#8A867B">derived bounds; S5</text><line x1="585" y1="129" x2="585" y2="140" stroke="#9A6410" stroke-width="1.3" marker-end="url(#mk-g)"/><line x1="175" y1="54" x2="175" y2="94" stroke="#8A867B" stroke-width="1.3" marker-end="url(#mk-g)"/><line x1="585" y1="54" x2="585" y2="94" stroke="#8A867B" stroke-width="1.3" marker-end="url(#mk-g)"/><polygon points="585,233 645,250 585,267 525,250" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.2"/><text x="585" y="254" text-anchor="middle" class="svgtxt" font-size="10" fill="#04342C" font-weight="600">OQ-7</text><line x1="585" y1="175" x2="585" y2="231" stroke="#9A6410" stroke-width="1.3" marker-end="url(#mk-g)"/><text x="593" y="207.0" text-anchor="start" class="svgtxt" font-size="8.5" fill="#854F0B">measurements</text><line x1="585" y1="267" x2="585" y2="278" stroke="#9A6410" stroke-width="1.3" marker-end="url(#mk-g)"/><line x1="585" y1="313" x2="585" y2="324" stroke="#9A6410" stroke-width="1.3" marker-end="url(#mk-g)"/><path d="M525 250 H360 V296 H312.0" fill="none" stroke="#0F6E56" stroke-width="1.3" marker-end="url(#mk-g)"/><text x="370" y="244" text-anchor="start" class="svgtxt" font-size="8.5" fill="#04342C">before M-4</text><text x="380" y="388" text-anchor="middle" class="svgtxt" font-size="9" fill="#5C6066">filled boxes: stages with a board demonstration or the first measurements; S1–S5 are the stages of the ZCU106 note</text></svg>
+<figcaption><b>Figure 1 &mdash; one plan, two tracks.</b> Track A runs the specification&rsquo;s milestones with the first
+board federation brought forward; Track B measures first and builds hardware only on the participant infrastructure of Track A.
+OQ-7 sits before M-4, where the measurements of B1&ndash;B2 meet the KPI-1 go/no-go criterion.</figcaption>
+</figure>
+<div class="tw"><table>
+<tr><th style="width:6%">Stage</th><th style="width:6%">Track</th><th style="width:32%">Content</th><th>Acceptance gate</th><th style="width:11%">Spec</th><th style="width:11%">ZCU106 / micro-LF note</th></tr>
+<tr><td class="id">P0</td><td class="id">both</td><td>Source manifest; matched build of the working ZCU106 port; golden model of <code>rti_common.c</code> with trace shim; decide DEC-05 and DEC-11.</td><td>Original Codesign example reproduced on the board; golden model prints a grant sequence for a random trace.</td><td>M-0</td><td>S0</td></tr>
+<tr><td class="id">P1</td><td class="id">A</td><td>Instrument the original Codesign path: WRITE, execute, LTC, READ, NET.</td><td>Observed transaction order matches the expected one; repeated commands are not lost.</td><td>(M-1 spike)</td><td>S1</td></tr>
+<tr><td class="id">P2</td><td class="id">A</td><td>Tag ALU (spec &sect;6.2) and the port adapter (FR-20).</td><td>UT-1, UT-2, UT-9 pass; FV-2 discharged.</td><td>M-1</td><td>&mdash;</td></tr>
+<tr><td class="id">P3</td><td class="id">A</td><td>Static-topology decision core; common participant adapter with bounded channels and atomic admission.</td><td>Core unit tests; admission, ownership and backpressure tests.</td><td>M-2</td><td>S2</td></tr>
+<tr><td class="id">P4</td><td class="id">A</td><td>First board federation: two reactor-chisel participants, acyclic, positive delays, TAG only.</td><td>Grants and completions match the golden model on the declared scope; no premature execution; LTC never precedes output visibility (FR-19).</td><td>early slice of M-5</td><td>S3</td></tr>
+<tr><td class="id">P5</td><td class="id">A</td><td>Closure engine; PTAG, DNET and shutdown, with zero-delay cycles among software federates.</td><td>DT-1 &hellip; DT-5, FV-1, FV-3, FV-4; KPI-1 go/no-go; OQ-7 answered before M-4.</td><td>M-3, M-4</td><td>&mdash;</td></tr>
+<tr><td class="id">P6</td><td class="id">A</td><td>Integration, bring-up and evaluation on the ZCU106.</td><td>ST-1 &hellip; ST-4, PT-1, PT-2; KPI-1 &hellip; KPI-6.</td><td>M-5 &hellip; M-7</td><td>&mdash;</td></tr>
+<tr><td class="id">B1</td><td class="id">B</td><td>micro-LF on the A53 under PetaLinux: POSIX port, TCP over loopback; no code.</td><td>Recorded: arrival-to-admission latency, CPU time per message, smallest waiting bound with no safe-to-process violations.</td><td>feeds OQ-7</td><td>micro-LF note stage 1</td></tr>
+<tr><td class="id">B2</td><td class="id">B</td><td>AXI4-Stream FIFO custom channel and the fabric time base (DEC-09, DEC-10).</td><td>Same traces as B1 over the new channel; measurements repeated.</td><td>feeds OQ-7</td><td>micro-LF note stage 2</td></tr>
+<tr><td class="id">B3</td><td class="id">B</td><td>Known-input distributed branch on the P3/P4 participant infrastructure.</td><td>No premature absence; live progress on the declared scope.</td><td>&mdash;</td><td>S4</td></tr>
+<tr><td class="id">B4</td><td class="id">B</td><td>Bounded waiting with derived bounds and a declared violation response.</td><td>Timing assumptions, violations and policy semantics tested; omissions never counted as throughput.</td><td>&mdash;</td><td>S5</td></tr>
+</table></div>
+
+<span class="msg" id="s4">&sect; 4</span>
+<h2>The reactor-chisel boundary</h2>
+<p>At reactor-chisel <code>d94dd2d</code> the coordination interface of the <code>TriggerGenerator</code> cannot be driven
+directly by HW-RTI. The three incompatibilities below were confirmed in source on 8&nbsp;October&nbsp;2026 and are now
+recorded in the specification (&sect;8.1, FR-20, D-11, OQ-8).</p>
+<div class="tw"><table>
+<tr><th style="width:22%">Property</th><th style="width:38%">At <code>d94dd2d</code></th><th>Adapter behaviour (FR-20)</th></tr>
+<tr><td>Tag representation</td><td>32-bit unsigned scalar of nanoseconds, no microstep (<code>Tag.scala</code>). <code>NEVER</code> = <code>Int.MinValue</code> as unsigned compares above <code>FOREVER</code> = <code>Int.MaxValue</code>. Range about 2.1&nbsp;s.</td><td>Convert in both directions with microstep 0 towards the core; map sentinels explicitly; compare only in the core encoding; FR-18 error outside the range or when a microstep other than 0 is needed. The hardware clock counts from the start of execution, so the conversion is relative to the federation start tag (spec &sect;8.2 <code>START_TAG</code>); confirm against the Codesign wrapper at P1.</td></tr>
+<tr><td>Grants above NET</td><td>The scheduler asserts &ldquo;TAG &gt; NET not allowed yet&rdquo; except for <code>FOREVER</code> (<code>Scheduler.scala</code>, line 48).</td><td>Retain the granted TAG and present min(TAG,&nbsp;NET), re-presenting as NET advances; unless DEC-05 removes the assertion.</td></tr>
+<tr><td>Provisional grants</td><td><code>CoordinationIO</code> has no PTAG input.</td><td>Forward no PTAG; reject at topology load a hardware federate in a zero-delay cycle.</td></tr>
+</table></div>
+<p>The ZCU106 note lists further adapter obligations that the participant interface of P3 must meet: separate grant value,
+validity and acknowledgement from input publication (the original WRITE couples them); a command handshake that cannot lose
+repeated commands; a READ-equivalent consumption acknowledgement; a participant NET that combines admitted external events,
+timers and physical actions rather than the local token queue alone; and LTC only after reaction work and outbound commitments
+are complete (FR-19). <code>reactionDone</code> defaults to true and must be driven for multi-cycle reactions.</p>
+
+<span class="msg" id="s5">&sect; 5</span>
+<h2>Contracts</h2>
+<p>These outlines become frozen formats at P3; the specification is normative wherever it already defines a field.</p>
+<ul>
+<li><strong>Tag.</strong> Spec &sect;6.1: (SInt64 nanoseconds, UInt32 microstep), <code>NEVER_TAG</code> and <code>FOREVER_TAG</code>
+as defined there. The reactor-chisel mapping of &sect;4 is the only other encoding.</li>
+<li><strong>Progress and grant record.</strong> Spec &sect;8.1 <code>ControlMsg</code> and <code>Grant</code>: participant, kind, tag; NET,
+LTC, MSG_SENT, RESIGN and stop messages inbound; TAG, PTAG, DNET and stop grants outbound. Grant permission and progress frontier
+keep distinct meanings; validity is separate from sentinel values.</li>
+<li><strong>Event record.</strong> Destination connection, intended tag, presence, payload handle and length, sequence number and
+epoch. The intended tag is kept even when an event is admitted late (reactor-uc keeps <code>intended_tag</code> for the same reason).</li>
+<li><strong>Trace record.</strong> Spec FR-17 trace port, extended for the board: physical timestamp, participant, event tag, and the
+distinct points of candidate query, commit, execution, completion, transport commit and violation.</li>
+<li><strong>Topology manifest.</strong> Participant and connection identifiers, logical or physical type, delay, payload schema; the same
+manifest drives both policies.</li>
+</ul>
+
+<span class="msg" id="s6">&sect; 6</span>
+<h2>Validation matrix</h2>
+<div class="tw"><table>
+<tr><th style="width:20%">Scenario</th><th>Centralized (Track A)</th><th>Distributed (Track B)</th></tr>
+<tr><td>Delayed input</td><td>No final execution before the input is visible (DT-1, ST-1)</td><td>Known-input wait, or a deliberate timeout with correct tardy classification</td></tr>
+<tr><td>Explicit absence</td><td>Absence or closure justifies the grant</td><td>Absence or progress information committed before release</td></tr>
+<tr><td>Multiple inputs</td><td>A grant never bypasses an unresolved dependency (FV-1)</td><td>Every required input policy evaluated</td></tr>
+<tr><td>Same time, microsteps</td><td>Tag order and grant transitions; adapter rejects a microstep other than 0 towards a hardware federate (UT-9)</td><td>Knowledge and expiry follow the declared microstep rule</td></tr>
+<tr><td>Grant above NET</td><td>Presented as min(TAG,&nbsp;NET) and released as NET advances (UT-9)</td><td>&mdash;</td></tr>
+<tr><td>Multi-cycle reaction, DMA</td><td>LTC does not precede output commit (FR-19, DT-6)</td><td>Local completion and peer knowledge stay ordered</td></tr>
+<tr><td>Full buffers, stalled peer</td><td>Backpressure; no false progress; FR-18 on in-transit overflow (UT-8)</td><td>No silent loss; knowledge never advances with a dropped event (DEC-14)</td></tr>
+<tr><td>Reset, epoch, range end</td><td>Epoch protection; FR-18 when a time leaves the 32-bit hardware range</td><td>Atomic timeout/arrival decision; intended tag retained</td></tr>
+</table></div>
+<p>Compare logical traces against a reference transition model, not clock-cycle timing between policies. Where finite waiting
+changes behaviour on purpose, judge each trace against its own declared contract and report the violations. Measure
+event-to-execution latency, physical lag, coordination traffic, queue occupancy, wait time, tardy count, throughput, logic and RAM
+use, and timing closure, with identical reactions, topology and channel capacity for both policies.</p>
+
+<span class="msg" id="s7">&sect; 7</span>
+<h2>Open questions</h2>
+<ul>
+<li><strong>Matched sources</strong> (DEC-11): which reactor-chisel and LF-fork commits does the working ZCU106 port use? The
+submodule commit <code>6c8aecd</code> and the runtime baseline <code>d94dd2d</code> differ.</li>
+<li><strong>Widening reactor-chisel</strong> (DEC-05, spec OQ-8): needed if the target application requires microsteps, runs longer
+than about 2.1&nbsp;s of logical time, or needs zero-delay cycles through hardware federates.</li>
+<li><strong>Software side of Codesign.</strong> The Codesign wrapper targets the C++ runtime (ZCU106 note, citing <code>CodesignSwEmitter.kt</code>), while the specification&rsquo;s software
+federates (configuration C-B) run the C runtime. Decide which runtime the A53 federates use in P5&ndash;P6.</li>
+<li><strong>Distribution</strong> (DEC-13, spec OQ-7): answered before M-4.</li>
+<li><strong>Upstream reports</strong> (DEC-14): the reactor-uc joining-time write and the knowledge advance after a dropped event; the
+reactor-chisel sentinel order.</li>
+<li><strong>reactor-uc startup on cyclic topologies:</strong> whether the two-sweep round count reaches the diameter.</li>
+</ul>
+
+<span class="msg" id="s8">&sect; 8</span>
+<h2>Changes made to the documents</h2>
+<p>On 8&nbsp;October&nbsp;2026 the specification moved to revision 0.2: ZCU106 as the Phase&nbsp;1 target (meta, SoC term, G-5,
+NFR-03, &sect;9.3, ST-4, PT-2, M-6, note on OQ-6); the reactor-chisel boundary (&sect;1.1, G-4, &sect;8.1, FR-20, D-11, UT-9, M-0,
+M-5, R-6, OQ-8); and one reference. Earlier on 7&nbsp;October: the decentralized alternative (&sect;0.2 term, NG-4, &sect;1.4,
+OQ-7, R-9). The tutorial gained &sect;5.3 on micro-LF. Nothing else is pending.</p>
+
+<span class="msg" id="s9">&sect; 9</span>
+<h2>Documents</h2>
+<div class="tw"><table>
+<tr><th style="width:36%">Document</th><th>Role</th></tr>
+<tr><td><a href="../hw-rti/HW-RTI_project_specification.html">HW-RTI project specification</a>, revision 0.2</td><td>Normative for Track A: requirements, microarchitecture, verification, schedule.</td></tr>
+<tr><td><a href="lf_hardware_coordination_zcu106_expanded.docx">LF hardware coordination on the ZCU106</a> (ChatGPT note, 8&nbsp;Oct&nbsp;2026)</td><td>Source of the board-specific plan: Codesign findings, participant flow, stages S0&ndash;S5, validation scenarios. Its proposals are absorbed here; it is not maintained further.</td></tr>
+<tr><td><a href="../micro-lf/micro_lf_fpga_design_note.html">micro-LF communication and FPGA acceleration</a>, revision 1</td><td>Track B design exploration and the traced reactor-uc behaviour.</td></tr>
+<tr><td><a href="../tutorial/lingua_franca_tutorial.html">Lingua Franca tutorial</a> and <a href="../tutorial/lingua_franca_rti.html">reference edition</a></td><td>Background: coordination protocols (&sect;4, &sect;5, &sect;5.3), the bridge to hardware (&sect;9.9), fixed points (&sect;15).</td></tr>
+<tr><td><code>lf-docs/INVENTARIO.md</code>, <code>governance/</code></td><td>Measured structure of the three main documents; editing handoffs and index.</td></tr>
+</table></div>
+
+</div>
+</body>
+</html>

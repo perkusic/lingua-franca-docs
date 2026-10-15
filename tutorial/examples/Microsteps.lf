@@ -1,0 +1,13 @@
+target C
+
+main reactor {
+  logical action again
+  state n: int = 0
+
+  reaction(startup, again) -> again {=
+    printf("tag (%lld ms, %u)\n", (long long)(lf_time_logical_elapsed() / MSEC(1)), lf_tag().microstep);
+    self->n++;
+    if (self->n < 3) lf_schedule(again, 0);          // zero delay: same time, next microstep
+    else if (self->n == 3) lf_schedule(again, MSEC(5)); // positive delay: time advances, microstep resets
+  =}
+}

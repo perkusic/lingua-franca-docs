@@ -1,0 +1,626 @@
+{
+ "note": "HTMLs remain canonical; this is a verified extraction, not the source of truth.",
+ "placeholder": "<!--@svg:{id}@-->",
+ "documents": {
+  "lingua_franca_tutorial.html": {
+   "sha256": "4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4",
+   "bytes": 780794,
+   "skeleton": "skeleton/lingua_franca_tutorial.skel.html",
+   "skeleton_sha256": "6e75d9afe61a8d7f378b48d0318180fecb43f7284763959d425c8a92df193a82",
+   "figures": [
+    "fig-message-time-not-order",
+    "fig-reactor-ports-levels",
+    "fig-federation-architecture",
+    "fig-joining-federation",
+    "fig-question-rti-answers",
+    "fig-grant-decision",
+    "fig-safety-conditions-wire",
+    "fig-zero-delay-cycle-message-message",
+    "fig-superdense-time",
+    "fig-graph-becomes-decision",
+    "fig-rti-cannot-trust-net-alone",
+    "fig-cost-net",
+    "fig-example-federation",
+    "fig-releasing-cycle",
+    "fig-dnet-provides",
+    "fig-algebra-comes-from",
+    "fig-absence-safe-assume",
+    "fig-ways-establish-tag-safe",
+    "fig-cycles-can-exist",
+    "fig-federate-scheduler",
+    "fig-reaction-module",
+    "fig-codesign-top-level",
+    "fig-codesign-build",
+    "fig-cascade-snapshot",
+    "fig-three-quantities-timeline",
+    "fig-interpret-time-based-rendezvous",
+    "fig-four-orders",
+    "fig-fixed-points-monotone-function",
+    "fig-dependency-graphs-program",
+    "fig-closure-successive-approximations",
+    "fig-any-relaxation-order-ends-least",
+    "fig-fixed-point-tag",
+    "fig-acyclic-reaction-graph-gives-exactly",
+    "fig-compiler-builds-example-16-1",
+    "fig-startup-between-neighbors-logged",
+    "fig-startup-coordinator-state-machine",
+    "fig-tcp-network-channel-state-machine",
+    "fig-clock-synchronization-round",
+    "fig-micro-lf-federate-advances-state",
+    "fig-example-16-1-dst-physical",
+    "fig-tag-nothing-send-under-both",
+    "fig-micro-lf-decision-datapath-interpretation",
+    "fig-micro-lf-program-meets-hardware"
+   ]
+  },
+  "lingua_franca_rti.html": {
+   "sha256": "77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8",
+   "bytes": 598902,
+   "skeleton": "skeleton/lingua_franca_rti.skel.html",
+   "skeleton_sha256": "358a180699f61d9986dadba09e558a5b65fb167c1007746bbe420d6cfdc2012b",
+   "figures": [
+    "fig-message-time-not-order",
+    "fig-reactor-ports-levels",
+    "fig-federation-architecture",
+    "fig-joining-federation",
+    "fig-question-rti-answers",
+    "fig-grant-decision",
+    "fig-safety-conditions-wire",
+    "fig-zero-delay-cycle-message-message",
+    "fig-superdense-time",
+    "fig-graph-becomes-decision",
+    "fig-rti-cannot-trust-net-alone",
+    "fig-cost-net",
+    "fig-example-federation",
+    "fig-releasing-cycle",
+    "fig-dnet-provides",
+    "fig-algebra-comes-from",
+    "fig-absence-safe-assume",
+    "fig-ways-establish-tag-safe",
+    "fig-cycles-can-exist",
+    "fig-federate-scheduler",
+    "fig-reaction-module",
+    "fig-codesign-top-level",
+    "fig-codesign-build",
+    "fig-cascade-snapshot",
+    "fig-three-quantities-timeline",
+    "fig-interpret-time-based-rendezvous",
+    "fig-four-orders",
+    "fig-fixed-points-monotone-function",
+    "fig-dependency-graphs-program",
+    "fig-closure-successive-approximations",
+    "fig-any-relaxation-order-ends-least",
+    "fig-fixed-point-tag",
+    "fig-acyclic-reaction-graph-gives-exactly",
+    "fig-compiler-builds-example-16-1",
+    "fig-startup-between-neighbors-logged",
+    "fig-startup-coordinator-state-machine",
+    "fig-tcp-network-channel-state-machine",
+    "fig-clock-synchronization-round",
+    "fig-micro-lf-federate-advances-state",
+    "fig-example-16-1-dst-physical",
+    "fig-tag-nothing-send-under-both",
+    "fig-micro-lf-decision-datapath-interpretation",
+    "fig-micro-lf-program-meets-hardware"
+   ]
+  }
+ },
+ "figures": [
+  {
+   "id": "fig-message-time-not-order",
+   "numbers": {
+    "lingua_franca_tutorial.html": 1,
+    "lingua_franca_rti.html": 1
+   },
+   "title": "one message at a time is not one order",
+   "file": "svg/fig-message-time-not-order.svg",
+   "sha256": "e3474cc43e8199a9bdf2c97fc4fc976ab2734820183edda868af8be0f682fc15",
+   "bytes": 7801,
+   "shared": true
+  },
+  {
+   "id": "fig-reactor-ports-levels",
+   "numbers": {
+    "lingua_franca_tutorial.html": 2,
+    "lingua_franca_rti.html": 2
+   },
+   "title": "a reactor, its ports, and levels",
+   "file": "svg/fig-reactor-ports-levels.svg",
+   "sha256": "8551906273c15e9e69c4e555c47d7f16f9c712a9c5ba6d6d4e791da2a46f39b9",
+   "bytes": 3332,
+   "shared": true
+  },
+  {
+   "id": "fig-federation-architecture",
+   "numbers": {
+    "lingua_franca_tutorial.html": 3,
+    "lingua_franca_rti.html": 3
+   },
+   "title": "federation architecture",
+   "file": "svg/fig-federation-architecture.svg",
+   "sha256": "c5706dc1353ef76acbfd057a432b0c3f89ee1c595356ee3c250eed2e039b376c",
+   "bytes": 2892,
+   "shared": true
+  },
+  {
+   "id": "fig-joining-federation",
+   "numbers": {
+    "lingua_franca_tutorial.html": 4,
+    "lingua_franca_rti.html": 4
+   },
+   "title": "joining a federation",
+   "file": "svg/fig-joining-federation.svg",
+   "sha256": "8613a52fae69911d730c6698e3e177c550ed27631de0ef5949f94f22e9d01ad7",
+   "bytes": 7595,
+   "shared": true
+  },
+  {
+   "id": "fig-question-rti-answers",
+   "numbers": {
+    "lingua_franca_tutorial.html": 5,
+    "lingua_franca_rti.html": 5
+   },
+   "title": "the question the RTI answers",
+   "file": "svg/fig-question-rti-answers.svg",
+   "sha256": "c3306a8cda16676e52b0129f9021333fcde67753c0254b56e303c313f03b9e75",
+   "bytes": 5007,
+   "shared": true
+  },
+  {
+   "id": "fig-grant-decision",
+   "numbers": {
+    "lingua_franca_tutorial.html": 6,
+    "lingua_franca_rti.html": 6
+   },
+   "title": "the grant decision",
+   "file": "svg/fig-grant-decision.svg",
+   "sha256": "19a19870b6fd21c2b92496532bb6f9ed7561e0309d6f0ebf1d437b007b868a87",
+   "bytes": 3078,
+   "shared": true
+  },
+  {
+   "id": "fig-safety-conditions-wire",
+   "numbers": {
+    "lingua_franca_tutorial.html": 7,
+    "lingua_franca_rti.html": 7
+   },
+   "title": "the two safety conditions, on the wire",
+   "file": "svg/fig-safety-conditions-wire.svg",
+   "sha256": "d443ca6bbd526af493e52f46cb680aba09adf5a0ebe4094e5c9b2243f866478e",
+   "bytes": 4740,
+   "shared": true
+  },
+  {
+   "id": "fig-zero-delay-cycle-message-message",
+   "numbers": {
+    "lingua_franca_tutorial.html": 8,
+    "lingua_franca_rti.html": 8
+   },
+   "title": "a zero-delay cycle, message by message",
+   "file": "svg/fig-zero-delay-cycle-message-message.svg",
+   "sha256": "3d2bf89b0fedf3462f2cb100f235ff57289a19d7087cd7a6cce19d107ce1d5fe",
+   "bytes": 5452,
+   "shared": true
+  },
+  {
+   "id": "fig-superdense-time",
+   "numbers": {
+    "lingua_franca_tutorial.html": 9,
+    "lingua_franca_rti.html": 9
+   },
+   "title": "superdense time",
+   "file": "svg/fig-superdense-time.svg",
+   "sha256": "d4b4162605c4079998fe7fe6fc5db0d837684d70a62d0d8a0ac482409936b9e4",
+   "bytes": 4023,
+   "shared": true
+  },
+  {
+   "id": "fig-graph-becomes-decision",
+   "numbers": {
+    "lingua_franca_tutorial.html": 10,
+    "lingua_franca_rti.html": 10
+   },
+   "title": "how the graph becomes a decision",
+   "file": "svg/fig-graph-becomes-decision.svg",
+   "sha256": "3d8c0a383ff3041dee18e3bee02bb3e8b60a279b715e57c28c3a7d5aa6702c5f",
+   "bytes": 11652,
+   "shared": true
+  },
+  {
+   "id": "fig-rti-cannot-trust-net-alone",
+   "numbers": {
+    "lingua_franca_tutorial.html": 11,
+    "lingua_franca_rti.html": 11
+   },
+   "title": "why the RTI cannot trust the NET alone",
+   "file": "svg/fig-rti-cannot-trust-net-alone.svg",
+   "sha256": "efd08eaef2f97f4d1cb23defd9f8539a33ef2e5641e1b377e01c03d68abf35e3",
+   "bytes": 9061,
+   "shared": true
+  },
+  {
+   "id": "fig-cost-net",
+   "numbers": {
+    "lingua_franca_tutorial.html": 12,
+    "lingua_franca_rti.html": 12
+   },
+   "title": "the cost of one NET",
+   "file": "svg/fig-cost-net.svg",
+   "sha256": "b84b7def5bf5d1b05b1aa3f9214bb2c74f5a1fe21ca7d6ade47bb7a3d8715dc1",
+   "bytes": 2615,
+   "shared": true
+  },
+  {
+   "id": "fig-example-federation",
+   "numbers": {
+    "lingua_franca_tutorial.html": 13,
+    "lingua_franca_rti.html": 13
+   },
+   "title": "the example federation",
+   "file": "svg/fig-example-federation.svg",
+   "sha256": "d3f073e5b1ecd93c2e661745fd3e0bc3846fa60f39070299176662bf30171a28",
+   "bytes": 3072,
+   "shared": true
+  },
+  {
+   "id": "fig-releasing-cycle",
+   "numbers": {
+    "lingua_franca_tutorial.html": 14,
+    "lingua_franca_rti.html": 14
+   },
+   "title": "releasing the cycle",
+   "file": "svg/fig-releasing-cycle.svg",
+   "sha256": "1d3682f6651383257a4578a4ffba65a7409344e09fc7ef1be38831930fe220ee",
+   "bytes": 2810,
+   "shared": true
+  },
+  {
+   "id": "fig-dnet-provides",
+   "numbers": {
+    "lingua_franca_tutorial.html": 15,
+    "lingua_franca_rti.html": 15
+   },
+   "title": "what DNET provides",
+   "file": "svg/fig-dnet-provides.svg",
+   "sha256": "dc35a9a1c7c828a0ada0942cdcef630b93bdaf868ab7a3ab014f815a2ea41489",
+   "bytes": 2477,
+   "shared": true
+  },
+  {
+   "id": "fig-algebra-comes-from",
+   "numbers": {
+    "lingua_franca_tutorial.html": 16,
+    "lingua_franca_rti.html": 16
+   },
+   "title": "where the algebra comes from",
+   "file": "svg/fig-algebra-comes-from.svg",
+   "sha256": "d5dd70c973009831a340a7c6165bd021bbfeec352ff1839ba1cd1e5391736760",
+   "bytes": 6986,
+   "shared": true
+  },
+  {
+   "id": "fig-absence-safe-assume",
+   "numbers": {
+    "lingua_franca_tutorial.html": 17,
+    "lingua_franca_rti.html": 17
+   },
+   "title": "when absence is safe to assume",
+   "file": "svg/fig-absence-safe-assume.svg",
+   "sha256": "2cab26ed6efd1ac918057bd4cda91e99b34b3e376a8fb9c54462baaaf513b532",
+   "bytes": 8068,
+   "shared": true
+  },
+  {
+   "id": "fig-ways-establish-tag-safe",
+   "numbers": {
+    "lingua_franca_tutorial.html": 18,
+    "lingua_franca_rti.html": 18
+   },
+   "title": "two ways to establish that a tag is safe",
+   "file": "svg/fig-ways-establish-tag-safe.svg",
+   "sha256": "8b6537c452123a5cd00bfa04444c4816dfc7081edc123e2ffdcfa8c46c87c709",
+   "bytes": 8209,
+   "shared": true
+  },
+  {
+   "id": "fig-cycles-can-exist",
+   "numbers": {
+    "lingua_franca_tutorial.html": 19,
+    "lingua_franca_rti.html": 19
+   },
+   "title": "which cycles can exist",
+   "file": "svg/fig-cycles-can-exist.svg",
+   "sha256": "f620dd498401612141ad026797509e66aed199e3df58c55688696f879f691aa1",
+   "bytes": 9354,
+   "shared": true
+  },
+  {
+   "id": "fig-federate-scheduler",
+   "numbers": {
+    "lingua_franca_tutorial.html": 20,
+    "lingua_franca_rti.html": 20
+   },
+   "title": "the federate scheduler",
+   "file": "svg/fig-federate-scheduler.svg",
+   "sha256": "b847b71c52c40c0a899202718d797552656da1cd13765b161cf67bb7b6d46a50",
+   "bytes": 2834,
+   "shared": true
+  },
+  {
+   "id": "fig-reaction-module",
+   "numbers": {
+    "lingua_franca_tutorial.html": 21,
+    "lingua_franca_rti.html": 21
+   },
+   "title": "the Reaction module",
+   "file": "svg/fig-reaction-module.svg",
+   "sha256": "e0b1677f18aef60081f4f0a9a474869992f4bbe89854730c0a738e1efd4b3736",
+   "bytes": 3715,
+   "shared": true
+  },
+  {
+   "id": "fig-codesign-top-level",
+   "numbers": {
+    "lingua_franca_tutorial.html": 22,
+    "lingua_franca_rti.html": 22
+   },
+   "title": "Codesign top level",
+   "file": "svg/fig-codesign-top-level.svg",
+   "sha256": "0c60fbd65c16a4533784f758263a86beef8a4c46e1f382c6eda64b2047e0292a",
+   "bytes": 4439,
+   "shared": true
+  },
+  {
+   "id": "fig-codesign-build",
+   "numbers": {
+    "lingua_franca_tutorial.html": 23,
+    "lingua_franca_rti.html": 23
+   },
+   "title": "the Codesign build",
+   "file": "svg/fig-codesign-build.svg",
+   "sha256": "bdf5cb5d8cb089840e0e92bd96130d90de40ad0a2b1df285c566475f949801b3",
+   "bytes": 3925,
+   "shared": true
+  },
+  {
+   "id": "fig-cascade-snapshot",
+   "numbers": {
+    "lingua_franca_tutorial.html": 24,
+    "lingua_franca_rti.html": 24
+   },
+   "title": "cascade and snapshot",
+   "file": "svg/fig-cascade-snapshot.svg",
+   "sha256": "235968c0ae76a45029fded227884453c246a5ec122590808e28b55306fd611f6",
+   "bytes": 6944,
+   "shared": true
+  },
+  {
+   "id": "fig-three-quantities-timeline",
+   "numbers": {
+    "lingua_franca_tutorial.html": 25,
+    "lingua_franca_rti.html": 25
+   },
+   "title": "three quantities on one timeline",
+   "file": "svg/fig-three-quantities-timeline.svg",
+   "sha256": "5fb2d45b735a358dd0636e2525a24ac230aefb822b71c77f558257e039b96d0e",
+   "bytes": 9785,
+   "shared": true
+  },
+  {
+   "id": "fig-interpret-time-based-rendezvous",
+   "numbers": {
+    "lingua_franca_tutorial.html": 26,
+    "lingua_franca_rti.html": 26
+   },
+   "title": "InterPRET and the time-based rendezvous",
+   "file": "svg/fig-interpret-time-based-rendezvous.svg",
+   "sha256": "11d952a1b91b44b51a4d30e57fd4cfdd3262aefb8e6ba9500818b7f968c1cfda",
+   "bytes": 3760,
+   "shared": true
+  },
+  {
+   "id": "fig-four-orders",
+   "numbers": {
+    "lingua_franca_tutorial.html": 27,
+    "lingua_franca_rti.html": 27
+   },
+   "title": "four orders",
+   "file": "svg/fig-four-orders.svg",
+   "sha256": "13f7c4ae6fd1603cd64ac8cbd0e745a6b1878e166db0f33bf6384ea06697473e",
+   "bytes": 11631,
+   "shared": true
+  },
+  {
+   "id": "fig-fixed-points-monotone-function",
+   "numbers": {
+    "lingua_franca_tutorial.html": 28,
+    "lingua_franca_rti.html": 28
+   },
+   "title": "fixed points of a monotone function",
+   "file": "svg/fig-fixed-points-monotone-function.svg",
+   "sha256": "94ec1cb1b98be8451d50e1fbe7da70a4b699501afd3256c9e7ece5427ea1c489",
+   "bytes": 11255,
+   "shared": true
+  },
+  {
+   "id": "fig-dependency-graphs-program",
+   "numbers": {
+    "lingua_franca_tutorial.html": 29,
+    "lingua_franca_rti.html": 29
+   },
+   "title": "two dependency graphs of one program",
+   "file": "svg/fig-dependency-graphs-program.svg",
+   "sha256": "5783a950f1d912fbb8770d8b744502175c4c97f900c01583a757f350721c54e3",
+   "bytes": 7340,
+   "shared": true
+  },
+  {
+   "id": "fig-closure-successive-approximations",
+   "numbers": {
+    "lingua_franca_tutorial.html": 30,
+    "lingua_franca_rti.html": 30
+   },
+   "title": "the closure as successive approximations",
+   "file": "svg/fig-closure-successive-approximations.svg",
+   "sha256": "215a1c33f23cc3354110ecfbdcec5ac18fb64b16227ea4d210dbba827d8d08c2",
+   "bytes": 10526,
+   "shared": true
+  },
+  {
+   "id": "fig-any-relaxation-order-ends-least",
+   "numbers": {
+    "lingua_franca_tutorial.html": 31,
+    "lingua_franca_rti.html": 31
+   },
+   "title": "why any relaxation order ends at the least delays",
+   "file": "svg/fig-any-relaxation-order-ends-least.svg",
+   "sha256": "f7456c9cebc5880874aa327d160ad7b8abb8b9676bd06f0e1745378b0cc1ef4a",
+   "bytes": 8077,
+   "shared": true
+  },
+  {
+   "id": "fig-fixed-point-tag",
+   "numbers": {
+    "lingua_franca_tutorial.html": 32,
+    "lingua_franca_rti.html": 32
+   },
+   "title": "the fixed point of one tag",
+   "file": "svg/fig-fixed-point-tag.svg",
+   "sha256": "579fb525620c17e61ad66796f59f2804b5cd20693e1256ef9026b84f3b88d4f7",
+   "bytes": 7527,
+   "shared": true
+  },
+  {
+   "id": "fig-acyclic-reaction-graph-gives-exactly",
+   "numbers": {
+    "lingua_franca_tutorial.html": 33,
+    "lingua_franca_rti.html": 33
+   },
+   "title": "why an acyclic reaction graph gives exactly one behaviour at a tag",
+   "file": "svg/fig-acyclic-reaction-graph-gives-exactly.svg",
+   "sha256": "47b8a59d7a75f4b0335c423b97dd518d395367a2eed0b3c320980500bb14f2fb",
+   "bytes": 8986,
+   "shared": true
+  },
+  {
+   "id": "fig-compiler-builds-example-16-1",
+   "numbers": {
+    "lingua_franca_tutorial.html": 34,
+    "lingua_franca_rti.html": 34
+   },
+   "title": "what the compiler builds for Example&nbsp;16.1",
+   "file": "svg/fig-compiler-builds-example-16-1.svg",
+   "sha256": "4fcc8cd8e6e590f24cecdb5e5e02d8d15b8164a09146c6c3427210a3814a55f5",
+   "bytes": 10482,
+   "shared": true
+  },
+  {
+   "id": "fig-startup-between-neighbors-logged",
+   "numbers": {
+    "lingua_franca_tutorial.html": 35,
+    "lingua_franca_rti.html": 35
+   },
+   "title": "startup between two neighbors, as logged",
+   "file": "svg/fig-startup-between-neighbors-logged.svg",
+   "sha256": "f2d67c100a4a067247e327582f9da80f4b7eca107ec0c77bc1e9f5e4bbfc6759",
+   "bytes": 7027,
+   "shared": true
+  },
+  {
+   "id": "fig-startup-coordinator-state-machine",
+   "numbers": {
+    "lingua_franca_tutorial.html": 36,
+    "lingua_franca_rti.html": 36
+   },
+   "title": "the startup coordinator as a state machine",
+   "file": "svg/fig-startup-coordinator-state-machine.svg",
+   "sha256": "ab5b5b995068c04cefd83bbc624cb9bfa583393ddc0a6f0d984287c7c52ae30c",
+   "bytes": 6582,
+   "shared": true
+  },
+  {
+   "id": "fig-tcp-network-channel-state-machine",
+   "numbers": {
+    "lingua_franca_tutorial.html": 37,
+    "lingua_franca_rti.html": 37
+   },
+   "title": "the TCP network channel as a state machine",
+   "file": "svg/fig-tcp-network-channel-state-machine.svg",
+   "sha256": "e0f67f750849063e99acd585a44f412580d296cf29cc1fd850c09512d07c2472",
+   "bytes": 5794,
+   "shared": true
+  },
+  {
+   "id": "fig-clock-synchronization-round",
+   "numbers": {
+    "lingua_franca_tutorial.html": 38,
+    "lingua_franca_rti.html": 38
+   },
+   "title": "one clock-synchronization round",
+   "file": "svg/fig-clock-synchronization-round.svg",
+   "sha256": "3b5af77574892da70c098b586bd565c289eeda0ad584d0cd0019b240ec4aca28",
+   "bytes": 4157,
+   "shared": true
+  },
+  {
+   "id": "fig-micro-lf-federate-advances-state",
+   "numbers": {
+    "lingua_franca_tutorial.html": 39,
+    "lingua_franca_rti.html": 39
+   },
+   "title": "how a micro-LF federate advances, as two state machines",
+   "file": "svg/fig-micro-lf-federate-advances-state.svg",
+   "sha256": "533f82dfce1dbf26b641734b078b458ba0400257d34e09ba3aa74258de1c53b9",
+   "bytes": 9863,
+   "shared": true
+  },
+  {
+   "id": "fig-example-16-1-dst-physical",
+   "numbers": {
+    "lingua_franca_tutorial.html": 40,
+    "lingua_franca_rti.html": 40
+   },
+   "title": "Example 16.1 on dst&rsquo;s physical timeline",
+   "file": "svg/fig-example-16-1-dst-physical.svg",
+   "sha256": "472ee71e8ce61424c8464afd4d88265bf6ebed22647b3e1706ae1cf888eabaab",
+   "bytes": 10861,
+   "shared": true
+  },
+  {
+   "id": "fig-tag-nothing-send-under-both",
+   "numbers": {
+    "lingua_franca_tutorial.html": 41,
+    "lingua_franca_rti.html": 41
+   },
+   "title": "a tag with nothing to send, under both architectures",
+   "file": "svg/fig-tag-nothing-send-under-both.svg",
+   "sha256": "5bc66af6e1760a297a770cd3f9a986f2370c90a96b876a2eacf19d2eaf28c5e6",
+   "bytes": 5895,
+   "shared": true
+  },
+  {
+   "id": "fig-micro-lf-decision-datapath-interpretation",
+   "numbers": {
+    "lingua_franca_tutorial.html": 42,
+    "lingua_franca_rti.html": 42
+   },
+   "title": "the micro-LF decision as a datapath (interpretation)",
+   "file": "svg/fig-micro-lf-decision-datapath-interpretation.svg",
+   "sha256": "0cf2149e99625356bacff3a2e7b376fbb87e42b4aa0dbc975441854ec2d24ac4",
+   "bytes": 9085,
+   "shared": true
+  },
+  {
+   "id": "fig-micro-lf-program-meets-hardware",
+   "numbers": {
+    "lingua_franca_tutorial.html": 43,
+    "lingua_franca_rti.html": 43
+   },
+   "title": "where a micro-LF program meets the hardware",
+   "file": "svg/fig-micro-lf-program-meets-hardware.svg",
+   "sha256": "40a425e72e4eda9f339e78fefd166010b1f98782272036b050195876fefed116",
+   "bytes": 7990,
+   "shared": true
+  }
+ ]
+}

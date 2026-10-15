@@ -1,0 +1,98 @@
+# Extraction of the SVG figures — step 1 (15 October 2026)
+
+**Status: verified extraction. The two HTMLs in `tutorial/` remain canonical.** Nothing in this folder is a source of truth yet; editing an `.svg` here changes nothing in the documents. Text, styles, scripts, quiz and references were not touched.
+
+## Baseline and result
+
+| document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
+|---|---|---|---|---|
+| `lingua_franca_tutorial.html` | 780794 | `4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4` | `4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 598902 | `77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8` | `77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8` | identical byte for byte (`cmp` and SHA-256) |
+
+The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
+
+**Incident during delivery (keep in mind for every later step).** The first copy of `svg/` to this computer failed the check: the file-delivery channel had inserted C2PA provenance metadata (`xmlns:c2pa=…`) into every `.svg` (for example 4 023 → 11 797 bytes), while the skeletons, the manifest and the scripts arrived byte-identical. The check detected it on all 43 files. The SVGs in this folder were therefore regenerated **on this computer** by running `extract.py` on the canonical HTMLs; the resulting `manifest.json` is byte-identical to the one produced in the cloud, so every SVG hash matches the baseline. Rule: never move `.svg` files through a channel that may rewrite images; regenerate them locally, or move them inside a container (archive, JSON) and verify the hashes after unpacking.
+
+**Re-extraction, 15 October 2026, 07:20.** After two text edits in the canonical HTMLs (a link to Example&nbsp;16.1 and to section&nbsp;16.3 in the tutorial; `id="s16-3"` on the h3 of 16.3 in both editions), `extract.py` was run again on this computer: the 43 SVG hashes are unchanged, the skeletons and document hashes above are the new ones, and `assemble.py --check` is PASS. First extraction's baseline: tutorial `88973f23033e663e`, reference `478dcccefacef892`.
+
+**Re-extraction, 15 October 2026, 08:40.** After cross-references became links (`lf-docs/linkrefs.py`) and every `<figure>` received its stable id as `id` attribute, `extract.py` was run again on this computer: the 43 SVG hashes are unchanged, `assemble.py --check` is PASS.
+
+## Findings
+
+- **43 SVG blocks per edition, all inside `<figure>`; all 43 are byte-identical between the two editions.** Each is therefore stored once (`svg/<id>.svg`, 43 files, 286 704 bytes in total).
+- **The four figure blocks that differ between editions (Figures 29, 34, 35 and 41) differ only in their captions**, never in the SVG: Figure 29 says "Example&nbsp;4.1" in the tutorial and "&sect;4.13" in the reference; Figures 34, 35 and 41 say "Lesson&nbsp;3" / "Lesson&nbsp;3" / "Lesson&nbsp;4" against "&sect;3" / "&sect;3" / "&sect;4". Captions were not extracted: they stay in each edition's skeleton unchanged, so the four variants are preserved as they are. The extractor would have kept separate per-edition SVG files had any SVG differed; none did.
+- The placeholder `<!--@svg:<id>@-->` did not occur in either document before extraction.
+
+## Identity and numbering
+
+Each figure has a stable identifier derived once from the reference edition's caption title (`fig-` plus up to five significant words). The identifier is the file name and the placeholder; it carries no number. Today's numbers are recorded in `manifest.json` only for cross-checking. The numbers printed in captions and body text are still literal text in the skeletons: assigning them at assembly is a later step, not done here.
+
+## Files
+
+| path | content |
+|---|---|
+| `svg/<id>.svg` | exact bytes of one `<svg …>…</svg>` block, **no trailing newline** (an editor that adds one makes the check fail, by design) |
+| `skeleton/*.skel.html` | each HTML with every SVG block replaced by its placeholder |
+| `manifest.json` | ids, numbers per edition, SHA-256 and size of every SVG, of both skeletons and of both original HTMLs |
+| `extract.py` | the one-time extraction (kept for the record; rerunning it overwrites this folder) |
+| `assemble.py` | rebuild and check |
+
+## How to check
+
+    cd tutorial/figures
+    python3 assemble.py --check              # PASS / FAIL, compares with the manifest and the canonical HTMLs
+    python3 assemble.py --check --out /tmp/x # also writes the rebuilt files; refuses to overwrite the canonical ones
+
+Negative tests run: one byte appended to an SVG file → both editions MISMATCH and the file is named; one word changed in a skeleton → that edition MISMATCH, the other still IDENTICAL.
+
+**Once a canonical HTML is edited, the extraction is stale** (`--check` reports "canonical file DIFFERS") until `extract.py` is run again. That is expected while the HTMLs remain canonical.
+
+## Inventory of figures
+
+| # (both editions) | id | bytes | SHA-256 (first 16) |
+|---|---|---|---|
+| 1 | `fig-message-time-not-order` | 7801 | `e3474cc43e8199a9` |
+| 2 | `fig-reactor-ports-levels` | 3332 | `8551906273c15e9e` |
+| 3 | `fig-federation-architecture` | 2892 | `c5706dc1353ef76a` |
+| 4 | `fig-joining-federation` | 7595 | `8613a52fae69911d` |
+| 5 | `fig-question-rti-answers` | 5007 | `c3306a8cda16676e` |
+| 6 | `fig-grant-decision` | 3078 | `19a19870b6fd21c2` |
+| 7 | `fig-safety-conditions-wire` | 4740 | `d443ca6bbd526af4` |
+| 8 | `fig-zero-delay-cycle-message-message` | 5452 | `3d2bf89b0fedf346` |
+| 9 | `fig-superdense-time` | 4023 | `d4b4162605c40799` |
+| 10 | `fig-graph-becomes-decision` | 11652 | `3d8c0a383ff3041d` |
+| 11 | `fig-rti-cannot-trust-net-alone` | 9061 | `efd08eaef2f97f4d` |
+| 12 | `fig-cost-net` | 2615 | `b84b7def5bf5d1b0` |
+| 13 | `fig-example-federation` | 3072 | `d3f073e5b1ecd93c` |
+| 14 | `fig-releasing-cycle` | 2810 | `1d3682f665138325` |
+| 15 | `fig-dnet-provides` | 2477 | `dc35a9a1c7c828a0` |
+| 16 | `fig-algebra-comes-from` | 6986 | `d5dd70c973009831` |
+| 17 | `fig-absence-safe-assume` | 8068 | `2cab26ed6efd1ac9` |
+| 18 | `fig-ways-establish-tag-safe` | 8209 | `8b6537c452123a5c` |
+| 19 | `fig-cycles-can-exist` | 9354 | `f620dd4984016121` |
+| 20 | `fig-federate-scheduler` | 2834 | `b847b71c52c40c0a` |
+| 21 | `fig-reaction-module` | 3715 | `e0b1677f18aef600` |
+| 22 | `fig-codesign-top-level` | 4439 | `0c60fbd65c16a453` |
+| 23 | `fig-codesign-build` | 3925 | `bdf5cb5d8cb08984` |
+| 24 | `fig-cascade-snapshot` | 6944 | `235968c0ae76a450` |
+| 25 | `fig-three-quantities-timeline` | 9785 | `5fb2d45b735a358d` |
+| 26 | `fig-interpret-time-based-rendezvous` | 3760 | `11d952a1b91b44b5` |
+| 27 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
+| 28 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
+| 29 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
+| 30 | `fig-closure-successive-approximations` | 10526 | `215a1c33f23cc335` |
+| 31 | `fig-any-relaxation-order-ends-least` | 8077 | `f7456c9cebc58808` |
+| 32 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
+| 33 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
+| 34 | `fig-compiler-builds-example-16-1` | 10482 | `4fcc8cd8e6e590f2` |
+| 35 | `fig-startup-between-neighbors-logged` | 7027 | `f2d67c100a4a0672` |
+| 36 | `fig-startup-coordinator-state-machine` | 6582 | `ab5b5b995068c04c` |
+| 37 | `fig-tcp-network-channel-state-machine` | 5794 | `e0f67f750849063e` |
+| 38 | `fig-clock-synchronization-round` | 4157 | `3b5af77574892da7` |
+| 39 | `fig-micro-lf-federate-advances-state` | 9863 | `533f82dfce1dbf26` |
+| 40 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
+| 41 | `fig-tag-nothing-send-under-both` | 5895 | `5bc66af6e1760a29` |
+| 42 | `fig-micro-lf-decision-datapath-interpretation` | 9085 | `0cf2149e99625356` |
+| 43 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
+
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `6e75d9afe61a8d7f`; `skeleton/lingua_franca_rti.skel.html` `358a180699f61d99`.

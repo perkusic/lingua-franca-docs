@@ -1,0 +1,67 @@
+target Python {
+  coordination: decentralized,
+  timeout: 2 s,
+  tracing: true
+}
+
+preamble {=
+  import threading, time
+  SLOW_S = 0                             # sender lag D added by A, in seconds
+=}
+
+# FeedbackCentralized under decentralized coordination: no grants, only clocks and delays.
+# To provoke tardy messages: change "after 100 ms" below to "after 1 ms" and set SLOW_S to 0.05.
+# A: a "sensor" (a physical action fed by a thread) that sends to B and hears back from B.
+reactor A {
+  input back
+  output out
+  physical action sample
+
+  reaction(startup) -> sample {=
+    def sensor():
+      for i in range(1, 5):
+        time.sleep(0.3)                  # a reading every 300 ms of physical time
+        sample.schedule(0, i)
+    threading.Thread(target=sensor, daemon=True).start()
+  =}
+
+  reaction(sample) -> out {=
+    time.sleep(SLOW_S)                   # physical time passes; the tag does not
+    print(f"A: sample {sample.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+    out.set(sample.value)
+  =}
+
+  reaction(back) {=
+    print(f"A: feedback {back.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+  =} tardy {=
+    print(f"A: tardy message, feedback meant for {(back.intended_tag.time - lf.time.start()) // MSEC(1)} ms arrived late")
+  =}
+}
+
+reactor B {
+  input inp
+  output back
+  timer tick(0, 50 ms)  # B's logical time advances on its own
+
+  reaction(tick) {=
+    pass  # nothing to do: the timer only moves B's logical time forward
+  =}
+
+  reaction(inp) -> back {=
+    print(f"B: sample {inp.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+    back.set(10 * inp.value)
+  =} tardy {=
+    meant = (inp.intended_tag.time - lf.time.start()) // MSEC(1)
+    print(f"B: tardy message, sample {inp.value} meant for {meant} ms arrived at {lf.time.logical_elapsed() // MSEC(1)} ms")
+  =}
+}
+
+federated reactor {
+  # decide absence as soon as the clock allows
+  @maxwait(0)
+  a = new A()
+  @maxwait(0)
+  b = new B()
+  a.out -> b.inp after 100 ms
+  b.back -> a.back after 200 ms
+}

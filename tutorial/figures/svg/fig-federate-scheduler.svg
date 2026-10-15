@@ -1,0 +1,24 @@
+<svg viewBox="0 0 760 262" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Federate scheduler state machine">
+<defs><marker id="ah3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+<rect x="30" y="80" width="150" height="60" rx="9" fill="#F2F0E9" stroke="#8A867B"/>
+<text x="105" y="106" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#1B1E22">Pick earliest</text>
+<text x="105" y="122" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#1B1E22">event, tag t</text>
+<rect x="230" y="80" width="150" height="60" rx="9" fill="#E8F0F9" stroke="#185FA5"/>
+<text x="305" y="106" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#042C53">Send NET(t),</text>
+<text x="305" y="122" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#042C53">block on condvar</text>
+<rect x="430" y="80" width="140" height="60" rx="9" fill="#E4F2EC" stroke="#0F6E56"/>
+<text x="500" y="106" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#04342C">Execute tag</text>
+<text x="500" y="122" text-anchor="middle" class="svgtxt" font-size="11" fill="#0F6E56">level by level</text>
+<rect x="620" y="80" width="110" height="60" rx="9" fill="#F2F0E9" stroke="#8A867B"/>
+<text x="675" y="106" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#1B1E22">Send LTC,</text>
+<text x="675" y="122" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#1B1E22">loop</text>
+<line x1="182" y1="110" x2="228" y2="110" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ah3)"/>
+<line x1="382" y1="110" x2="428" y2="110" stroke="#0F6E56" stroke-width="1.1" marker-end="url(#ah3)"/>
+<text x="405" y="127" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#0F6E56">TAG/PTAG</text>
+<line x1="572" y1="110" x2="618" y2="110" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ah3)"/>
+<path d="M675 142 L675 200 L105 200 L105 142" fill="none" stroke="#8A867B" stroke-width="1" marker-end="url(#ah3)"/>
+<path d="M305 78 L305 40 L105 40 L105 78" fill="none" stroke="#A32D2D" stroke-width="1.1" marker-end="url(#ah3)"/>
+<text x="240" y="32" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#A32D2D">earlier arrival: retract, re-pick, resend NET</text>
+<text x="390" y="222" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">decentralized diff: NET/grant becomes sleep until clock &ge; t + STA;</text>
+<text x="390" y="238" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">absence becomes STAA timeout; a late arrival invokes the violation handler</text>
+</svg>

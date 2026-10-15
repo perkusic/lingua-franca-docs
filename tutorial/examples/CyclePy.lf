@@ -1,0 +1,59 @@
+target Python {
+  timeout: 40 ms,
+  tracing: true
+}
+
+reactor Source {
+  output out
+  timer t(0, 20 ms)
+  state n = 0
+
+  reaction(t) -> out {=
+    out.set(self.n)
+    self.n += 1
+  =}
+}
+
+reactor A {
+  input inp
+  input back
+  output out
+
+  reaction(inp) -> out {=
+    out.set(inp.value)
+  =}
+
+  reaction(back) {=
+    print(f"A: got {back.value} back at ({lf.time.logical_elapsed() // MSEC(1)} ms, {lf.tag().microstep})")
+  =}
+}
+
+reactor B {
+  input inp
+  output back
+  output out
+
+  reaction(inp) -> back, out {=
+    back.set(inp.value + 100)
+    out.set(inp.value)
+  =}
+}
+
+reactor C {
+  input inp
+
+  reaction(inp) {=
+    print(f"C: got {inp.value} at ({lf.time.logical_elapsed() // MSEC(1)} ms, {lf.tag().microstep})")
+  =}
+}
+
+federated reactor {
+  s = new Source()
+  a = new A()
+  b = new B()
+  c = new C()
+  s.out -> a.inp
+  a.out -> b.inp
+  b.back -> a.back
+  b.out -> c.inp after 10 ms
+}

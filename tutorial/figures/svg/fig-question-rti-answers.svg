@@ -1,0 +1,47 @@
+<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The grant decision: node e requests tag g; the RTI compares g with the earliest tag at which any input could still reach e">
+<g transform="translate(-10 0)">
+<defs><marker id="ah-q" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1.5 1.5L8 5L1.5 8.5" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+<text x="185" y="30" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#1B1E22">The federation</text>
+<text x="185" y="48" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">each node reports its next event tag</text>
+<rect x="40" y="62" width="112" height="50" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.1"/>
+<text x="96" y="83" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#042C53">u1</text>
+<text x="96" y="101" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#185FA5">NET = 12 ms</text>
+<rect x="40" y="190" width="112" height="50" rx="9" fill="#E8F0F9" stroke="#185FA5" stroke-width="1.1"/>
+<text x="96" y="211" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#042C53">u2</text>
+<text x="96" y="229" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#185FA5">NET = 20 ms</text>
+<rect x="232" y="126" width="118" height="50" rx="9" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.3"/>
+<text x="291" y="147" text-anchor="middle" class="svgtxt" font-size="12" font-weight="500" fill="#04342C">e</text>
+<text x="291" y="165" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#0F6E56">asks g = 15 ms</text>
+<line x1="152" y1="92" x2="230" y2="138" stroke="#185FA5" stroke-width="1.2" marker-end="url(#ah-q)"/>
+<text x="198" y="100" text-anchor="middle" class="svgtxt" font-size="10" fill="#5C6066">after 5 ms</text>
+<line x1="152" y1="210" x2="230" y2="164" stroke="#185FA5" stroke-width="1.2" marker-end="url(#ah-q)"/>
+<text x="198" y="214" text-anchor="middle" class="svgtxt" font-size="10" fill="#5C6066">no delay</text>
+<text x="185" y="284" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">u1 and u2 may still send to e, but</text>
+<text x="185" y="300" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">no input reaches e earlier than its</text>
+<text x="185" y="316" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">sender&#8217;s NET plus the connection delay</text>
+<line x1="376" y1="24" x2="376" y2="340" stroke="#D9D5CA" stroke-width="1"/>
+<text x="585" y="30" text-anchor="middle" class="svgtxt" font-size="13" font-weight="500" fill="#1B1E22">The RTI&#8217;s question for e</text>
+<text x="585" y="48" text-anchor="middle" class="svgtxt" font-size="10.5" fill="#5C6066">can any input at or below g still arrive?</text>
+<rect x="420" y="168" width="154" height="32" fill="#E4F2EC"/>
+<rect x="574" y="168" width="176" height="32" fill="#FAF0DC"/>
+<text x="497" y="217" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#0F6E56">no input can arrive</text>
+<text x="662" y="217" text-anchor="middle" class="svgtxt" font-size="9.5" fill="#854F0B">inputs may still arrive</text>
+<line x1="420" y1="200" x2="752" y2="200" stroke="#5C6066" stroke-width="1.1" marker-end="url(#ah-q)"/>
+<text x="748" y="192" text-anchor="end" class="svgtxt" font-size="9" fill="#8A867B">tag &#8594;</text>
+<line x1="640" y1="112" x2="640" y2="196" stroke="#185FA5" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="640" cy="200" r="4" fill="#185FA5"/>
+<text x="640" y="106" text-anchor="middle" class="svgtxt" font-size="10" fill="#185FA5">from u2: 20 + 0 = 20 ms</text>
+<line x1="574" y1="140" x2="574" y2="204" stroke="#0F6E56" stroke-width="1.6"/>
+<circle cx="574" cy="200" r="4" fill="#185FA5"/>
+<text x="568" y="134" text-anchor="end" class="svgtxt" font-size="10" fill="#185FA5">from u1: 12 + 5 = 17 ms</text>
+<line x1="530" y1="160" x2="530" y2="204" stroke="#042C53" stroke-width="1.6"/>
+<path d="M524 156 L536 156 L530 164 Z" fill="#042C53"/>
+<text x="526" y="238" text-anchor="end" class="svgtxt" font-size="10.5" font-weight="500" fill="#042C53">g = 15 ms (asked)</text>
+<text x="580" y="238" class="svgtxt" font-size="10.5" font-weight="500" fill="#0F6E56">EIMT = min = 17 ms</text>
+<rect x="400" y="258" width="360" height="82" rx="9" fill="#E4F2EC" stroke="#0F6E56" stroke-width="1.1"/>
+<text x="416" y="280" class="svgtxt" font-size="11.5" font-weight="500" fill="#04342C">EIMT 17 ms &gt; g 15 ms  &#8594;  TAG</text>
+<text x="416" y="298" class="svgtxt" font-size="10" fill="#0F6E56">granted up to (17 ms &#8722; 1 ns, UINT_MAX): more than</text>
+<text x="416" y="312" class="svgtxt" font-size="10" fill="#0F6E56">asked, sparing a later round trip</text>
+<text x="416" y="330" class="svgtxt" font-size="10" fill="#5C6066">EIMT &#8804; g: wait (PTAG if the tie is e&#8217;s own cycle)</text>
+</g>
+</svg>

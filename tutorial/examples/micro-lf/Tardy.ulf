@@ -1,0 +1,54 @@
+// Example 16.1 — decentralized coordination in micro-LF: @maxwait and tardy.
+// src sends 1, 2, 3, ... every 200 ms; at count 3 it holds the message back for
+// 100 ms of physical time. dst has its own timer, so it advances on its own.
+// Try: @maxwait(150ms) on dst; remove the tardy handler; uncomment the `sparse` line.
+reactor Src {
+  output out: int
+  timer t(0, 200 ms)
+  state n: int = 0
+  reaction(t) -> out {=
+    self->n++;
+    if (self->n == 3) {
+      env->platform->wait_for(env->platform, MSEC(100)); // a slow computation
+    }
+    // if (self->n % 2 == 0) return;  // sparse: send only odd counts
+    lf_set(out, self->n);
+    printf("src: sent %d at logical %lld ms\n", self->n,
+           (long long)(env->get_elapsed_logical_time(env) / MSEC(1)));
+  =}
+}
+
+reactor Dst {
+  input in: int
+  timer t(0, 200 ms)
+  reaction(t, in) {=
+    tag_t now = env->scheduler->current_tag(env->scheduler);
+    long long ms = (long long)(env->get_elapsed_logical_time(env) / MSEC(1));
+    long long lag = (long long)((env->get_physical_time(env)
+                                 - env->get_logical_time(env)) / MSEC(1));
+    if (lf_is_present(in))
+      printf("dst: tag (%lld ms, %u), lag %lld ms: in = %d\n",
+             ms, (unsigned)now.microstep, lag, in->value);
+    else
+      printf("dst: tag (%lld ms, %u), lag %lld ms: in absent\n",
+             ms, (unsigned)now.microstep, lag);
+  =} tardy {=
+    tag_t now = env->scheduler->current_tag(env->scheduler);
+    printf("dst: TARDY in = %d, intended tag %lld ms, handled at tag (%lld ms, %u)\n",
+           in->value,
+           (long long)((in->super.intended_tag.time - env->scheduler->start_time)
+                       / MSEC(1)),
+           (long long)((now.time - env->scheduler->start_time) / MSEC(1)),
+           (unsigned)now.microstep);
+  =}
+}
+
+@platform("native")
+@timeout(900ms)
+federated reactor {
+  @clock_sync(grandmaster=true)
+  src = new Src()
+  @maxwait(50ms)
+  dst = new Dst()
+  src.out -> dst.in
+}

@@ -1,0 +1,48 @@
+target Python {
+  timeout: 2 s,
+  tracing: true
+}
+
+preamble {=
+  import threading, time
+=}
+
+# A: a "sensor" (a physical action fed by a thread) that sends to B and hears back from B.
+reactor A {
+  input back
+  output out
+  physical action sample
+
+  reaction(startup) -> sample {=
+    def sensor():
+      for i in range(1, 5):
+        time.sleep(0.3)                  # a reading every 300 ms of physical time
+        sample.schedule(0, i)
+    threading.Thread(target=sensor, daemon=True).start()
+  =}
+
+  reaction(sample) -> out {=
+    print(f"A: sample {sample.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+    out.set(sample.value)
+  =}
+
+  reaction(back) {=
+    print(f"A: feedback {back.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+  =}
+}
+
+reactor B {
+  input inp
+  output back
+
+  reaction(inp) -> back {=
+    back.set(10 * inp.value)
+  =}
+}
+
+federated reactor {
+  a = new A()
+  b = new B()
+  a.out -> b.inp
+  b.back -> a.back after 200 ms
+}

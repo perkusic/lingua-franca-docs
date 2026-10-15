@@ -1,0 +1,35 @@
+target Python {
+  coordination: decentralized,
+  timeout: 400 ms
+}
+
+reactor Sensor {
+  output out
+  timer t(0, 100 ms)
+  state n = 0
+
+  reaction(t) -> out {=
+    out.set(self.n)
+    self.n += 1
+  =} deadline(10 ms) {=
+    print("Sensor: started more than 10 ms late; D is out of budget")
+  =}
+}
+
+reactor Consumer {
+  input inp
+
+  reaction(inp) {=
+    print(f"Consumer: {inp.value} at {lf.time.logical_elapsed() // MSEC(1)} ms")
+  =} tardy {=
+    print(f"Consumer: {inp.value} meant for {(inp.intended_tag.time - lf.time.start()) // MSEC(1)} ms arrived after that tag")
+  =}
+}
+
+federated reactor {
+  s = new Sensor()
+  # STA: assume absence as soon as the clock passes the tag
+  @maxwait(0)
+  c = new Consumer()
+  s.out -> c.inp after 20 ms  # after must exceed E + L + D
+}

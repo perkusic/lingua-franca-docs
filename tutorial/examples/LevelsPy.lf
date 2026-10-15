@@ -1,0 +1,43 @@
+target Python {
+  timeout: 10 ms
+}
+
+reactor Controller {
+  input in1
+  input in2
+  output out
+  state a = 0
+  state b = 0
+
+  reaction(in1) {=
+    self.a = in1.value
+    print(f"  reaction 1: in1 = {in1.value}")
+  =}
+
+  reaction(in2) {=
+    self.b = in2.value
+    print(f"  reaction 2: in2 = {in2.value}")
+  =}
+
+  reaction(in1, in2) -> out {=
+    print(f"  reaction 3: writes {self.a + self.b}")
+    out.set(self.a + self.b)
+  =}
+}
+
+main reactor {
+  timer t(0, 10 ms)
+  state n = 1
+  c = new Controller()
+
+  reaction(t) -> c.in2, c.in1 {=
+    print(f"tag ({lf.time.logical_elapsed() // MSEC(1)} ms, {lf.tag().microstep}):")
+    c.in2.set(10 * self.n)
+    c.in1.set(self.n)
+    self.n += 1
+  =}
+
+  reaction(c.out) {=
+    print(f"  main sees out = {c.out.value}")
+  =}
+}

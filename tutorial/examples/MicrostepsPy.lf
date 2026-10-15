@@ -1,0 +1,15 @@
+target Python
+
+main reactor {
+  logical action again
+  state n = 0
+
+  reaction(startup, again) -> again {=
+    print(f"tag ({lf.time.logical_elapsed() // MSEC(1)} ms, {lf.tag().microstep})")
+    self.n += 1
+    if self.n < 3:
+      again.schedule(0)         # zero delay: same time, next microstep
+    elif self.n == 3:
+      again.schedule(MSEC(5))   # positive delay: time advances, microstep resets
+  =}
+}

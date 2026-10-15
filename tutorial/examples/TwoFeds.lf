@@ -1,0 +1,28 @@
+target C {
+  timeout: 20 ms
+}
+
+reactor Sender {
+  output out: int
+  timer t(0, 10 ms)
+  state n: int = 0
+
+  reaction(t) -> out {=
+    lf_set(out, self->n++);
+  =}
+}
+
+reactor Receiver {
+  input in: int
+
+  reaction(in) {=
+    printf("Receiver got %d at tag (%lld ms, %u)\n", in->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)), lf_tag().microstep);
+  =}
+}
+
+federated reactor {
+  s = new Sender()
+  r = new Receiver()
+  s.out -> r.in after 5 ms
+}

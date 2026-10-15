@@ -1,0 +1,79 @@
+target C {
+  coordination: decentralized,
+  timeout: 2 s,
+  tracing: true
+}
+
+preamble {=
+  #include <unistd.h>
+=}
+
+// FeedbackCentralized under decentralized coordination: no grants, only clocks and delays.
+// To provoke tardy messages: change "after 100 ms" below to "after 1 ms" and set SLOW_MS to 50.
+// A: a "sensor" (a physical action fed by a thread) that sends to B and hears back from B.
+reactor A {
+  input back: int
+  output out: int
+  physical action sample: int
+  state thread: lf_thread_t
+
+  preamble {=
+    #define SLOW_MS 0                                // sender lag D added by A, in ms
+    static void* sensor(void* action) {
+      for (int i = 1; i <= 4; i++) {
+        usleep(300000);                              // a reading every 300 ms of physical time
+        lf_schedule_int(action, 0, i);
+      }
+      return NULL;
+    }
+  =}
+
+  reaction(startup) -> sample {=
+    lf_thread_create(&self->thread, &sensor, sample);
+  =}
+
+  reaction(sample) -> out {=
+    usleep(SLOW_MS * 1000);                          // physical time passes; the tag does not
+    printf("A: sample %d at %lld ms\n", sample->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+    lf_set(out, sample->value);
+  =}
+
+  reaction(back) {=
+    printf("A: feedback %d at %lld ms\n", back->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+  =} tardy {=
+    printf("A: tardy message, feedback meant for %lld ms arrived late\n",
+           (long long)((back->intended_tag.time - lf_time_start()) / MSEC(1)));
+  =}
+}
+
+reactor B {
+  input in: int
+  output back: int
+  timer tick(0, 50 ms)  // B's logical time advances on its own
+
+  reaction(tick) {=
+    // nothing to do: the timer only moves B's logical time forward
+  =}
+
+  reaction(in) -> back {=
+    printf("B: sample %d at %lld ms\n", in->value,
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+    lf_set(back, 10 * in->value);
+  =} tardy {=
+    printf("B: tardy message, sample %d meant for %lld ms arrived at %lld ms\n", in->value,
+           (long long)((in->intended_tag.time - lf_time_start()) / MSEC(1)),
+           (long long)(lf_time_logical_elapsed() / MSEC(1)));
+  =}
+}
+
+federated reactor {
+  // decide absence as soon as the clock allows
+  @maxwait(0)
+  a = new A()
+  @maxwait(0)
+  b = new B()
+  a.out -> b.in after 100 ms
+  b.back -> a.back after 200 ms
+}
