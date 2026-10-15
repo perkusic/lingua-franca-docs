@@ -12,14 +12,14 @@ prevalece sobre este README e sobre os handoffs.
 
 | Arquivo | O que é |
 | --- | --- |
-| `lingua_franca_tutorial.html` | edição didática: 16 lições em 5 partes, objetivos, checkpoints e autoverificação (102 perguntas), 13 exemplos de código |
+| `lingua_franca_tutorial.html` | edição didática: 16 lições em 5 partes, objetivos, checkpoints e autoverificação (103 perguntas), 13 exemplos de código |
 | `lingua_franca_rti.html` | edição de consolidação técnica: as mesmas 16 seções sem o aparato didático |
 | `examples/` | fontes dos exemplos (20 `.lf` em C e Python, `fixpoint.py`, `micro-lf/`), com README |
-| `figures/` | as 43 figuras extraídas dos HTMLs, esqueletos, manifesto e os scripts de extração e montagem; ver `figures/REPORT.md` |
+| `figures/` | as 44 figuras extraídas dos HTMLs, esqueletos, manifesto e os scripts de extração e montagem; ver `figures/REPORT.md` |
 | `HANDOFF_lingua_franca.md` | ponteiro para o handoff no projeto |
 
 Estrutura comum: 16 seções (14 = ferramentas, 15 = apêndice de pontos fixos, 16 = micro-LF sem RTI), 48
-subseções, 43 figuras SVG inline em `viewBox="0 0 760 H"`, 51 referências. Remissões (§N.M, Figure N,
+subseções, 44 figuras SVG inline em `viewBox="0 0 760 H"`, 51 referências. Remissões (§N.M, Figure N,
 Lesson N, Example N.M) são links internos; toda subseção tem `id="sN-M"` e toda figura um `id` estável.
 **Os dois HTMLs são a fonte canônica**; `figures/` é uma extração verificada, não a fonte.
 

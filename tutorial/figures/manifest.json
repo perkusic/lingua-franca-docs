@@ -3,11 +3,12 @@
  "placeholder": "<!--@svg:{id}@-->",
  "documents": {
   "lingua_franca_tutorial.html": {
-   "sha256": "4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4",
-   "bytes": 780794,
+   "sha256": "6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473",
+   "bytes": 798197,
    "skeleton": "skeleton/lingua_franca_tutorial.skel.html",
-   "skeleton_sha256": "6e75d9afe61a8d7f378b48d0318180fecb43f7284763959d425c8a92df193a82",
+   "skeleton_sha256": "ffeceb5794aa158a42e9ed5b89d25aeb6150ac3d3c8ff2a945db61f24f70e18a",
    "figures": [
+    "fig-actor-model-message",
     "fig-message-time-not-order",
     "fig-reactor-ports-levels",
     "fig-federation-architecture",
@@ -54,11 +55,12 @@
    ]
   },
   "lingua_franca_rti.html": {
-   "sha256": "77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8",
-   "bytes": 598902,
+   "sha256": "413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc",
+   "bytes": 615503,
    "skeleton": "skeleton/lingua_franca_rti.skel.html",
-   "skeleton_sha256": "358a180699f61d9986dadba09e558a5b65fb167c1007746bbe420d6cfdc2012b",
+   "skeleton_sha256": "defe233d0dde386284dd0eca0f592779cef651fad85c629e51d2b3b56fc90b00",
    "figures": [
+    "fig-actor-model-message",
     "fig-message-time-not-order",
     "fig-reactor-ports-levels",
     "fig-federation-architecture",
@@ -107,10 +109,22 @@
  },
  "figures": [
   {
-   "id": "fig-message-time-not-order",
+   "id": "fig-actor-model-message",
    "numbers": {
     "lingua_franca_tutorial.html": 1,
     "lingua_franca_rti.html": 1
+   },
+   "title": "the actor model, message by message",
+   "file": "svg/fig-actor-model-message.svg",
+   "sha256": "747d9b7b9903a5392a76ff54cee5d235b9b0ab1e8a165913ba6d91202bfc4e52",
+   "bytes": 14193,
+   "shared": true
+  },
+  {
+   "id": "fig-message-time-not-order",
+   "numbers": {
+    "lingua_franca_tutorial.html": 2,
+    "lingua_franca_rti.html": 2
    },
    "title": "one message at a time is not one order",
    "file": "svg/fig-message-time-not-order.svg",
@@ -121,8 +135,8 @@
   {
    "id": "fig-reactor-ports-levels",
    "numbers": {
-    "lingua_franca_tutorial.html": 2,
-    "lingua_franca_rti.html": 2
+    "lingua_franca_tutorial.html": 3,
+    "lingua_franca_rti.html": 3
    },
    "title": "a reactor, its ports, and levels",
    "file": "svg/fig-reactor-ports-levels.svg",
@@ -133,8 +147,8 @@
   {
    "id": "fig-federation-architecture",
    "numbers": {
-    "lingua_franca_tutorial.html": 3,
-    "lingua_franca_rti.html": 3
+    "lingua_franca_tutorial.html": 4,
+    "lingua_franca_rti.html": 4
    },
    "title": "federation architecture",
    "file": "svg/fig-federation-architecture.svg",
@@ -145,8 +159,8 @@
   {
    "id": "fig-joining-federation",
    "numbers": {
-    "lingua_franca_tutorial.html": 4,
-    "lingua_franca_rti.html": 4
+    "lingua_franca_tutorial.html": 5,
+    "lingua_franca_rti.html": 5
    },
    "title": "joining a federation",
    "file": "svg/fig-joining-federation.svg",
@@ -157,8 +171,8 @@
   {
    "id": "fig-question-rti-answers",
    "numbers": {
-    "lingua_franca_tutorial.html": 5,
-    "lingua_franca_rti.html": 5
+    "lingua_franca_tutorial.html": 6,
+    "lingua_franca_rti.html": 6
    },
    "title": "the question the RTI answers",
    "file": "svg/fig-question-rti-answers.svg",
@@ -169,8 +183,8 @@
   {
    "id": "fig-grant-decision",
    "numbers": {
-    "lingua_franca_tutorial.html": 6,
-    "lingua_franca_rti.html": 6
+    "lingua_franca_tutorial.html": 7,
+    "lingua_franca_rti.html": 7
    },
    "title": "the grant decision",
    "file": "svg/fig-grant-decision.svg",
@@ -181,8 +195,8 @@
   {
    "id": "fig-safety-conditions-wire",
    "numbers": {
-    "lingua_franca_tutorial.html": 7,
-    "lingua_franca_rti.html": 7
+    "lingua_franca_tutorial.html": 8,
+    "lingua_franca_rti.html": 8
    },
    "title": "the two safety conditions, on the wire",
    "file": "svg/fig-safety-conditions-wire.svg",
@@ -193,8 +207,8 @@
   {
    "id": "fig-zero-delay-cycle-message-message",
    "numbers": {
-    "lingua_franca_tutorial.html": 8,
-    "lingua_franca_rti.html": 8
+    "lingua_franca_tutorial.html": 9,
+    "lingua_franca_rti.html": 9
    },
    "title": "a zero-delay cycle, message by message",
    "file": "svg/fig-zero-delay-cycle-message-message.svg",
@@ -205,8 +219,8 @@
   {
    "id": "fig-superdense-time",
    "numbers": {
-    "lingua_franca_tutorial.html": 9,
-    "lingua_franca_rti.html": 9
+    "lingua_franca_tutorial.html": 10,
+    "lingua_franca_rti.html": 10
    },
    "title": "superdense time",
    "file": "svg/fig-superdense-time.svg",
@@ -217,8 +231,8 @@
   {
    "id": "fig-graph-becomes-decision",
    "numbers": {
-    "lingua_franca_tutorial.html": 10,
-    "lingua_franca_rti.html": 10
+    "lingua_franca_tutorial.html": 11,
+    "lingua_franca_rti.html": 11
    },
    "title": "how the graph becomes a decision",
    "file": "svg/fig-graph-becomes-decision.svg",
@@ -229,8 +243,8 @@
   {
    "id": "fig-rti-cannot-trust-net-alone",
    "numbers": {
-    "lingua_franca_tutorial.html": 11,
-    "lingua_franca_rti.html": 11
+    "lingua_franca_tutorial.html": 12,
+    "lingua_franca_rti.html": 12
    },
    "title": "why the RTI cannot trust the NET alone",
    "file": "svg/fig-rti-cannot-trust-net-alone.svg",
@@ -241,8 +255,8 @@
   {
    "id": "fig-cost-net",
    "numbers": {
-    "lingua_franca_tutorial.html": 12,
-    "lingua_franca_rti.html": 12
+    "lingua_franca_tutorial.html": 13,
+    "lingua_franca_rti.html": 13
    },
    "title": "the cost of one NET",
    "file": "svg/fig-cost-net.svg",
@@ -253,8 +267,8 @@
   {
    "id": "fig-example-federation",
    "numbers": {
-    "lingua_franca_tutorial.html": 13,
-    "lingua_franca_rti.html": 13
+    "lingua_franca_tutorial.html": 14,
+    "lingua_franca_rti.html": 14
    },
    "title": "the example federation",
    "file": "svg/fig-example-federation.svg",
@@ -265,8 +279,8 @@
   {
    "id": "fig-releasing-cycle",
    "numbers": {
-    "lingua_franca_tutorial.html": 14,
-    "lingua_franca_rti.html": 14
+    "lingua_franca_tutorial.html": 15,
+    "lingua_franca_rti.html": 15
    },
    "title": "releasing the cycle",
    "file": "svg/fig-releasing-cycle.svg",
@@ -277,8 +291,8 @@
   {
    "id": "fig-dnet-provides",
    "numbers": {
-    "lingua_franca_tutorial.html": 15,
-    "lingua_franca_rti.html": 15
+    "lingua_franca_tutorial.html": 16,
+    "lingua_franca_rti.html": 16
    },
    "title": "what DNET provides",
    "file": "svg/fig-dnet-provides.svg",
@@ -289,8 +303,8 @@
   {
    "id": "fig-algebra-comes-from",
    "numbers": {
-    "lingua_franca_tutorial.html": 16,
-    "lingua_franca_rti.html": 16
+    "lingua_franca_tutorial.html": 17,
+    "lingua_franca_rti.html": 17
    },
    "title": "where the algebra comes from",
    "file": "svg/fig-algebra-comes-from.svg",
@@ -301,8 +315,8 @@
   {
    "id": "fig-absence-safe-assume",
    "numbers": {
-    "lingua_franca_tutorial.html": 17,
-    "lingua_franca_rti.html": 17
+    "lingua_franca_tutorial.html": 18,
+    "lingua_franca_rti.html": 18
    },
    "title": "when absence is safe to assume",
    "file": "svg/fig-absence-safe-assume.svg",
@@ -313,8 +327,8 @@
   {
    "id": "fig-ways-establish-tag-safe",
    "numbers": {
-    "lingua_franca_tutorial.html": 18,
-    "lingua_franca_rti.html": 18
+    "lingua_franca_tutorial.html": 19,
+    "lingua_franca_rti.html": 19
    },
    "title": "two ways to establish that a tag is safe",
    "file": "svg/fig-ways-establish-tag-safe.svg",
@@ -325,8 +339,8 @@
   {
    "id": "fig-cycles-can-exist",
    "numbers": {
-    "lingua_franca_tutorial.html": 19,
-    "lingua_franca_rti.html": 19
+    "lingua_franca_tutorial.html": 20,
+    "lingua_franca_rti.html": 20
    },
    "title": "which cycles can exist",
    "file": "svg/fig-cycles-can-exist.svg",
@@ -337,8 +351,8 @@
   {
    "id": "fig-federate-scheduler",
    "numbers": {
-    "lingua_franca_tutorial.html": 20,
-    "lingua_franca_rti.html": 20
+    "lingua_franca_tutorial.html": 21,
+    "lingua_franca_rti.html": 21
    },
    "title": "the federate scheduler",
    "file": "svg/fig-federate-scheduler.svg",
@@ -349,8 +363,8 @@
   {
    "id": "fig-reaction-module",
    "numbers": {
-    "lingua_franca_tutorial.html": 21,
-    "lingua_franca_rti.html": 21
+    "lingua_franca_tutorial.html": 22,
+    "lingua_franca_rti.html": 22
    },
    "title": "the Reaction module",
    "file": "svg/fig-reaction-module.svg",
@@ -361,8 +375,8 @@
   {
    "id": "fig-codesign-top-level",
    "numbers": {
-    "lingua_franca_tutorial.html": 22,
-    "lingua_franca_rti.html": 22
+    "lingua_franca_tutorial.html": 23,
+    "lingua_franca_rti.html": 23
    },
    "title": "Codesign top level",
    "file": "svg/fig-codesign-top-level.svg",
@@ -373,8 +387,8 @@
   {
    "id": "fig-codesign-build",
    "numbers": {
-    "lingua_franca_tutorial.html": 23,
-    "lingua_franca_rti.html": 23
+    "lingua_franca_tutorial.html": 24,
+    "lingua_franca_rti.html": 24
    },
    "title": "the Codesign build",
    "file": "svg/fig-codesign-build.svg",
@@ -385,8 +399,8 @@
   {
    "id": "fig-cascade-snapshot",
    "numbers": {
-    "lingua_franca_tutorial.html": 24,
-    "lingua_franca_rti.html": 24
+    "lingua_franca_tutorial.html": 25,
+    "lingua_franca_rti.html": 25
    },
    "title": "cascade and snapshot",
    "file": "svg/fig-cascade-snapshot.svg",
@@ -397,8 +411,8 @@
   {
    "id": "fig-three-quantities-timeline",
    "numbers": {
-    "lingua_franca_tutorial.html": 25,
-    "lingua_franca_rti.html": 25
+    "lingua_franca_tutorial.html": 26,
+    "lingua_franca_rti.html": 26
    },
    "title": "three quantities on one timeline",
    "file": "svg/fig-three-quantities-timeline.svg",
@@ -409,8 +423,8 @@
   {
    "id": "fig-interpret-time-based-rendezvous",
    "numbers": {
-    "lingua_franca_tutorial.html": 26,
-    "lingua_franca_rti.html": 26
+    "lingua_franca_tutorial.html": 27,
+    "lingua_franca_rti.html": 27
    },
    "title": "InterPRET and the time-based rendezvous",
    "file": "svg/fig-interpret-time-based-rendezvous.svg",
@@ -421,8 +435,8 @@
   {
    "id": "fig-four-orders",
    "numbers": {
-    "lingua_franca_tutorial.html": 27,
-    "lingua_franca_rti.html": 27
+    "lingua_franca_tutorial.html": 28,
+    "lingua_franca_rti.html": 28
    },
    "title": "four orders",
    "file": "svg/fig-four-orders.svg",
@@ -433,8 +447,8 @@
   {
    "id": "fig-fixed-points-monotone-function",
    "numbers": {
-    "lingua_franca_tutorial.html": 28,
-    "lingua_franca_rti.html": 28
+    "lingua_franca_tutorial.html": 29,
+    "lingua_franca_rti.html": 29
    },
    "title": "fixed points of a monotone function",
    "file": "svg/fig-fixed-points-monotone-function.svg",
@@ -445,8 +459,8 @@
   {
    "id": "fig-dependency-graphs-program",
    "numbers": {
-    "lingua_franca_tutorial.html": 29,
-    "lingua_franca_rti.html": 29
+    "lingua_franca_tutorial.html": 30,
+    "lingua_franca_rti.html": 30
    },
    "title": "two dependency graphs of one program",
    "file": "svg/fig-dependency-graphs-program.svg",
@@ -457,8 +471,8 @@
   {
    "id": "fig-closure-successive-approximations",
    "numbers": {
-    "lingua_franca_tutorial.html": 30,
-    "lingua_franca_rti.html": 30
+    "lingua_franca_tutorial.html": 31,
+    "lingua_franca_rti.html": 31
    },
    "title": "the closure as successive approximations",
    "file": "svg/fig-closure-successive-approximations.svg",
@@ -469,8 +483,8 @@
   {
    "id": "fig-any-relaxation-order-ends-least",
    "numbers": {
-    "lingua_franca_tutorial.html": 31,
-    "lingua_franca_rti.html": 31
+    "lingua_franca_tutorial.html": 32,
+    "lingua_franca_rti.html": 32
    },
    "title": "why any relaxation order ends at the least delays",
    "file": "svg/fig-any-relaxation-order-ends-least.svg",
@@ -481,8 +495,8 @@
   {
    "id": "fig-fixed-point-tag",
    "numbers": {
-    "lingua_franca_tutorial.html": 32,
-    "lingua_franca_rti.html": 32
+    "lingua_franca_tutorial.html": 33,
+    "lingua_franca_rti.html": 33
    },
    "title": "the fixed point of one tag",
    "file": "svg/fig-fixed-point-tag.svg",
@@ -493,8 +507,8 @@
   {
    "id": "fig-acyclic-reaction-graph-gives-exactly",
    "numbers": {
-    "lingua_franca_tutorial.html": 33,
-    "lingua_franca_rti.html": 33
+    "lingua_franca_tutorial.html": 34,
+    "lingua_franca_rti.html": 34
    },
    "title": "why an acyclic reaction graph gives exactly one behaviour at a tag",
    "file": "svg/fig-acyclic-reaction-graph-gives-exactly.svg",
@@ -505,8 +519,8 @@
   {
    "id": "fig-compiler-builds-example-16-1",
    "numbers": {
-    "lingua_franca_tutorial.html": 34,
-    "lingua_franca_rti.html": 34
+    "lingua_franca_tutorial.html": 35,
+    "lingua_franca_rti.html": 35
    },
    "title": "what the compiler builds for Example&nbsp;16.1",
    "file": "svg/fig-compiler-builds-example-16-1.svg",
@@ -517,8 +531,8 @@
   {
    "id": "fig-startup-between-neighbors-logged",
    "numbers": {
-    "lingua_franca_tutorial.html": 35,
-    "lingua_franca_rti.html": 35
+    "lingua_franca_tutorial.html": 36,
+    "lingua_franca_rti.html": 36
    },
    "title": "startup between two neighbors, as logged",
    "file": "svg/fig-startup-between-neighbors-logged.svg",
@@ -529,8 +543,8 @@
   {
    "id": "fig-startup-coordinator-state-machine",
    "numbers": {
-    "lingua_franca_tutorial.html": 36,
-    "lingua_franca_rti.html": 36
+    "lingua_franca_tutorial.html": 37,
+    "lingua_franca_rti.html": 37
    },
    "title": "the startup coordinator as a state machine",
    "file": "svg/fig-startup-coordinator-state-machine.svg",
@@ -541,8 +555,8 @@
   {
    "id": "fig-tcp-network-channel-state-machine",
    "numbers": {
-    "lingua_franca_tutorial.html": 37,
-    "lingua_franca_rti.html": 37
+    "lingua_franca_tutorial.html": 38,
+    "lingua_franca_rti.html": 38
    },
    "title": "the TCP network channel as a state machine",
    "file": "svg/fig-tcp-network-channel-state-machine.svg",
@@ -553,20 +567,20 @@
   {
    "id": "fig-clock-synchronization-round",
    "numbers": {
-    "lingua_franca_tutorial.html": 38,
-    "lingua_franca_rti.html": 38
+    "lingua_franca_tutorial.html": 39,
+    "lingua_franca_rti.html": 39
    },
    "title": "one clock-synchronization round",
    "file": "svg/fig-clock-synchronization-round.svg",
-   "sha256": "3b5af77574892da70c098b586bd565c289eeda0ad584d0cd0019b240ec4aca28",
+   "sha256": "1a59636eb7461b6f50930e3e6f79781f3a5d236b911de81d1e2b45735a8a8d20",
    "bytes": 4157,
    "shared": true
   },
   {
    "id": "fig-micro-lf-federate-advances-state",
    "numbers": {
-    "lingua_franca_tutorial.html": 39,
-    "lingua_franca_rti.html": 39
+    "lingua_franca_tutorial.html": 40,
+    "lingua_franca_rti.html": 40
    },
    "title": "how a micro-LF federate advances, as two state machines",
    "file": "svg/fig-micro-lf-federate-advances-state.svg",
@@ -577,8 +591,8 @@
   {
    "id": "fig-example-16-1-dst-physical",
    "numbers": {
-    "lingua_franca_tutorial.html": 40,
-    "lingua_franca_rti.html": 40
+    "lingua_franca_tutorial.html": 41,
+    "lingua_franca_rti.html": 41
    },
    "title": "Example 16.1 on dst&rsquo;s physical timeline",
    "file": "svg/fig-example-16-1-dst-physical.svg",
@@ -589,8 +603,8 @@
   {
    "id": "fig-tag-nothing-send-under-both",
    "numbers": {
-    "lingua_franca_tutorial.html": 41,
-    "lingua_franca_rti.html": 41
+    "lingua_franca_tutorial.html": 42,
+    "lingua_franca_rti.html": 42
    },
    "title": "a tag with nothing to send, under both architectures",
    "file": "svg/fig-tag-nothing-send-under-both.svg",
@@ -601,8 +615,8 @@
   {
    "id": "fig-micro-lf-decision-datapath-interpretation",
    "numbers": {
-    "lingua_franca_tutorial.html": 42,
-    "lingua_franca_rti.html": 42
+    "lingua_franca_tutorial.html": 43,
+    "lingua_franca_rti.html": 43
    },
    "title": "the micro-LF decision as a datapath (interpretation)",
    "file": "svg/fig-micro-lf-decision-datapath-interpretation.svg",
@@ -613,8 +627,8 @@
   {
    "id": "fig-micro-lf-program-meets-hardware",
    "numbers": {
-    "lingua_franca_tutorial.html": 43,
-    "lingua_franca_rti.html": 43
+    "lingua_franca_tutorial.html": 44,
+    "lingua_franca_rti.html": 44
    },
    "title": "where a micro-LF program meets the hardware",
    "file": "svg/fig-micro-lf-program-meets-hardware.svg",

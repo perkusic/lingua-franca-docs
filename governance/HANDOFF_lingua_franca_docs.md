@@ -505,6 +505,15 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   nomeia placeholders desconhecidos, duplicados, ausentes ou fora de ordem. OneDrive e GitHub são cópias
   independentes: ao editar, atualize as duas e confira os SHA-256.
 
+- **Figura 1 nova e renumeração (15/out/2026, tarde).** Em §1.1, `fig-actor-model-message` (o modelo de atores mensagem a
+  mensagem; FE1 no tutorial) é a nova Figura 1; **as antigas 1–43 são hoje 2–44** — em qualquer entrada deste handoff ou do
+  inventário datada antes desta, some 1 ao número de figura citado. A renumeração foi feita pelos ids estáveis (legendas,
+  textos dos links e o "Figure N" escrito dentro do SVG da sincronização de relógio). **Animação contínua:** a figura usa
+  elementos `class="tok"` com `@keyframes` num `<style>` dentro do próprio SVG (prefixo `fa-`); o script de controles só os
+  anima com Play, e o CSS da página os congela fora do Play, na impressão e com `prefers-reduced-motion`. O ciclo dura 14 s
+  = 4 passos × 3,5 s, para coincidir com o avanço dos passos no Play; o quadro 0% é o estado estático (mensagens na caixa
+  de correio, x = 1). Para outra figura animada, siga o mesmo esquema: ciclo = passos × 3,5 s e quadro 0% = figura estática.
+
 ## Como quero as edições
 
 - Edite os arquivos diretamente e devolva os arquivos editados.

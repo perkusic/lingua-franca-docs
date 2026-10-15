@@ -14,26 +14,26 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `77670fd414af0e20` |
-| `tutorial/lingua_franca_tutorial.html` | `4304fc29fcf46e3e` |
+| `tutorial/lingua_franca_rti.html` | `413bfe3675a15b8f` |
+| `tutorial/lingua_franca_tutorial.html` | `6d69e31ddeae08f3` |
 | `hw-rti/HW-RTI_project_specification.html` | `690258aaf21eef48` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 598.876 | 780.680 | 256.445 |
-| Bytes (UTF-8) | 598.902 | 780.794 | 256.457 |
-| Palavras de texto (sem SVG, CSS) | 39.920 | 54.627 | 22.534 |
+| Caracteres | 615.477 | 798.083 | 256.445 |
+| Bytes (UTF-8) | 615.503 | 798.197 | 256.457 |
+| Palavras de texto (sem SVG, CSS) | 40.295 | 55.077 | 22.534 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
-| Figuras (`<figure>` = `<svg>`) | 43 | 43 | 12 |
-| Figuras animadas (`<svg class="anim">`) | 28 | 28 | 5 |
+| Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
+| Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
-| Itens de lista | 222 | 327 | 67 |
+| Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 432 | 519 | 22 |
+| Links `<a href>` | 433 | 520 | 22 |
 | Caixas de checkpoint | 0 | 16 | 0 |
-| Perguntas após figura ou exemplo (`.fq`) | 0 | 47 | 0 |
+| Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
 | Exemplos de código (`.ex`) | 0 | 13 | 0 |
 | Aberturas de parte | 0 | 5 | 0 |
@@ -62,64 +62,65 @@ método e não são comparáveis com este número.
 h2 idênticos nas duas edições, salvo rótulos: sim
 (17 h2). Os 48 h3 são literalmente os mesmos nas duas edições.
 
-Remissões a figura no corpo (fora das legendas, SVG e scripts; "Figures N and M" conta as duas; recontadas em 15/out):
+Remissões a figura no corpo: desde 15/out são links para o `id` estável de cada figura (contagem e destinos conferidos por `.github/scripts/check_html.py`); a lista abaixo é de 15/out, antes da Figura 1 nova, e está com a numeração antiga (some 1):
 referência Figure 6, Figure 18, Figure 4, Figure 30, Figure 28, Figure 19, Figure 32, Figure 31, Figure 33, Figure 27, Figure 28, Figure 27, Figure 2, Figure 30, Figure 30, Figure 31, Figure 32, Figure 32, Figure 33, Figure 30, Figure 34, Figure 4, Figure 35, Figure 36, Figure 37, Figure 35, Figure 38, Figure 39, Figure 40, Figure 38, Figure 41, Figure 42, Figure 43, Figure 38;
 tutorial Figure 2, Figure 2, Figure 9, Figure 6, Figure 18, Figure 19, Figure 4, Figure 30, Figure 28, Figure 19, Figure 32, Figure 31, Figure 33, Figure 27, Figure 28, Figure 27, Figure 2, Figure 30, Figure 30, Figure 31, Figure 32, Figure 32, Figure 33, Figure 30, Figure 30, Figure 32, Figure 30, Figure 34, Figure 4, Figure 35, Figure 36, Figure 37, Figure 35, Figure 38, Figure 39, Figure 40, Figure 38, Figure 41, Figure 42, Figure 43, Figure 38.
 
-### Figuras — 43
+### Figuras — 44
 
 | # | viewBox | Assunto | Animada |
 | --- | --- | --- | --- |
-| 1 | 760×330 | one message at a time is not one order | sim |
-| 2 | 760×250 | a reactor, its ports, and levels |  |
-| 3 | 760×330 | federation architecture |  |
-| 4 | 760×404 | joining a federation | sim |
-| 5 | 760×360 | the question the RTI answers |  |
-| 6 | 760×300 | the grant decision |  |
-| 7 | 760×420 | the two safety conditions, on the wire | sim |
-| 8 | 760×524 | a zero-delay cycle, message by message | sim |
-| 9 | 760×296 | superdense time |  |
-| 10 | 760×546 | how the graph becomes a decision | sim |
-| 11 | 760×334 | why the RTI cannot trust the NET alone | sim |
-| 12 | 760×300 | the cost of one NET |  |
-| 13 | 760×250 | the example federation |  |
-| 14 | 760×290 | releasing the cycle |  |
-| 15 | 760×210 | what DNET provides |  |
-| 16 | 760×474 | where the algebra comes from |  |
-| 17 | 760×450 | when absence is safe to assume | sim |
-| 18 | 760×452 | two ways to establish that a tag is safe | sim |
-| 19 | 760×380 | which cycles can exist | sim |
-| 20 | 760×262 | the federate scheduler |  |
-| 21 | 760×300 | the Reaction module |  |
-| 22 | 760×360 | Codesign top level |  |
-| 23 | 760×250 | the Codesign build |  |
-| 24 | 760×300 | cascade and snapshot | sim |
-| 25 | 760×444 | three quantities on one timeline | sim |
-| 26 | 760×260 | InterPRET and the time-based rendezvous |  |
-| 27 | 760×330 | four orders | sim |
-| 28 | 760×350 | fixed points of a monotone function | sim |
-| 29 | 760×330 | two dependency graphs of one program | sim |
-| 30 | 760×262 | the closure as successive approximations | sim |
-| 31 | 760×364 | why any relaxation order ends at the least delays | sim |
-| 32 | 760×330 | the fixed point of one tag | sim |
-| 33 | 760×300 | why an acyclic reaction graph gives exactly one behaviour at a tag | sim |
-| 34 | 760×440 | what the compiler builds for Example 16.1 | sim |
-| 35 | 760×470 | startup between two neighbors, as logged | sim |
-| 36 | 760×420 | the startup coordinator as a state machine | sim |
-| 37 | 760×384 | the TCP network channel as a state machine | sim |
-| 38 | 760×360 | one clock-synchronization round | sim |
-| 39 | 760×520 | how a micro-LF federate advances, as two state machines | sim |
-| 40 | 760×470 | Example 16.1 on dst’s physical timeline | sim |
-| 41 | 760×360 | a tag with nothing to send, under both architectures | sim |
-| 42 | 760×388 | the micro-LF decision as a datapath (interpretation) | sim |
-| 43 | 760×440 | where a micro-LF program meets the hardware | sim |
+| 1 | 760×452 | the actor model, message by message | sim |
+| 2 | 760×330 | one message at a time is not one order | sim |
+| 3 | 760×250 | a reactor, its ports, and levels |  |
+| 4 | 760×330 | federation architecture |  |
+| 5 | 760×404 | joining a federation | sim |
+| 6 | 760×360 | the question the RTI answers |  |
+| 7 | 760×300 | the grant decision |  |
+| 8 | 760×420 | the two safety conditions, on the wire | sim |
+| 9 | 760×524 | a zero-delay cycle, message by message | sim |
+| 10 | 760×296 | superdense time |  |
+| 11 | 760×546 | how the graph becomes a decision | sim |
+| 12 | 760×334 | why the RTI cannot trust the NET alone | sim |
+| 13 | 760×300 | the cost of one NET |  |
+| 14 | 760×250 | the example federation |  |
+| 15 | 760×290 | releasing the cycle |  |
+| 16 | 760×210 | what DNET provides |  |
+| 17 | 760×474 | where the algebra comes from |  |
+| 18 | 760×450 | when absence is safe to assume | sim |
+| 19 | 760×452 | two ways to establish that a tag is safe | sim |
+| 20 | 760×380 | which cycles can exist | sim |
+| 21 | 760×262 | the federate scheduler |  |
+| 22 | 760×300 | the Reaction module |  |
+| 23 | 760×360 | Codesign top level |  |
+| 24 | 760×250 | the Codesign build |  |
+| 25 | 760×300 | cascade and snapshot | sim |
+| 26 | 760×444 | three quantities on one timeline | sim |
+| 27 | 760×260 | InterPRET and the time-based rendezvous |  |
+| 28 | 760×330 | four orders | sim |
+| 29 | 760×350 | fixed points of a monotone function | sim |
+| 30 | 760×330 | two dependency graphs of one program | sim |
+| 31 | 760×262 | the closure as successive approximations | sim |
+| 32 | 760×364 | why any relaxation order ends at the least delays | sim |
+| 33 | 760×330 | the fixed point of one tag | sim |
+| 34 | 760×300 | why an acyclic reaction graph gives exactly one behaviour at a tag | sim |
+| 35 | 760×440 | what the compiler builds for Example&nbsp;16.1 | sim |
+| 36 | 760×470 | startup between two neighbors, as logged | sim |
+| 37 | 760×420 | the startup coordinator as a state machine | sim |
+| 38 | 760×384 | the TCP network channel as a state machine | sim |
+| 39 | 760×360 | one clock-synchronization round | sim |
+| 40 | 760×520 | how a micro-LF federate advances, as two state machines | sim |
+| 41 | 760×470 | Example 16.1 on dst’s physical timeline | sim |
+| 42 | 760×360 | a tag with nothing to send, under both architectures | sim |
+| 43 | 760×388 | the micro-LF decision as a datapath (interpretation) | sim |
+| 44 | 760×440 | where a micro-LF program meets the hardware | sim |
 
 O tutorial tem as mesmas figuras, na mesma ordem: sim.
 
 ### O que só o tutorial tem
 
 Andaime pedagógico: a caixa "How to use this tutorial", um bloco "In this lesson
-you will" por lição, 16 caixas de checkpoint, 47 perguntas "Read the figure"
+you will" por lição, 16 caixas de checkpoint, 48 perguntas "Read the figure"
 (uma após cada figura, com resposta recolhível), 5 aberturas de parte, o
 sumário agrupado por parte e dois blocos "Lab step". Nada disso cria heading.
 
@@ -148,8 +149,8 @@ inline faz as abas, a cópia e o portão; sem ele, todos os painéis aparecem. A
 
 Cada pergunta de checkpoint (`<li data-q="Cb.n">`) e cada pergunta após figura
 (`<div class="fq" data-q="Fn">`) tem uma definição em `<script type="application/json"
-id="quiz-data">`: 102 perguntas, das quais
-66 com verificação exata (49 múltipla escolha, 3 marcar todas, 8 campo numérico/tag,
+id="quiz-data">`: 103 perguntas, das quais
+67 com verificação exata (50 múltipla escolha, 3 marcar todas, 8 campo numérico/tag,
 6 associação) e 36 com rubrica e autoavaliação. Um `<script>` inline esconde a resposta até
 uma tentativa (objetivas) ou até 20 caracteres escritos (abertas), guarda as respostas no
 `localStorage` do navegador (`lf-tutorial-quiz-v1`) e mostra um placar por checkpoint. Sem
@@ -307,3 +308,7 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   (o mesmo que o sumário lateral daria) e toda `<figure>` tem o id estável de `tutorial/figures/manifest.json`. Fora do
   alcance: texto dentro de links, SVG, scripts, código, títulos (h1–h4), rótulos `span.msg` e o rótulo "Figure N —" das
   legendas. Extração de figuras refeita: 43 SVGs inalterados, PASS.
+- 15/out/2026 (tarde): **Figura 1 nova** nas duas edições, em §1.1 (`fig-actor-model-message`: o modelo de atores mensagem a
+  mensagem, duas execuções, caixa de correio, x termina em 4 ou em 3; 4 passos e uma animação contínua que roda com Play,
+  em sincronia com os passos). As antigas 1–43 viraram 2–44; legendas, links e o número escrito dentro do SVG da antiga 38
+  (hoje 39) renumerados pelos ids estáveis. No tutorial, FE1 após a figura. Extração refeita (44 SVGs, PASS).

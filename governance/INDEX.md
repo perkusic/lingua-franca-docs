@@ -48,8 +48,8 @@ deles, regrave a cópia e confira o SHA-256.
 
 | Arquivo | O que é | Handoff |
 |---|---|---|
-| `tutorial/lingua_franca_rti.html` | Referência (~590 KB): ordenação determinística por tempo lógico, do protocolo ao silício. 16 seções (14ª ferramentas, 15ª apêndice de pontos fixos, 16ª micro-LF sem RTI), 48 h3, 43 figuras, 51 referências. | `claude/HANDOFF_lingua_franca_docs.md` |
-| `tutorial/lingua_franca_tutorial.html` | Tutorial (~770 KB): mesmo conteúdo técnico mais objetivos, 11 exemplos de código em C e Python, um em Python puro (§15) e um micro-LF (§16; runtime verificado, `.ulf` não compilado), 16 checkpoints, uma pergunta após cada figura (47 no total, incluindo as de exemplo), autoverificação nas 102 perguntas, 5 partes e 2 lab steps; laboratório com 3 programas. | idem |
+| `tutorial/lingua_franca_rti.html` | Referência (~590 KB): ordenação determinística por tempo lógico, do protocolo ao silício. 16 seções (14ª ferramentas, 15ª apêndice de pontos fixos, 16ª micro-LF sem RTI), 48 h3, 44 figuras, 51 referências. | `claude/HANDOFF_lingua_franca_docs.md` |
+| `tutorial/lingua_franca_tutorial.html` | Tutorial (~770 KB): mesmo conteúdo técnico mais objetivos, 11 exemplos de código em C e Python, um em Python puro (§15) e um micro-LF (§16; runtime verificado, `.ulf` não compilado), 16 checkpoints, uma pergunta após cada figura (48 no total, incluindo as de exemplo), autoverificação nas 103 perguntas, 5 partes e 2 lab steps; laboratório com 3 programas. | idem |
 | `hw-rti/HW-RTI_project_specification.html` | Especificação do HW-RTI (~255 KB, revisão 0.2): Fase 1 on-chip, topologia estática, alvo n = 8 (até 32), centralizada, sem TCP, plataforma ZCU106. 15 seções, 44 h3, 12 figuras, IDs `FR/NFR/D/OQ/R/...`. | `claude/HANDOFF_hw_rti_spec.md` |
 
 ## Limpeza

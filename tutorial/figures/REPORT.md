@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 780794 | `4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4` | `4304fc29fcf46e3e8269f45e548088aacda82331ff658d0834cfb7b1b36f0fd4` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 598902 | `77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8` | `77670fd414af0e20e9ea0114657b8590a252674de383210301918753ab6cb9b8` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 798197 | `6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473` | `6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 615503 | `413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc` | `413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -16,6 +16,8 @@ The rebuild was run in the cloud workspace and again with `python3` 3.10 on this
 **Re-extraction, 15 October 2026, 07:20.** After two text edits in the canonical HTMLs (a link to Example&nbsp;16.1 and to section&nbsp;16.3 in the tutorial; `id="s16-3"` on the h3 of 16.3 in both editions), `extract.py` was run again on this computer: the 43 SVG hashes are unchanged, the skeletons and document hashes above are the new ones, and `assemble.py --check` is PASS. First extraction's baseline: tutorial `88973f23033e663e`, reference `478dcccefacef892`.
 
 **Re-extraction, 15 October 2026, 08:40.** After cross-references became links (`lf-docs/linkrefs.py`) and every `<figure>` received its stable id as `id` attribute, `extract.py` was run again on this computer: the 43 SVG hashes are unchanged, `assemble.py --check` is PASS.
+
+**15 October 2026, afternoon: 44 figures.** A new Figure 1 (`fig-actor-model-message`, the actor model with an animation that runs with Play) was added in §1.1; the former Figures 1–43 are now 2–44. Captions, links and one figure number written inside an SVG were renumbered from the stable ids. `fig-clock-synchronization-round.svg` changed for that reason only ("run of Figure 41"). The figure-level findings below date from the 43-figure extraction.
 
 ## Findings
 
@@ -56,48 +58,49 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 
 | # (both editions) | id | bytes | SHA-256 (first 16) |
 |---|---|---|---|
-| 1 | `fig-message-time-not-order` | 7801 | `e3474cc43e8199a9` |
-| 2 | `fig-reactor-ports-levels` | 3332 | `8551906273c15e9e` |
-| 3 | `fig-federation-architecture` | 2892 | `c5706dc1353ef76a` |
-| 4 | `fig-joining-federation` | 7595 | `8613a52fae69911d` |
-| 5 | `fig-question-rti-answers` | 5007 | `c3306a8cda16676e` |
-| 6 | `fig-grant-decision` | 3078 | `19a19870b6fd21c2` |
-| 7 | `fig-safety-conditions-wire` | 4740 | `d443ca6bbd526af4` |
-| 8 | `fig-zero-delay-cycle-message-message` | 5452 | `3d2bf89b0fedf346` |
-| 9 | `fig-superdense-time` | 4023 | `d4b4162605c40799` |
-| 10 | `fig-graph-becomes-decision` | 11652 | `3d8c0a383ff3041d` |
-| 11 | `fig-rti-cannot-trust-net-alone` | 9061 | `efd08eaef2f97f4d` |
-| 12 | `fig-cost-net` | 2615 | `b84b7def5bf5d1b0` |
-| 13 | `fig-example-federation` | 3072 | `d3f073e5b1ecd93c` |
-| 14 | `fig-releasing-cycle` | 2810 | `1d3682f665138325` |
-| 15 | `fig-dnet-provides` | 2477 | `dc35a9a1c7c828a0` |
-| 16 | `fig-algebra-comes-from` | 6986 | `d5dd70c973009831` |
-| 17 | `fig-absence-safe-assume` | 8068 | `2cab26ed6efd1ac9` |
-| 18 | `fig-ways-establish-tag-safe` | 8209 | `8b6537c452123a5c` |
-| 19 | `fig-cycles-can-exist` | 9354 | `f620dd4984016121` |
-| 20 | `fig-federate-scheduler` | 2834 | `b847b71c52c40c0a` |
-| 21 | `fig-reaction-module` | 3715 | `e0b1677f18aef600` |
-| 22 | `fig-codesign-top-level` | 4439 | `0c60fbd65c16a453` |
-| 23 | `fig-codesign-build` | 3925 | `bdf5cb5d8cb08984` |
-| 24 | `fig-cascade-snapshot` | 6944 | `235968c0ae76a450` |
-| 25 | `fig-three-quantities-timeline` | 9785 | `5fb2d45b735a358d` |
-| 26 | `fig-interpret-time-based-rendezvous` | 3760 | `11d952a1b91b44b5` |
-| 27 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
-| 28 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
-| 29 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
-| 30 | `fig-closure-successive-approximations` | 10526 | `215a1c33f23cc335` |
-| 31 | `fig-any-relaxation-order-ends-least` | 8077 | `f7456c9cebc58808` |
-| 32 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
-| 33 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
-| 34 | `fig-compiler-builds-example-16-1` | 10482 | `4fcc8cd8e6e590f2` |
-| 35 | `fig-startup-between-neighbors-logged` | 7027 | `f2d67c100a4a0672` |
-| 36 | `fig-startup-coordinator-state-machine` | 6582 | `ab5b5b995068c04c` |
-| 37 | `fig-tcp-network-channel-state-machine` | 5794 | `e0f67f750849063e` |
-| 38 | `fig-clock-synchronization-round` | 4157 | `3b5af77574892da7` |
-| 39 | `fig-micro-lf-federate-advances-state` | 9863 | `533f82dfce1dbf26` |
-| 40 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
-| 41 | `fig-tag-nothing-send-under-both` | 5895 | `5bc66af6e1760a29` |
-| 42 | `fig-micro-lf-decision-datapath-interpretation` | 9085 | `0cf2149e99625356` |
-| 43 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
+| 1 | `fig-actor-model-message` | 14193 | `747d9b7b9903a539` |
+| 2 | `fig-message-time-not-order` | 7801 | `e3474cc43e8199a9` |
+| 3 | `fig-reactor-ports-levels` | 3332 | `8551906273c15e9e` |
+| 4 | `fig-federation-architecture` | 2892 | `c5706dc1353ef76a` |
+| 5 | `fig-joining-federation` | 7595 | `8613a52fae69911d` |
+| 6 | `fig-question-rti-answers` | 5007 | `c3306a8cda16676e` |
+| 7 | `fig-grant-decision` | 3078 | `19a19870b6fd21c2` |
+| 8 | `fig-safety-conditions-wire` | 4740 | `d443ca6bbd526af4` |
+| 9 | `fig-zero-delay-cycle-message-message` | 5452 | `3d2bf89b0fedf346` |
+| 10 | `fig-superdense-time` | 4023 | `d4b4162605c40799` |
+| 11 | `fig-graph-becomes-decision` | 11652 | `3d8c0a383ff3041d` |
+| 12 | `fig-rti-cannot-trust-net-alone` | 9061 | `efd08eaef2f97f4d` |
+| 13 | `fig-cost-net` | 2615 | `b84b7def5bf5d1b0` |
+| 14 | `fig-example-federation` | 3072 | `d3f073e5b1ecd93c` |
+| 15 | `fig-releasing-cycle` | 2810 | `1d3682f665138325` |
+| 16 | `fig-dnet-provides` | 2477 | `dc35a9a1c7c828a0` |
+| 17 | `fig-algebra-comes-from` | 6986 | `d5dd70c973009831` |
+| 18 | `fig-absence-safe-assume` | 8068 | `2cab26ed6efd1ac9` |
+| 19 | `fig-ways-establish-tag-safe` | 8209 | `8b6537c452123a5c` |
+| 20 | `fig-cycles-can-exist` | 9354 | `f620dd4984016121` |
+| 21 | `fig-federate-scheduler` | 2834 | `b847b71c52c40c0a` |
+| 22 | `fig-reaction-module` | 3715 | `e0b1677f18aef600` |
+| 23 | `fig-codesign-top-level` | 4439 | `0c60fbd65c16a453` |
+| 24 | `fig-codesign-build` | 3925 | `bdf5cb5d8cb08984` |
+| 25 | `fig-cascade-snapshot` | 6944 | `235968c0ae76a450` |
+| 26 | `fig-three-quantities-timeline` | 9785 | `5fb2d45b735a358d` |
+| 27 | `fig-interpret-time-based-rendezvous` | 3760 | `11d952a1b91b44b5` |
+| 28 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
+| 29 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
+| 30 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
+| 31 | `fig-closure-successive-approximations` | 10526 | `215a1c33f23cc335` |
+| 32 | `fig-any-relaxation-order-ends-least` | 8077 | `f7456c9cebc58808` |
+| 33 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
+| 34 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
+| 35 | `fig-compiler-builds-example-16-1` | 10482 | `4fcc8cd8e6e590f2` |
+| 36 | `fig-startup-between-neighbors-logged` | 7027 | `f2d67c100a4a0672` |
+| 37 | `fig-startup-coordinator-state-machine` | 6582 | `ab5b5b995068c04c` |
+| 38 | `fig-tcp-network-channel-state-machine` | 5794 | `e0f67f750849063e` |
+| 39 | `fig-clock-synchronization-round` | 4157 | `1a59636eb7461b6f` |
+| 40 | `fig-micro-lf-federate-advances-state` | 9863 | `533f82dfce1dbf26` |
+| 41 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
+| 42 | `fig-tag-nothing-send-under-both` | 5895 | `5bc66af6e1760a29` |
+| 43 | `fig-micro-lf-decision-datapath-interpretation` | 9085 | `0cf2149e99625356` |
+| 44 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `6e75d9afe61a8d7f`; `skeleton/lingua_franca_rti.skel.html` `358a180699f61d99`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `ffeceb5794aa158a`; `skeleton/lingua_franca_rti.skel.html` `defe233d0dde3862`.
