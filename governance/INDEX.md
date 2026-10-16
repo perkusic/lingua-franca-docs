@@ -164,6 +164,9 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
 - **Legendas curtas:** título e no máximo ~300 caracteres de escopo/fonte; sem passos "(1)…", sem "What to conclude",
   sem "Use the controls…". Passos na lista após a figura; explicação em "How to read Figure N." e conclusão em "What
   Figure N shows.", parágrafos do texto (o CI recusa o resto).
+- **Fontes de código:** caminho completo do arquivo + repositório e host + commit e data + referência; link fixado no
+  hash completo (blob/tree), nunca em branch de repositório alheio; a referência guarda o hash completo para o caso de o
+  link morrer.
 - **Afirmações sobre sintaxe ou comportamento do LF se conferem compilando** com o
   `lfc` do tarball de release (baixa do GitHub neste ambiente), não de memória nem da
   documentação antiga.

@@ -115,7 +115,7 @@ a{color:var(--grant)}
   <div><span>Scope</span><span>Phase&nbsp;1: on-chip federation, static topology, target n&nbsp;=&nbsp;8 (elaborates up to n&nbsp;=&nbsp;32), centralized coordination.</span></div>
   <div><span>Reference model</span><span><code>lf-lang/reactor-c</code> &mdash; <code>core/federated/RTI/rti_common.c</code>, pinned commit</span></div>
   <div><span>Platform</span><span>Phase&nbsp;1 target board: AMD ZCU106 (Zynq UltraScale+ XCZU7EV, speed grade -2). Zynq-7020 is kept as the area reference for smaller parts.</span></div>
-  <div><span>Integration baseline</span><span><code>erlingrj/reactor-chisel</code> <code>d94dd2d</code> and <code>erlingrj/lingua-franca</code> <code>f60c83c</code> (submodule <code>6c8aecd</code>), as cited by the ZCU106 integration note; to be confirmed against the working ZCU106 port at M-0.</span></div>
+  <div><span>Integration baseline</span><span><code>erlingrj/reactor-chisel</code> at <a href="https://github.com/erlingrj/reactor-chisel/tree/d94dd2d272ce46145ac13c3c6a141bc2ba9dfca1"><code>d94dd2d</code></a> and <code>erlingrj/lingua-franca</code> at <a href="https://github.com/erlingrj/lingua-franca/tree/f60c83c5fbf0f0c26c780c28e58e50c0fc60a608"><code>f60c83c</code></a> (submodule reactor-chisel at <a href="https://github.com/erlingrj/reactor-chisel/tree/6c8aecd0211acc4c1e58d1cdd9ae950880a25204"><code>6c8aecd</code></a>), all on GitHub, as cited by the ZCU106 integration note; to be confirmed against the working ZCU106 port at M-0.</span></div>
   <div><span>Target language</span><span>Chisel&nbsp;3 (Scala), integrating with <code>erlingrj/reactor-chisel</code></span></div>
   <div><span>Self-contained</span><span>All domain terms are defined in &sect;0. Background reading, optional: &ldquo;Lingua Franca: a deterministic coordination language,&rdquo; &sect;&sect;3&ndash;4 and&nbsp;9.</span></div>
 </div>
@@ -518,7 +518,7 @@ K and K<sub>max</sub>, it is exact. Put in the vocabulary of the PRET literature
 coordinator reintroduces a system-level <em>state problem</em> even when every federate runs
 on a machine built to eliminate it. HW-RTI keeps the analysis a path problem end to end
 &mdash; which is what would let an InterPRET-class system make timing claims about
-<em>centralized</em> coordination, which the reference software RTI examined in this document (<code>reactor-c</code>, commit <code>ccd0512</code>) does not support; no wider survey of implementations is claimed.</p>
+<em>centralized</em> coordination, which the reference software RTI examined in this document (<code>lf-lang/reactor-c</code> on GitHub, commit <a href="https://github.com/lf-lang/reactor-c/tree/ccd05124e4b2086de045a6857702ae5636da30a6"><code>ccd0512</code></a>) does not support; no wider survey of implementations is claimed.</p>
 <p><strong>It lets physical-time budgets be sized rather than guessed.</strong> Deadlines and
 &mdash; where federations mix modes &mdash; safe-to-process offsets must absorb coordination
 delay. Absorbing 50&nbsp;&micro;s of jitter consumes a significant part of the timing budget; a fixed coordination term of about 90&nbsp;ns, derived from the cycle count of &sect;1.3 at 200&nbsp;MHz and a design target until M-2 reports synthesis and timing, is far smaller and can be budgeted explicitly. The knock-on effect is tighter <code>after</code> delays and lower
@@ -809,9 +809,7 @@ throughput limit whenever DNET is enabled and n&nbsp;+&nbsp;1 exceeds K<sub>max<
 under the global lock; HW-RTI handles it as one evaluation of every node against a single
 snapshot of the state table. The two agree on what is decided, but not automatically on what is
 emitted, because some writes made early in the cascade are read later in it. This subsection
-states what the reference does for each message and how the core reproduces it, as read from
-<code>rti_common.c</code> and <code>rti_remote.c</code> at commit <code>ccd0512</code>
-(26&nbsp;September&nbsp;2026).</p>
+states what the reference does for each message and how the core reproduces it, as read from <a href="https://github.com/lf-lang/reactor-c/blob/ccd05124e4b2086de045a6857702ae5636da30a6/core/federated/RTI/rti_common.c"><code>core/federated/RTI/rti_common.c</code></a> and <a href="https://github.com/lf-lang/reactor-c/blob/ccd05124e4b2086de045a6857702ae5636da30a6/core/federated/RTI/rti_remote.c"><code>rti_remote.c</code></a> in <code>lf-lang/reactor-c</code> on GitHub at commit <code>ccd0512</code> (26&nbsp;September&nbsp;2026).</p>
 <table id="tab-cascade"><caption><b>Table 17 &mdash; the reference cascade and its HW-RTI counterpart, per message.</b></caption>
 <tr><th style="width:14%">Message</th><th>Reference, in execution order</th><th style="width:34%">HW-RTI</th></tr>
 <tr><td>NET(e,&nbsp;g)</td><td><code>next_event(e)&nbsp;:=&nbsp;min(g, earliest in-transit tag of e)</code>. If e has no immediate upstream, <code>last_granted(e)&nbsp;:=&nbsp;next_event(e)</code> and e is not evaluated (FR-13); otherwise e is evaluated. Then every j with <code>minDelays[e][j]&nbsp;&ne;&nbsp;FOREVER</code> is evaluated in index order &mdash; e itself a second time if it lies on a cycle. Then, with DNET enabled, DNET is computed for every u&nbsp;&ne;&nbsp;e with <code>minDelays[u][e]&nbsp;&ne;&nbsp;FOREVER</code>.</td><td>UPDATE writes <code>nextEvent</code>, and <code>lastGranted</code> for a source. DECIDE evaluates all n nodes; emission is masked to row e of R, plus e when e has an upstream (D-8). The DNET engine runs on the same snapshot.</td></tr>

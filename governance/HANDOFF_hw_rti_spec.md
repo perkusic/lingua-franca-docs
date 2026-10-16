@@ -70,6 +70,9 @@ defasado.
   to read Figure N." e conclusão em "What Figure N shows." no texto; sem "Use the controls…" (removida). As Figuras 1, 2,
   3, 7, 8, 9 e 11 ganharam "How to read", as 4 e 12 "What … shows". A legenda da Figura 2 agora diz que o trabalho
   uniforme "costs area, not time", alinhada à L-2.
+- **Fontes de código (16/out/2026):** commit citado sempre com link fixado no hash completo e com o repositório
+  (`erlingrj/reactor-chisel` em `d94dd2d272ce…`, `erlingrj/lingua-franca` em `f60c83c5fbf0…`, submódulo `6c8aecd0211a…`,
+  `lf-lang/reactor-c` em `ccd05124e4b2…`); arquivo citado pelo caminho completo (`core/federated/RTI/rti_common.c`).
 - **Remissões aos documentos irmãos** aparecem como "§N do companion document".
   A numeração de §4 deles mudou em setembro/2026 — ao renumerar lá, varra aqui.
 - **Estilo de prosa:** direto, sem ênfase decorativa; afirmações quantificadas

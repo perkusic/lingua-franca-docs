@@ -545,6 +545,14 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Citar artefato = o que, onde, qual versão (16/out/2026, regra permanente).** Nunca "From x.c at df7cfea". Escreva o
+  caminho completo a partir da raiz do repositório, o repositório e onde ele está, e a versão: "Source:
+  `src/startup_coordinator.c` in the micro-LF runtime, `lf-lang/reactor-uc` on GitHub, at commit `df7cfea` (7 September
+  2026) [49]". O caminho leva link **fixado no commit** (`…/blob/<hash completo>/<caminho>`; pasta: `…/tree/<hash>/…`),
+  nunca para `main` de repositório alheio — um link de branch muda de conteúdo sem aviso. A entrada de referência traz o
+  hash completo e a frase de que, se o link morrer, repositório + hash identificam os mesmos arquivos em qualquer clone ou
+  arquivo de código (Software Heritage). Arquivo deste próprio repositório pode apontar para `main`. Antes de publicar,
+  confira que o caminho existe no commit (`git cat-file -e <hash>:<caminho>`).
 - **Legenda curta; explicação no texto (16/out/2026, regra permanente).** A `<figcaption>` tem só o título
   ("Figure N &mdash; título.") e, se preciso, uma ou duas frases de escopo, fonte ou legenda de cores (até ~300
   caracteres). Nunca: passos numerados "(1)…" (vão só na lista "The steps of Figure N", que o Play usa), "What to
