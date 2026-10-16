@@ -23,4 +23,4 @@ jobs:
       - name: Lingua Franca HTMLs, structure and links
         run: python3 .github/scripts/check_html.py tutorial/lingua_franca_tutorial.html tutorial/lingua_franca_rti.html
       - name: HW-RTI specification, design note and implementation guide, structure and links
-        run: python3 .github/scripts/check_html.py --no-figure-ids --allow-section-sign hw-rti/HW-RTI_project_specification.html micro-lf/micro_lf_fpga_design_note.html program/implementation_guide.html
+        run: python3 .github/scripts/check_html.py --allow-section-sign hw-rti/HW-RTI_project_specification.html micro-lf/micro_lf_fpga_design_note.html program/implementation_guide.html

@@ -157,6 +157,10 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
   table" nem "the fourth row of the table". O CI confere as legendas e recusa as formas vagas.
 - **Vocabulário de figuras:** uma figura ou tabela "shows"; nunca "draws", "drawn" ou "draw the line/distinction"
   em nenhum HTML do projeto (o CI recusa).
+- **Sem posição no lugar do nome:** nunca "the figure above", "the table below", "everything above/below",
+  "described/listed above" — cite "Figure N", "Table N" ou "Section N.M" com link (o CI recusa). Frases literais em vez
+  de metáforas ("rides along", "collapses into", "falls out of", "narrow"); toda figura tem `id`, inclusive na
+  especificação, na nota micro-LF e no guia.
 - **Afirmações sobre sintaxe ou comportamento do LF se conferem compilando** com o
   `lfc` do tarball de release (baixa do GitHub neste ambiente), não de memória nem da
   documentação antiga.

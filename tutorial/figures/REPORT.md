@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 801769 | `3d0bfa2b1abaf5ec0650b2ffcacdcf55e0b07dc1635934a71b07a92ffa93ecdf` | `3d0bfa2b1abaf5ec0650b2ffcacdcf55e0b07dc1635934a71b07a92ffa93ecdf` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 619086 | `3696f730de665c2783229c387fdde4678169d008ed520481b85173285f6ee4b4` | `3696f730de665c2783229c387fdde4678169d008ed520481b85173285f6ee4b4` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 803604 | `3a732e3c1c51395e9d03db98d7227c814818757d45dbc387bee65bc820981316` | `3a732e3c1c51395e9d03db98d7227c814818757d45dbc387bee65bc820981316` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 620891 | `2b6d1e703b7db142c5b2e4c0010f1bf56cfe3d65d9be550095065582dee1bbd7` | `2b6d1e703b7db142c5b2e4c0010f1bf56cfe3d65d9be550095065582dee1bbd7` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -105,6 +105,6 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 41 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
 | 42 | `fig-tag-nothing-send-under-both` | 5896 / 5897 | `b03e8a4dfd5afa97` / `da899da86a2c10d4` (tutorial / reference) |
 | 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `66f5b03bd51f9cca` |
-| 44 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
+| 44 | `fig-micro-lf-program-meets-hardware` | 8009 | `71b1afbaf09f9c41` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `5083b7242cceff3f`; `skeleton/lingua_franca_rti.skel.html` `d809b199c2d7e60e`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `5997083bc610b3bf`; `skeleton/lingua_franca_rti.skel.html` `fae82d74dc48c07e`.

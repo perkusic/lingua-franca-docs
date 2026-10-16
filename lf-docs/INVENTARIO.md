@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `3696f730de665c27` |
-| `tutorial/lingua_franca_tutorial.html` | `3d0bfa2b1abaf5ec` |
-| `hw-rti/HW-RTI_project_specification.html` | `f437eacd756bc8d0` |
+| `tutorial/lingua_franca_rti.html` | `2b6d1e703b7db142` |
+| `tutorial/lingua_franca_tutorial.html` | `3a732e3c1c51395e` |
+| `hw-rti/HW-RTI_project_specification.html` | `30192caf669af35e` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 619.060 | 801.655 | 259.726 |
-| Bytes (UTF-8) | 619.086 | 801.769 | 259.738 |
-| Palavras de texto (sem SVG, CSS) | 40.677 | 55.456 | 22.761 |
+| Caracteres | 620.865 | 803.490 | 260.360 |
+| Bytes (UTF-8) | 620.891 | 803.604 | 260.372 |
+| Palavras de texto (sem SVG, CSS) | 40.727 | 55.509 | 22.763 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 440 | 529 | 26 |
+| Links `<a href>` | 475 | 565 | 34 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -338,3 +338,13 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
 - 16/out/2026 (09:15): em 16.6, "Everything above two narrow interfaces is the same portable C on every target" virou três
   frases explícitas (o código gerado e o núcleo do runtime são o mesmo C em todo alvo; só as interfaces Platform e
   NetworkChannel mudam; portar = implementá-las). Palavras pelo delta: +43 tutorial, +43 referência.
+- 16/out/2026 (09:18): **nada de "above/below" para apontar texto.** Os 29 títulos "The steps of the figure above" de
+  cada edição de LF (e 5 da especificação) viraram "The steps of Figure N", com link. Reescritas de clareza, nas duas
+  edições: abertura da Section 1 ("four disguises"), níveis em 2 e na legenda da Figura 3, 3.1 ("bracket… in miniature"),
+  abertura da 4 ("Everything below" → "Every rule in Sections 4.1–4.14"), 4.8 ("machinery described above" → 4.1–4.7),
+  4.13 ("falls out of the code"), 5.1 ("collapses into it"), 5.3 ("described above/below"), 7 ("Three analyses ride
+  along"), 9.9 (ROM, relógio, "line of inquiry"), abertura da 10 ("Everything above"), 10.3 ("in one number"), 11
+  ("engineered downward"), legenda e texto do SVG da Figura 44 e, no tutorial, a orientação do laboratório. Especificação:
+  §0.2 ("Everything below" → Table 2), OQ-1 ("requirements listed above" → FR-09 a FR-12 e FR-14), duas menções a
+  "Figure 2" viraram links, e as 12 figuras ganharam `id`; a nota micro-LF (5) e o guia (1) também. Palavras pelo delta:
+  +53 tutorial, +50 referência, +2 especificação.

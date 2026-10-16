@@ -545,6 +545,12 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Nada de "above/below" para apontar texto, figura ou tabela; nada de metáfora no lugar do fato.** Não escreva "the
+  figure above", "the table below", "everything above/below", "described/listed above"; nomeie com link ("The steps of
+  Figure&nbsp;N", "Table N", "Sections 4.1–4.14"). Prefira a frase literal à imagem: não "rides along", "collapses into",
+  "falls out of", "in miniature", "in one number", "narrow interface", "the arc of everything below" — diga o que
+  acontece, quem faz e onde. "That is…" só quando o referente da frase anterior é inequívoco. O CI barra as formas
+  posicionais; a clareza do resto é conferida na revisão.
 - **Figura e tabela "show", nunca "draw":** "Figure 28 shows both", não "draws"; nem "drawn as", nem a expressão "draw the
   line/distinction" (use "states the boundary", "makes the distinction"). O CI recusa draw/draws/drawn/drew.
 - **Tabelas: sempre "Table N" com link, nunca "the table"; toda tabela com `id` e legenda numerada.** O CI barra.

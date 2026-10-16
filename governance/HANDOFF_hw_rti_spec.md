@@ -63,6 +63,9 @@ defasado.
   as legendas e recusa "the/this table"; uma estrutura interna se nomeia ("the state table"). As remissões a seções
   continuam com "§" nesta especificação.
 - **Figuras "show", nunca "draw"** (16/out/2026; o CI recusa draw/draws/drawn/drew).
+- **Figuras com `id` estável (16/out/2026):** `fig-question-rti-answers` … `fig-equivalence-test`, uma por figura; cite
+  "Figure N" com link (`#fig-…`). Os títulos das listas de passos são "The steps of Figure N" com link, nunca "the figure
+  above"; o CI recusa "the figure/table above/below", "everything above/below" e "described/listed above".
 - **Remissões aos documentos irmãos** aparecem como "§N do companion document".
   A numeração de §4 deles mudou em setembro/2026 — ao renumerar lá, varra aqui.
 - **Estilo de prosa:** direto, sem ênfase decorativa; afirmações quantificadas

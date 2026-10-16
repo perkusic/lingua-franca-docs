@@ -3,6 +3,8 @@
 figures without a stable id, and the reference list (every [n] cited resolves, every reference is cited).
 Tables: every <table> has an id and a caption "Table N &mdash; title.", numbered 1, 2, ... in document order, and
 the text never points at a table as "the table" or "this table": it names "Table N", with a link.
+No position words for a referent: never "the figure above", "the table below", "everything above/below",
+"described/listed above/below"; name it ("Figure N", "Table N", "Section N.M") with a link.
 Figures and tables "show"; the text never says that a figure "draws" (no draw, draws, drawn, drew anywhere).
 A numbered cross-reference is capitalized: "Section 4.7", "Sections 4.10 and 4.12", never "section 4.7".
 Also: no section sign before a number (cross-references are written "Section N.M", or "Lesson N" for a
@@ -35,12 +37,14 @@ for fn in args:
     text = re.sub(r"<[^>]*>", " ", body)
     vague = re.findall(r"\b(?:[Tt]he|[Tt]his|[Tt]hat) tables?\b(?! of contents)", text)
     quiz = "".join(re.findall(r'<script type="application/json"[^>]*>(.*?)</script>', s, re.S))
+    spatial = re.findall(r"\b(?:(?:the|this) (?:figure|table|diagram|list) (?:above|below)|(?:everything|anything) (?:above|below)|(?:described|listed|shown|given) (?:above|below))\b", re.sub(r"\s+", " ", text + " " + quiz), re.I)
     drawn = re.findall(r"\b(?:draw|draws|drawn|drew)\b", text + " " + quiz, re.I)
     lowsec = re.findall(r"\bsections?(?=(?:&nbsp;|\s)+(?:<a\b[^>]*>)?\d)", s)
     problems = []
     if dup: problems.append(f"duplicate ids: {dup}")
     if bad: problems.append(f"internal links without a target: {bad}")
     if nofig: problems.append(f"{nofig} <figure> without a stable id")
+    if spatial: problems.append(f"{len(spatial)} position reference(s) {sorted(set(spatial))[:3]}; name the figure, table or section with a link")
     if drawn: problems.append(f"{len(drawn)} use(s) of 'draw(s)/drawn'; write 'shows'")
     if lowsec: problems.append(f"{len(lowsec)} lowercase numbered reference(s) 'section N'; write 'Section N'")
     if tab_bad: problems.append(f"table(s) without id or numbered caption, by position: {tab_bad}")
