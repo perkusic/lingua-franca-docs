@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Replace section-sign cross-references (§N, §N.M) in the two Lingua Franca HTMLs with words.
 
-  tutorial edition:  §N -> Lesson N          §N.M -> section N.M
-  reference edition: §N -> section N         §N.M -> section N.M
-"section" is capitalized at the start of a sentence or block. Homogeneous lists of links
-("§4.10 and §4.12") become "sections 4.10 and 4.12", with each number still a link.
+  tutorial edition:  §N -> Lesson N          §N.M -> Section N.M
+  reference edition: §N -> Section N         §N.M -> Section N.M
+"Section" is always capitalized, like "Figure", "Table" and "Lesson". Homogeneous lists of links
+("§4.10 and §4.12") become "Sections 4.10 and 4.12", with each number still a link.
 Links keep their href; only the text changes. Code comments (<pre>) and SVG text get the same words,
 without links. The banner labels "§ 01 / motivation" of the reference edition are left alone
 (the sign there is followed by a space, not a number).
@@ -27,8 +27,7 @@ def sentence_start(s, i):
 def word(top, lessons, cap, plural=False):
     if top and lessons:
         return "Lessons" if plural else "Lesson"
-    w = "sections" if plural else "section"
-    return w.capitalize() if cap else w
+    return "Sections" if plural else "Section"   # always capitalized (rule of 16 Oct 2026)
 
 def convert(s, lessons):
     n = {"list": 0, "single": 0, "plain": 0}
@@ -52,7 +51,7 @@ def convert(s, lessons):
     def r_plain(m):
         n["plain"] += 1
         top = "." not in m.group(1)
-        return word(top, lessons, False) + " " + m.group(1)
+        return word(top, lessons, True) + " " + m.group(1)
     s = re.sub(r"&sect;(\d+(?:\.\d+)?)", r_plain, s)
     return s, n
 

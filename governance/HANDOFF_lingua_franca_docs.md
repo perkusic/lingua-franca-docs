@@ -515,11 +515,12 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   de correio, x = 1). Para outra figura animada, siga o mesmo esquema: ciclo = passos × 3,5 s e quadro 0% = figura estática.
 
 - **Remissões sem "§" (16/out/2026, regra permanente).** Nos documentos de LF, toda remissão é escrita por extenso e
-  como link: subseção → `<a href="#sN-M">section&nbsp;N.M</a>`; seção de topo → `<a href="#sN">Lesson&nbsp;N</a>` no
-  tutorial e `<a href="#sN">section&nbsp;N</a>` na referência; "Section" com maiúscula no início de frase; lista → "sections
-  <a>4.10</a> and <a>4.12</a>" (a palavra fora do link, cada número com o seu); intervalo → "sections <a>4.1</a>–<a>4.13</a>".
+  como link: subseção → `<a href="#sN-M">Section&nbsp;N.M</a>`; seção de topo → `<a href="#sN">Lesson&nbsp;N</a>` no
+  tutorial e `<a href="#sN">Section&nbsp;N</a>` na referência; **"Section" sempre com maiúscula** (como Figure, Table e
+  Lesson; regra de 16/out, 08:56), também no meio da frase e entre parênteses; lista → "Sections <a>4.10</a> and
+  <a>4.12</a>" (a palavra fora do link, cada número com o seu); intervalo → "Sections <a>4.1</a>–<a>4.13</a>".
   Vale também para legendas, perguntas do quiz, comentários em blocos de código e texto dentro de SVG (lá, sem link; como os
-  SVGs são compartilhados, prefira "section N.M", que serve às duas edições — "Lesson N" num SVG obriga a guardar uma
+  SVGs são compartilhados, prefira "Section N.M", que serve às duas edições — "Lesson N" num SVG obriga a guardar uma
   variante por edição, como em `fig-tag-nothing-send-under-both`). Únicas exceções: os rótulos de abertura "§ 01 / …" da
   referência e os documentos com convenção própria (especificação HW-RTI, notas de projeto, guia de implementação), que
   continuam com "§". **O CI recusa** "§" seguido de número nos dois HTMLs de LF (`check_html.py`; a especificação roda com
@@ -545,8 +546,8 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
 - **Tabelas: sempre "Table N" com link, nunca "the table"; toda tabela com `id` e legenda numerada.** O CI barra.
-- **Remissões: "section N.M" (e "Lesson N" no tutorial), sempre como link; nunca "§N"** — inclusive em legendas, quiz,
-  código e SVG. O CI barra o "§".
+- **Remissões: "Section N.M" (e "Lesson N" no tutorial), sempre com maiúscula e como link; nunca "§N" nem "section N"**
+  — inclusive em legendas, quiz, código e SVG. O CI barra o "§" e o "section" minúsculo.
 - Ao renumerar seções, **varra também a especificação HW-RTI**: ela cita seções
   destes documentos ("§N do companion document").
 - Edições em lote rendem muito mais que uma de cada vez: cada rodada custa um

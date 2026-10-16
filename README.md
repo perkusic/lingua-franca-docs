@@ -19,8 +19,8 @@ prevalece sobre este README e sobre os handoffs.
 | `HANDOFF_lingua_franca.md` | ponteiro para o handoff no projeto |
 
 Estrutura comum: 16 seções (14 = ferramentas, 15 = apêndice de pontos fixos, 16 = micro-LF sem RTI), 48
-subseções, 44 figuras SVG inline em `viewBox="0 0 760 H"`, 51 referências. Remissões ("section N.M",
-"Lesson N" ou "section N", "Figure N", "Example N.M"; nunca "§") são links internos; toda subseção tem `id="sN-M"` e toda figura um `id` estável.
+subseções, 44 figuras SVG inline em `viewBox="0 0 760 H"`, 51 referências. Remissões ("Section N.M",
+"Lesson N" ou "Section N", "Figure N", "Example N.M"; nunca "§") são links internos; toda subseção tem `id="sN-M"` e toda figura um `id` estável.
 **Os dois HTMLs são a fonte canônica**; `figures/` é uma extração verificada, não a fonte.
 
 ## `hw-rti/` — especificação

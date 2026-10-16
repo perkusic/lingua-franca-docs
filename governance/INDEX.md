@@ -149,9 +149,9 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
 - Mudança técnica nos documentos LF vale para os **dois** arquivos.
 - Ao renumerar seções nos documentos LF, varra a especificação: ela cita
   "§N do companion document".
-- **Nos documentos LF, remissão se escreve por extenso e como link:** "section N.M"; seção de topo "Lesson N" no
-  tutorial e "section N" na referência; nunca "§N" (inclusive em legendas, quiz, código e SVG). O CI recusa o "§"
-  nos dois HTMLs de LF. A especificação HW-RTI e as notas mantêm a convenção "§".
+- **Nos documentos LF, remissão se escreve por extenso, com maiúscula e como link:** "Section N.M" ("Sections 4.10
+  and 4.12"); seção de topo "Lesson N" no tutorial e "Section N" na referência; nunca "§N" nem "section N" minúsculo
+  (inclusive em legendas, quiz, código e SVG). O CI recusa os dois nos HTMLs de LF. A especificação HW-RTI e as notas mantêm a convenção "§".
 - **Em todos os HTMLs do projeto, tabela se cita por número e com link:** toda `<table>` tem `id="tab-…"` e legenda
   "Table N — título." numerada na ordem do documento; o texto escreve "Table N" (link para `#tab-…`), nunca "the
   table" nem "the fourth row of the table". O CI confere as legendas e recusa as formas vagas.

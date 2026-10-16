@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 801476 | `affa3c99c40ff9a9ecd11c7df3c409673708f4da9cd0e1ca222e0f06a5a47252` | `affa3c99c40ff9a9ecd11c7df3c409673708f4da9cd0e1ca222e0f06a5a47252` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 618798 | `8350865f17a4c326a402f37c587b875010b3571ee99899c63ed232be802c3ef7` | `8350865f17a4c326a402f37c587b875010b3571ee99899c63ed232be802c3ef7` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 801476 | `2495939fc01593fa6cccb853a9a6c49b602b41253abcef946fd349e4cb427220` | `2495939fc01593fa6cccb853a9a6c49b602b41253abcef946fd349e4cb427220` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 618798 | `e74d5ae9ebb9a4bbaab4a2bce8d2ee8e25b02e804b81784a6e926894f6399344` | `e74d5ae9ebb9a4bbaab4a2bce8d2ee8e25b02e804b81784a6e926894f6399344` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -21,7 +21,7 @@ The rebuild was run in the cloud workspace and again with `python3` 3.10 on this
 
 **16 October 2026: no section signs.** Cross-references written with a section sign became words in both editions (`lf-docs/sectwords.py`): "section&nbsp;N.M" for a subsection, "Lesson&nbsp;N" (tutorial) or "section&nbsp;N" (reference) for a top-level section, with homogeneous lists as "sections&nbsp;4.10 and 4.12". Eight SVG texts changed with them, in seven files. One of them, `fig-tag-nothing-send-under-both`, now reads "Lesson 4" in the tutorial and "section 4" in the reference, so it is the first figure stored per edition (`svg/fig-tag-nothing-send-under-both.lingua_franca_tutorial.svg` and `….lingua_franca_rti.svg`): 44 figures, 43 shared. `assemble.py --check` is PASS.
 
-**16 October 2026, morning: numbered tables.** Every `<table>` received a stable `id` and a caption "Table&nbsp;N &mdash; title." (`lf-docs/tablecaps.py`); vague mentions ("the table") became links to "Table&nbsp;N". One SVG text changed with it (`fig-closure-successive-approximations`: "Table 3 of section 4.13"). Tables are not extracted: they stay in the skeletons. `assemble.py --check` is PASS.
+**16 October 2026, morning: numbered tables.** Every `<table>` received a stable `id` and a caption "Table&nbsp;N &mdash; title." (`lf-docs/tablecaps.py`); vague mentions ("the table") became links to "Table&nbsp;N". One SVG text changed with it (`fig-closure-successive-approximations`: "Table 3 of section 4.13"). Tables are not extracted: they stay in the skeletons. `assemble.py --check` is PASS. Later the same morning, "section" became "Section" in every numbered reference (eight SVG texts among them); PASS again.
 
 ## Findings
 
@@ -72,16 +72,16 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 8 | `fig-safety-conditions-wire` | 4740 | `d443ca6bbd526af4` |
 | 9 | `fig-zero-delay-cycle-message-message` | 5452 | `3d2bf89b0fedf346` |
 | 10 | `fig-superdense-time` | 4023 | `d4b4162605c40799` |
-| 11 | `fig-graph-becomes-decision` | 11654 | `96f341686c92a864` |
+| 11 | `fig-graph-becomes-decision` | 11654 | `97c9585b56094ca7` |
 | 12 | `fig-rti-cannot-trust-net-alone` | 9061 | `efd08eaef2f97f4d` |
-| 13 | `fig-cost-net` | 2617 | `ef7e6e57f0822c95` |
+| 13 | `fig-cost-net` | 2617 | `99605771a563c1be` |
 | 14 | `fig-example-federation` | 3072 | `d3f073e5b1ecd93c` |
 | 15 | `fig-releasing-cycle` | 2810 | `1d3682f665138325` |
 | 16 | `fig-dnet-provides` | 2477 | `dc35a9a1c7c828a0` |
 | 17 | `fig-algebra-comes-from` | 6986 | `d5dd70c973009831` |
 | 18 | `fig-absence-safe-assume` | 8068 | `2cab26ed6efd1ac9` |
-| 19 | `fig-ways-establish-tag-safe` | 8201 | `37a6386fca1f6083` |
-| 20 | `fig-cycles-can-exist` | 9356 | `1b255ad418886541` |
+| 19 | `fig-ways-establish-tag-safe` | 8201 | `9eefe7dae87eb2e1` |
+| 20 | `fig-cycles-can-exist` | 9356 | `7793790cda63e3af` |
 | 21 | `fig-federate-scheduler` | 2834 | `b847b71c52c40c0a` |
 | 22 | `fig-reaction-module` | 3715 | `e0b1677f18aef600` |
 | 23 | `fig-codesign-top-level` | 4439 | `0c60fbd65c16a453` |
@@ -92,8 +92,8 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 28 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
 | 29 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
 | 30 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
-| 31 | `fig-closure-successive-approximations` | 10526 | `9474d2c0e95c39ac` |
-| 32 | `fig-any-relaxation-order-ends-least` | 8079 | `9a2cf59b5ec8ce4e` |
+| 31 | `fig-closure-successive-approximations` | 10526 | `d7ff89e5ef572dab` |
+| 32 | `fig-any-relaxation-order-ends-least` | 8079 | `4dff624511b6068a` |
 | 33 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
 | 34 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
 | 35 | `fig-compiler-builds-example-16-1` | 10482 | `4fcc8cd8e6e590f2` |
@@ -103,8 +103,8 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 39 | `fig-clock-synchronization-round` | 4157 | `1a59636eb7461b6f` |
 | 40 | `fig-micro-lf-federate-advances-state` | 9863 | `533f82dfce1dbf26` |
 | 41 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
-| 42 | `fig-tag-nothing-send-under-both` | 5896 / 5897 | `b03e8a4dfd5afa97` / `7cdf79203314f10e` (tutorial / reference) |
-| 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `8d020809fa9d1f1c` |
+| 42 | `fig-tag-nothing-send-under-both` | 5896 / 5897 | `b03e8a4dfd5afa97` / `da899da86a2c10d4` (tutorial / reference) |
+| 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `66f5b03bd51f9cca` |
 | 44 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `e328112520a78ad2`; `skeleton/lingua_franca_rti.skel.html` `9e3a4b55735bf60f`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `41186fc4166ff536`; `skeleton/lingua_franca_rti.skel.html` `218bc9a379675b04`.

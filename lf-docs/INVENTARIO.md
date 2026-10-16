@@ -14,8 +14,8 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `8350865f17a4c326` |
-| `tutorial/lingua_franca_tutorial.html` | `affa3c99c40ff9a9` |
+| `tutorial/lingua_franca_rti.html` | `e74d5ae9ebb9a4bb` |
+| `tutorial/lingua_franca_tutorial.html` | `2495939fc01593fa` |
 | `hw-rti/HW-RTI_project_specification.html` | `f437eacd756bc8d0` |
 
 ## 1. Números gerais
@@ -328,3 +328,6 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   4.13" virou "Table 3 of section 4.13". "grow the table" (fila em trânsito em hardware) virou "grow the in-transit table".
   Palavras pelo delta: +114 tutorial, +110 referência, +227 especificação; links +8, +6, +4. Nota micro-LF: ids de marcador
   duplicados (`mk-n` em 5 SVGs) renomeados e a referência [6] citada. O CI confere as legendas e recusa "the table".
+- 16/out/2026 (08:56): **"Section" com maiúscula** em toda remissão numerada das duas edições de LF ("Section 4.7",
+  "Sections 4.10, 4.12"), como "Figure", "Table" e "Lesson": 170 no tutorial, 240 na referência, incluindo código, SVG e
+  quiz. Mesmo número de caracteres, palavras e links; só o SHA muda. O CI recusa "section N" minúsculo.

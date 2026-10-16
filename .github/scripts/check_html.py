@@ -3,7 +3,8 @@
 figures without a stable id, and the reference list (every [n] cited resolves, every reference is cited).
 Tables: every <table> has an id and a caption "Table N &mdash; title.", numbered 1, 2, ... in document order, and
 the text never points at a table as "the table" or "this table": it names "Table N", with a link.
-Also: no section sign before a number (cross-references are written "section N.M", or "Lesson N" for a
+A numbered cross-reference is capitalized: "Section 4.7", "Sections 4.10 and 4.12", never "section 4.7".
+Also: no section sign before a number (cross-references are written "Section N.M", or "Lesson N" for a
 lesson of the tutorial, never "\u00a7N.M"); the banner labels "\u00a7 01 / ..." have a space and pass.
 Usage: python3 check_html.py [--no-figure-ids] [--allow-section-sign] file.html [...]   exit 1 on any problem.
 --no-figure-ids skips the figure-id rule (the HW-RTI specification has no stable figure ids yet);
@@ -32,10 +33,12 @@ for fn in args:
     tab_bad = [k for k, (attrs, cap, num) in enumerate(tabs, 1) if 'id="' not in attrs or not cap or int(num) != k]
     text = re.sub(r"<[^>]*>", " ", body)
     vague = re.findall(r"\b(?:[Tt]he|[Tt]his|[Tt]hat) tables?\b(?! of contents)", text)
+    lowsec = re.findall(r"\bsections?(?=(?:&nbsp;|\s)+(?:<a\b[^>]*>)?\d)", s)
     problems = []
     if dup: problems.append(f"duplicate ids: {dup}")
     if bad: problems.append(f"internal links without a target: {bad}")
     if nofig: problems.append(f"{nofig} <figure> without a stable id")
+    if lowsec: problems.append(f"{len(lowsec)} lowercase numbered reference(s) 'section N'; write 'Section N'")
     if tab_bad: problems.append(f"table(s) without id or numbered caption, by position: {tab_bad}")
     if vague: problems.append(f"{len(vague)} vague table reference(s) ('the table'); write 'Table N' with a link")
     if sect: problems.append(f"{len(sect)} section-sign reference(s), write 'section N.M' instead: {sorted(set(sect))[:5]}")
