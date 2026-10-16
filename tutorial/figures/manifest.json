@@ -3,10 +3,10 @@
  "placeholder": "<!--@svg:{id}@-->",
  "documents": {
   "lingua_franca_tutorial.html": {
-   "sha256": "78e8ba5b5e3c05bb03e1dd282a292f78775d0c380267be647c3bbe4a956b504a",
-   "bytes": 792571,
+   "sha256": "14dc3261ab2a71df940af50775e27a046e68ebf26aad9c22ec9646495bff31d8",
+   "bytes": 795116,
    "skeleton": "skeleton/lingua_franca_tutorial.skel.html",
-   "skeleton_sha256": "1f24f5495871279144cbbbceae1ebbc116c04fb76033fc9b8d021c5177494a68",
+   "skeleton_sha256": "ccb55174f171ca660418cf3671d88b08efc2e617c4e41ff5c4a2d893a452c68d",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",
@@ -55,10 +55,10 @@
    ]
   },
   "lingua_franca_rti.html": {
-   "sha256": "04046cc30d5050cb609193352a2d3e731c20c2bc9ed9f9eb8e8a3b2940f0f354",
-   "bytes": 609627,
+   "sha256": "df4129fb2d9dad10956efb85a4553a41bec038f2d9fe858759740e6175716b69",
+   "bytes": 612173,
    "skeleton": "skeleton/lingua_franca_rti.skel.html",
-   "skeleton_sha256": "6e295cdd1750891a022970a7700d64bdd19751360a10350a5dfe65e60e1e3a16",
+   "skeleton_sha256": "3aff332a67860f74dc6ed4e1a3f8733173194e103c05792ca700422deb34b70f",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",

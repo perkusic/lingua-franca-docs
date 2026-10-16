@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `04046cc30d5050cb` |
-| `tutorial/lingua_franca_tutorial.html` | `78e8ba5b5e3c05bb` |
+| `tutorial/lingua_franca_rti.html` | `df4129fb2d9dad10` |
+| `tutorial/lingua_franca_tutorial.html` | `14dc3261ab2a71df` |
 | `hw-rti/HW-RTI_project_specification.html` | `0a2b0b6343f43b94` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 609.601 | 792.457 | 260.157 |
-| Bytes (UTF-8) | 609.627 | 792.571 | 260.169 |
-| Palavras de texto (sem SVG, CSS) | 38.216 | 53.009 | 22.530 |
+| Caracteres | 612.147 | 795.002 | 260.157 |
+| Bytes (UTF-8) | 612.173 | 795.116 | 260.169 |
+| Palavras de texto (sem SVG, CSS) | 38.637 | 53.430 | 22.530 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 524 | 616 | 49 |
+| Links `<a href>` | 526 | 618 | 49 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -351,3 +351,4 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
 - 16/out/2026 (09:25): **Figura 43** — a legenda ficou só com título, escopo ("no such design exists in the sources") e a frase dos controles; a leitura em três estágios e a conclusão viraram cinco parágrafos de texto depois da lista de passos, em 16.5, nas duas edições. Palavras pelo delta: +170 tutorial, +170 referência.
 - 16/out/2026 (09:28): **legendas curtas.** Em todas as figuras das duas edições de LF e da especificação, a frase "Use the controls below the figure …" saiu (31 por edição de LF, 5 na especificação); os passos numerados (1)…(n) saíram das legendas (a lista "The steps of Figure N" já os traz; a Figura 39 ganhou no passo 3 o detalhe do servo PI); "What to conclude" virou o parágrafo "What Figure N shows." depois da lista de passos; explicações longas viraram "How to read Figure N." (LF: Figuras 3, 6, 8, 9, 10, 17, 25 e 29; especificação: 1, 2, 3, 7, 8, 9 e 11). Especificação: a legenda da Figura 2 deixou de dizer que o trabalho uniforme "is free" (agora "costs area, not time", como L-2) e a da Figura 3 cita K_max e L_response em vez de "stated below". "the next figure" virou link para a Figura 26. Palavras pelo delta: -2819 tutorial, -2825 referência, -245 especificação.
 - 16/out/2026 (09:38): **fontes com o que, onde e qual versão.** As legendas das Figuras 37–40 e 44 deixaram de dizer "From x.c at df7cfea": agora dão o caminho completo do arquivo, com link fixado no commit, "in the micro-LF runtime, lf-lang/reactor-uc on GitHub, at commit df7cfea (7 September 2026) [49]". As referências [5] e [49] ganharam o hash completo e uma frase sobre o que fazer se um link deixar de funcionar; [5] ganhou link e data exata para a852b20 (30/ago/2026). No tutorial, examples/micro-lf/ virou link para a pasta no repositório deste documento. Especificação: baseline de integração (d94dd2d, f60c83c, 6c8aecd), "reactor-c, commit ccd0512" e os arquivos de §5.3 com links fixados; guia: f60c83c e 6c8aecd com links. Palavras pelo delta: +149 tutorial, +144 referência, +12 especificação.
+- 16/out/2026 (12:58): Section 1, "Time as semantics, not side effect" ampliado nas duas edições: por que C não tem "faça isto em t" (padrão C sem agendamento; clock_nanosleep absoluto só garante não acordar antes), como os tags vêm do texto do programa (timer, after), as quatro ligações com o relógio físico nomeadas numa lista (partida, não adiantar, ações físicas e conexões físicas, deadlines) com link para a Section/Lesson 2 e 3.1, e o lag como grandeza limitável. Palavras pelo delta: +421 tutorial, +421 referência.
