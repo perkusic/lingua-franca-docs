@@ -545,6 +545,8 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Figura e tabela "show", nunca "draw":** "Figure 28 shows both", não "draws"; nem "drawn as", nem a expressão "draw the
+  line/distinction" (use "states the boundary", "makes the distinction"). O CI recusa draw/draws/drawn/drew.
 - **Tabelas: sempre "Table N" com link, nunca "the table"; toda tabela com `id` e legenda numerada.** O CI barra.
 - **Remissões: "Section N.M" (e "Lesson N" no tutorial), sempre com maiúscula e como link; nunca "§N" nem "section N"**
   — inclusive em legendas, quiz, código e SVG. O CI barra o "§" e o "section" minúsculo.

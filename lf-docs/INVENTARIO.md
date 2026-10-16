@@ -14,16 +14,16 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `e74d5ae9ebb9a4bb` |
-| `tutorial/lingua_franca_tutorial.html` | `2495939fc01593fa` |
+| `tutorial/lingua_franca_rti.html` | `4dfb0ad5a06423b1` |
+| `tutorial/lingua_franca_tutorial.html` | `9993dd1835f674e4` |
 | `hw-rti/HW-RTI_project_specification.html` | `f437eacd756bc8d0` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 618.772 | 801.362 | 259.726 |
-| Bytes (UTF-8) | 618.798 | 801.476 | 259.738 |
+| Caracteres | 618.782 | 801.377 | 259.726 |
+| Bytes (UTF-8) | 618.808 | 801.491 | 259.738 |
 | Palavras de texto (sem SVG, CSS) | 40.634 | 55.413 | 22.761 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
@@ -331,3 +331,7 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
 - 16/out/2026 (08:56): **"Section" com maiúscula** em toda remissão numerada das duas edições de LF ("Section 4.7",
   "Sections 4.10, 4.12"), como "Figure", "Table" e "Lesson": 170 no tutorial, 240 na referência, incluindo código, SVG e
   quiz. Mesmo número de caracteres, palavras e links; só o SHA muda. O CI recusa "section N" minúsculo.
+- 16/out/2026 (09:09): **"shows", não "draws".** Figura e diagrama "show" (Figures 28, 32 e 34, 43, a legenda da 28, a da
+  29 com "shown as points", e o ícone de diagrama do editor, 4× no tutorial). Onde "draw" era expressão idiomática:
+  "make the wider distinction" e "states/stated the boundary" (Lesson/Section 7). Tutorial 13 trocas, referência 9;
+  palavras e links iguais. O CI recusa draw/draws/drawn/drew em todos os HTMLs.

@@ -155,6 +155,8 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
 - **Em todos os HTMLs do projeto, tabela se cita por número e com link:** toda `<table>` tem `id="tab-…"` e legenda
   "Table N — título." numerada na ordem do documento; o texto escreve "Table N" (link para `#tab-…`), nunca "the
   table" nem "the fourth row of the table". O CI confere as legendas e recusa as formas vagas.
+- **Vocabulário de figuras:** uma figura ou tabela "shows"; nunca "draws", "drawn" ou "draw the line/distinction"
+  em nenhum HTML do projeto (o CI recusa).
 - **Afirmações sobre sintaxe ou comportamento do LF se conferem compilando** com o
   `lfc` do tarball de release (baixa do GitHub neste ambiente), não de memória nem da
   documentação antiga.

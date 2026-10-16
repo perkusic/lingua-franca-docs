@@ -62,6 +62,7 @@ defasado.
   Table 16, §11.1 → Table 28). Tabela nova: id e legenda, e renumere as seguintes e os textos dos links. O CI confere
   as legendas e recusa "the/this table"; uma estrutura interna se nomeia ("the state table"). As remissões a seções
   continuam com "§" nesta especificação.
+- **Figuras "show", nunca "draw"** (16/out/2026; o CI recusa draw/draws/drawn/drew).
 - **Remissões aos documentos irmãos** aparecem como "§N do companion document".
   A numeração de §4 deles mudou em setembro/2026 — ao renumerar lá, varra aqui.
 - **Estilo de prosa:** direto, sem ênfase decorativa; afirmações quantificadas
