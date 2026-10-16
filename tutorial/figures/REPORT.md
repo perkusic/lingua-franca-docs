@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 798197 | `6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473` | `6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 615503 | `413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc` | `413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 799683 | `95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2` | `95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 617102 | `4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c` | `4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -19,10 +19,12 @@ The rebuild was run in the cloud workspace and again with `python3` 3.10 on this
 
 **15 October 2026, afternoon: 44 figures.** A new Figure 1 (`fig-actor-model-message`, the actor model with an animation that runs with Play) was added in §1.1; the former Figures 1–43 are now 2–44. Captions, links and one figure number written inside an SVG were renumbered from the stable ids. `fig-clock-synchronization-round.svg` changed for that reason only ("run of Figure 41"). The figure-level findings below date from the 43-figure extraction.
 
+**16 October 2026: no section signs.** Cross-references written with a section sign became words in both editions (`lf-docs/sectwords.py`): "section&nbsp;N.M" for a subsection, "Lesson&nbsp;N" (tutorial) or "section&nbsp;N" (reference) for a top-level section, with homogeneous lists as "sections&nbsp;4.10 and 4.12". Eight SVG texts changed with them, in seven files. One of them, `fig-tag-nothing-send-under-both`, now reads "Lesson 4" in the tutorial and "section 4" in the reference, so it is the first figure stored per edition (`svg/fig-tag-nothing-send-under-both.lingua_franca_tutorial.svg` and `….lingua_franca_rti.svg`): 44 figures, 43 shared. `assemble.py --check` is PASS.
+
 ## Findings
 
 - **43 SVG blocks per edition, all inside `<figure>`; all 43 are byte-identical between the two editions.** Each is therefore stored once (`svg/<id>.svg`, 43 files, 286 704 bytes in total).
-- **The four figure blocks that differ between editions (Figures 29, 34, 35 and 41) differ only in their captions**, never in the SVG: Figure 29 says "Example&nbsp;4.1" in the tutorial and "&sect;4.13" in the reference; Figures 34, 35 and 41 say "Lesson&nbsp;3" / "Lesson&nbsp;3" / "Lesson&nbsp;4" against "&sect;3" / "&sect;3" / "&sect;4". Captions were not extracted: they stay in each edition's skeleton unchanged, so the four variants are preserved as they are. The extractor would have kept separate per-edition SVG files had any SVG differed; none did.
+- **The four figure blocks that differ between editions (Figures 29, 34, 35 and 41) differ only in their captions**, never in the SVG: Figure 29 says "Example&nbsp;4.1" in the tutorial and "&sect;4.13" in the reference; Figures 34, 35 and 41 say "Lesson&nbsp;3" / "Lesson&nbsp;3" / "Lesson&nbsp;4" against "&sect;3" / "&sect;3" / "&sect;4" (numbers of the 43-figure extraction; since 16 October 2026 the reference writes "section" instead of the sign). Captions were not extracted: they stay in each edition's skeleton unchanged, so the four variants are preserved as they are. The extractor would have kept separate per-edition SVG files had any SVG differed; none did.
 - The placeholder `<!--@svg:<id>@-->` did not occur in either document before extraction.
 
 ## Identity and numbering
@@ -68,16 +70,16 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 8 | `fig-safety-conditions-wire` | 4740 | `d443ca6bbd526af4` |
 | 9 | `fig-zero-delay-cycle-message-message` | 5452 | `3d2bf89b0fedf346` |
 | 10 | `fig-superdense-time` | 4023 | `d4b4162605c40799` |
-| 11 | `fig-graph-becomes-decision` | 11652 | `3d8c0a383ff3041d` |
+| 11 | `fig-graph-becomes-decision` | 11654 | `96f341686c92a864` |
 | 12 | `fig-rti-cannot-trust-net-alone` | 9061 | `efd08eaef2f97f4d` |
-| 13 | `fig-cost-net` | 2615 | `b84b7def5bf5d1b0` |
+| 13 | `fig-cost-net` | 2617 | `ef7e6e57f0822c95` |
 | 14 | `fig-example-federation` | 3072 | `d3f073e5b1ecd93c` |
 | 15 | `fig-releasing-cycle` | 2810 | `1d3682f665138325` |
 | 16 | `fig-dnet-provides` | 2477 | `dc35a9a1c7c828a0` |
 | 17 | `fig-algebra-comes-from` | 6986 | `d5dd70c973009831` |
 | 18 | `fig-absence-safe-assume` | 8068 | `2cab26ed6efd1ac9` |
-| 19 | `fig-ways-establish-tag-safe` | 8209 | `8b6537c452123a5c` |
-| 20 | `fig-cycles-can-exist` | 9354 | `f620dd4984016121` |
+| 19 | `fig-ways-establish-tag-safe` | 8201 | `37a6386fca1f6083` |
+| 20 | `fig-cycles-can-exist` | 9356 | `1b255ad418886541` |
 | 21 | `fig-federate-scheduler` | 2834 | `b847b71c52c40c0a` |
 | 22 | `fig-reaction-module` | 3715 | `e0b1677f18aef600` |
 | 23 | `fig-codesign-top-level` | 4439 | `0c60fbd65c16a453` |
@@ -88,8 +90,8 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 28 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
 | 29 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
 | 30 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
-| 31 | `fig-closure-successive-approximations` | 10526 | `215a1c33f23cc335` |
-| 32 | `fig-any-relaxation-order-ends-least` | 8077 | `f7456c9cebc58808` |
+| 31 | `fig-closure-successive-approximations` | 10528 | `f09f8b1e8c60b2a2` |
+| 32 | `fig-any-relaxation-order-ends-least` | 8079 | `9a2cf59b5ec8ce4e` |
 | 33 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
 | 34 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
 | 35 | `fig-compiler-builds-example-16-1` | 10482 | `4fcc8cd8e6e590f2` |
@@ -99,8 +101,8 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 39 | `fig-clock-synchronization-round` | 4157 | `1a59636eb7461b6f` |
 | 40 | `fig-micro-lf-federate-advances-state` | 9863 | `533f82dfce1dbf26` |
 | 41 | `fig-example-16-1-dst-physical` | 10861 | `472ee71e8ce61424` |
-| 42 | `fig-tag-nothing-send-under-both` | 5895 | `5bc66af6e1760a29` |
-| 43 | `fig-micro-lf-decision-datapath-interpretation` | 9085 | `0cf2149e99625356` |
+| 42 | `fig-tag-nothing-send-under-both` | 5896 / 5897 | `b03e8a4dfd5afa97` / `7cdf79203314f10e` (tutorial / reference) |
+| 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `8d020809fa9d1f1c` |
 | 44 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `ffeceb5794aa158a`; `skeleton/lingua_franca_rti.skel.html` `defe233d0dde3862`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `bb543f7639f323de`; `skeleton/lingua_franca_rti.skel.html` `028d6cc50e9c5d45`.

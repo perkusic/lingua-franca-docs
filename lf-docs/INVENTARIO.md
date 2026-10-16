@@ -1,6 +1,6 @@
 # Inventário estrutural dos três HTMLs
 
-Gerado em 2026-10-15 por uma rotina que lê os três arquivos em disco. O gerador de 8/out
+Gerado em 2026-10-15 (atualizado em 16/out) por uma rotina que lê os três arquivos em disco. O gerador de 8/out
 não está na pasta; a rotina de 15/out foi reescrita e **calibrada** nos arquivos de 8/out:
 reproduz todos os números daquela versão, exceto as palavras (método diferente). Por isso as
 palavras das duas edições de LF são as de 8/out somadas ao delta medido pela rotina nova, nos
@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `413bfe3675a15b8f` |
-| `tutorial/lingua_franca_tutorial.html` | `6d69e31ddeae08f3` |
+| `tutorial/lingua_franca_rti.html` | `4d2e8fc162bb3f59` |
+| `tutorial/lingua_franca_tutorial.html` | `95a0f6fc505f016a` |
 | `hw-rti/HW-RTI_project_specification.html` | `690258aaf21eef48` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 615.477 | 798.083 | 256.445 |
-| Bytes (UTF-8) | 615.503 | 798.197 | 256.457 |
-| Palavras de texto (sem SVG, CSS) | 40.295 | 55.077 | 22.534 |
+| Caracteres | 617.076 | 799.569 | 256.445 |
+| Bytes (UTF-8) | 617.102 | 799.683 | 256.457 |
+| Palavras de texto (sem SVG, CSS) | 40.524 | 55.299 | 22.534 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 433 | 520 | 22 |
+| Links `<a href>` | 434 | 521 | 22 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -312,3 +312,11 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   mensagem, duas execuções, caixa de correio, x termina em 4 ou em 3; 4 passos e uma animação contínua que roda com Play,
   em sincronia com os passos). As antigas 1–43 viraram 2–44; legendas, links e o número escrito dentro do SVG da antiga 38
   (hoje 39) renumerados pelos ids estáveis. No tutorial, FE1 após a figura. Extração refeita (44 SVGs, PASS).
+- 16/out/2026: **sem "§" nas remissões** das duas edições de LF (`lf-docs/sectwords.py`). Subseção: "section N.M"; seção de
+  topo: "Lesson N" no tutorial e "section N" na referência; maiúscula no início de frase; listas homogêneas viram "sections
+  4.10 and 4.12" com cada número como link; o intervalo "4.1–4.13" virou dois links. Texto de código e de SVG recebeu as
+  mesmas palavras, sem link. Ficam os rótulos "§ 01 / …" das aberturas da referência. Tutorial: 214 remissões avulsas, 7
+  listas, 6 em código, 8 em SVG; referência: 221, 7, 6 e 8. Palavras pelo delta (+222 no tutorial, +229 na referência);
+  links +1 em cada edição (o intervalo). `fig-tag-nothing-send-under-both` passou a ter um SVG por edição; o rótulo de
+  `fig-ways-establish-tag-safe` foi encurtado para caber ("centralized: reactor-c, HW-RTI (section 9.9)"). O CI recusa
+  "§" seguido de número nos HTMLs de LF.

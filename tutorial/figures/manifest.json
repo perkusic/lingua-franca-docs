@@ -3,10 +3,10 @@
  "placeholder": "<!--@svg:{id}@-->",
  "documents": {
   "lingua_franca_tutorial.html": {
-   "sha256": "6d69e31ddeae08f35f209a5fb30257899d503fed7633fa394704c1572f204473",
-   "bytes": 798197,
+   "sha256": "95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2",
+   "bytes": 799683,
    "skeleton": "skeleton/lingua_franca_tutorial.skel.html",
-   "skeleton_sha256": "ffeceb5794aa158a42e9ed5b89d25aeb6150ac3d3c8ff2a945db61f24f70e18a",
+   "skeleton_sha256": "bb543f7639f323deee3f06fe3246244e6da44f419339cd9e05b9fac28b6b81bd",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",
@@ -55,10 +55,10 @@
    ]
   },
   "lingua_franca_rti.html": {
-   "sha256": "413bfe3675a15b8fbf49fe774341920bd8951541b52b5a95d44fe78bcdfdf4fc",
-   "bytes": 615503,
+   "sha256": "4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c",
+   "bytes": 617102,
    "skeleton": "skeleton/lingua_franca_rti.skel.html",
-   "skeleton_sha256": "defe233d0dde386284dd0eca0f592779cef651fad85c629e51d2b3b56fc90b00",
+   "skeleton_sha256": "028d6cc50e9c5d45f50c261ceb0a65886ecf347cf85c3d7021fcc3042c0bc1ce",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",
@@ -236,8 +236,8 @@
    },
    "title": "how the graph becomes a decision",
    "file": "svg/fig-graph-becomes-decision.svg",
-   "sha256": "3d8c0a383ff3041dee18e3bee02bb3e8b60a279b715e57c28c3a7d5aa6702c5f",
-   "bytes": 11652,
+   "sha256": "96f341686c92a864b03004c159b985a398fb715a7de938c0313d0ed251a7624d",
+   "bytes": 11654,
    "shared": true
   },
   {
@@ -260,8 +260,8 @@
    },
    "title": "the cost of one NET",
    "file": "svg/fig-cost-net.svg",
-   "sha256": "b84b7def5bf5d1b05b1aa3f9214bb2c74f5a1fe21ca7d6ade47bb7a3d8715dc1",
-   "bytes": 2615,
+   "sha256": "ef7e6e57f0822c95b2a595ddfa94368775ba21a5731c85fc1c1cf0ec56c4eda8",
+   "bytes": 2617,
    "shared": true
   },
   {
@@ -332,8 +332,8 @@
    },
    "title": "two ways to establish that a tag is safe",
    "file": "svg/fig-ways-establish-tag-safe.svg",
-   "sha256": "8b6537c452123a5cd00bfa04444c4816dfc7081edc123e2ffdcfa8c46c87c709",
-   "bytes": 8209,
+   "sha256": "37a6386fca1f6083b46ec55d68e860e0abacff1ed7974c54730016a3ffef80a0",
+   "bytes": 8201,
    "shared": true
   },
   {
@@ -344,8 +344,8 @@
    },
    "title": "which cycles can exist",
    "file": "svg/fig-cycles-can-exist.svg",
-   "sha256": "f620dd498401612141ad026797509e66aed199e3df58c55688696f879f691aa1",
-   "bytes": 9354,
+   "sha256": "1b255ad41888654158e7f247f2d8530710f26acd5d86b4e7c2f4aa9091d36532",
+   "bytes": 9356,
    "shared": true
   },
   {
@@ -476,8 +476,8 @@
    },
    "title": "the closure as successive approximations",
    "file": "svg/fig-closure-successive-approximations.svg",
-   "sha256": "215a1c33f23cc3354110ecfbdcec5ac18fb64b16227ea4d210dbba827d8d08c2",
-   "bytes": 10526,
+   "sha256": "f09f8b1e8c60b2a2e14351eadfddfdbbe8d51e6f4e2d2a0db07deeb25f56c7fc",
+   "bytes": 10528,
    "shared": true
   },
   {
@@ -488,8 +488,8 @@
    },
    "title": "why any relaxation order ends at the least delays",
    "file": "svg/fig-any-relaxation-order-ends-least.svg",
-   "sha256": "f7456c9cebc5880874aa327d160ad7b8abb8b9676bd06f0e1745378b0cc1ef4a",
-   "bytes": 8077,
+   "sha256": "9a2cf59b5ec8ce4e6526131e29f7f1331083c310ff8a8dc77127b84fc5493745",
+   "bytes": 8079,
    "shared": true
   },
   {
@@ -607,10 +607,19 @@
     "lingua_franca_rti.html": 42
    },
    "title": "a tag with nothing to send, under both architectures",
-   "file": "svg/fig-tag-nothing-send-under-both.svg",
-   "sha256": "5bc66af6e1760a297a770cd3f9a986f2370c90a96b876a2eacf19d2eaf28c5e6",
-   "bytes": 5895,
-   "shared": true
+   "shared": false,
+   "variants": {
+    "lingua_franca_tutorial.html": {
+     "file": "svg/fig-tag-nothing-send-under-both.lingua_franca_tutorial.svg",
+     "sha256": "b03e8a4dfd5afa97dcf62127f838c69bdb337d7320d3bc533fc03552ff1c298e",
+     "bytes": 5896
+    },
+    "lingua_franca_rti.html": {
+     "file": "svg/fig-tag-nothing-send-under-both.lingua_franca_rti.svg",
+     "sha256": "7cdf79203314f10ec30a5a854cb1f28f16f0bb63364cee2638e17da07b7c3097",
+     "bytes": 5897
+    }
+   }
   },
   {
    "id": "fig-micro-lf-decision-datapath-interpretation",
@@ -620,8 +629,8 @@
    },
    "title": "the micro-LF decision as a datapath (interpretation)",
    "file": "svg/fig-micro-lf-decision-datapath-interpretation.svg",
-   "sha256": "0cf2149e99625356bacff3a2e7b376fbb87e42b4aa0dbc975441854ec2d24ac4",
-   "bytes": 9085,
+   "sha256": "8d020809fa9d1f1c06398053735074097adcb43ef1005bc6bbf443436681e738",
+   "bytes": 9087,
    "shared": true
   },
   {

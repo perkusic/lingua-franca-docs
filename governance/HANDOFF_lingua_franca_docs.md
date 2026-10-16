@@ -491,7 +491,7 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   entrega: ele insere metadados C2PA; regenere localmente. Âncoras explícitas: `id="s16-3"` na h3 de 16.3 (o mesmo que o
   sumário lateral geraria); o tutorial liga "Example 16.1" (`#ex-ulf`) e "section 16.3" (`#s16-3`) em 16.1.
 
-- **Remissões como links (15/out/2026, nas duas edições).** §N/§N.M, "Section N.M", "Lesson(s) N", "Figure(s) N" e, no
+- **Remissões como links (15/out/2026, nas duas edições).** "section N.M", "Lesson(s) N", "Figure(s) N" e, no
   tutorial, "Example N.M" são `<a href="#…">`: seções `#sN`, subseções `#sN-M` (toda h3 tem esse id fixo, igual ao que o
   sumário lateral daria), figuras `#<id estável>` (toda `<figure>` tem `id` do `figures/manifest.json`), exemplos `#ex-…`.
   **Texto novo:** escreva a remissão já como link no mesmo formato; `lf-docs/linkrefs.py` faz isso num arquivo sem links,
@@ -514,6 +514,18 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   = 4 passos × 3,5 s, para coincidir com o avanço dos passos no Play; o quadro 0% é o estado estático (mensagens na caixa
   de correio, x = 1). Para outra figura animada, siga o mesmo esquema: ciclo = passos × 3,5 s e quadro 0% = figura estática.
 
+- **Remissões sem "§" (16/out/2026, regra permanente).** Nos documentos de LF, toda remissão é escrita por extenso e
+  como link: subseção → `<a href="#sN-M">section&nbsp;N.M</a>`; seção de topo → `<a href="#sN">Lesson&nbsp;N</a>` no
+  tutorial e `<a href="#sN">section&nbsp;N</a>` na referência; "Section" com maiúscula no início de frase; lista → "sections
+  <a>4.10</a> and <a>4.12</a>" (a palavra fora do link, cada número com o seu); intervalo → "sections <a>4.1</a>–<a>4.13</a>".
+  Vale também para legendas, perguntas do quiz, comentários em blocos de código e texto dentro de SVG (lá, sem link; como os
+  SVGs são compartilhados, prefira "section N.M", que serve às duas edições — "Lesson N" num SVG obriga a guardar uma
+  variante por edição, como em `fig-tag-nothing-send-under-both`). Únicas exceções: os rótulos de abertura "§ 01 / …" da
+  referência e os documentos com convenção própria (especificação HW-RTI, notas de projeto, guia de implementação), que
+  continuam com "§". **O CI recusa** "§" seguido de número nos dois HTMLs de LF (`check_html.py`; a especificação roda com
+  `--allow-section-sign`). Conversão de um arquivo antigo: `lf-docs/sectwords.py` (`--lessons` para o tutorial). Ao
+  alongar um texto de SVG, confira que ele cabe (houve um rótulo encurtado na Figura 19).
+
 ## Como quero as edições
 
 - Edite os arquivos diretamente e devolva os arquivos editados.
@@ -523,6 +535,8 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Remissões: "section N.M" (e "Lesson N" no tutorial), sempre como link; nunca "§N"** — inclusive em legendas, quiz,
+  código e SVG. O CI barra o "§".
 - Ao renumerar seções, **varra também a especificação HW-RTI**: ela cita seções
   destes documentos ("§N do companion document").
 - Edições em lote rendem muito mais que uma de cada vez: cada rodada custa um
