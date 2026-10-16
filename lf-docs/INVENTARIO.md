@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `281ca5f2d5cee8f2` |
-| `tutorial/lingua_franca_tutorial.html` | `06126dc9ac327563` |
-| `hw-rti/HW-RTI_project_specification.html` | `30192caf669af35e` |
+| `tutorial/lingua_franca_rti.html` | `5046b6a6d457db1f` |
+| `tutorial/lingua_franca_tutorial.html` | `90420c5e7c8ee4c9` |
+| `hw-rti/HW-RTI_project_specification.html` | `2b13ca258b3c583c` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 622.042 | 804.667 | 260.360 |
-| Bytes (UTF-8) | 622.068 | 804.781 | 260.372 |
-| Palavras de texto (sem SVG, CSS) | 40.897 | 55.679 | 22.763 |
+| Caracteres | 606.863 | 789.523 | 259.374 |
+| Bytes (UTF-8) | 606.889 | 789.637 | 259.386 |
+| Palavras de texto (sem SVG, CSS) | 38.072 | 52.860 | 22.518 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 479 | 569 | 34 |
+| Links `<a href>` | 509 | 599 | 43 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -349,3 +349,4 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   "Figure 2" viraram links, e as 12 figuras ganharam `id`; a nota micro-LF (5) e o guia (1) também. Palavras pelo delta:
   +53 tutorial, +50 referência, +2 especificação.
 - 16/out/2026 (09:25): **Figura 43** — a legenda ficou só com título, escopo ("no such design exists in the sources") e a frase dos controles; a leitura em três estágios e a conclusão viraram cinco parágrafos de texto depois da lista de passos, em 16.5, nas duas edições. Palavras pelo delta: +170 tutorial, +170 referência.
+- 16/out/2026 (09:28): **legendas curtas.** Em todas as figuras das duas edições de LF e da especificação, a frase "Use the controls below the figure …" saiu (31 por edição de LF, 5 na especificação); os passos numerados (1)…(n) saíram das legendas (a lista "The steps of Figure N" já os traz; a Figura 39 ganhou no passo 3 o detalhe do servo PI); "What to conclude" virou o parágrafo "What Figure N shows." depois da lista de passos; explicações longas viraram "How to read Figure N." (LF: Figuras 3, 6, 8, 9, 10, 17, 25 e 29; especificação: 1, 2, 3, 7, 8, 9 e 11). Especificação: a legenda da Figura 2 deixou de dizer que o trabalho uniforme "is free" (agora "costs area, not time", como L-2) e a da Figura 3 cita K_max e L_response em vez de "stated below". "the next figure" virou link para a Figura 26. Palavras pelo delta: -2819 tutorial, -2825 referência, -245 especificação.

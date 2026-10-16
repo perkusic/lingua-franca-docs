@@ -161,6 +161,9 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
   "described/listed above" — cite "Figure N", "Table N" ou "Section N.M" com link (o CI recusa). Frases literais em vez
   de metáforas ("rides along", "collapses into", "falls out of", "narrow"); toda figura tem `id`, inclusive na
   especificação, na nota micro-LF e no guia.
+- **Legendas curtas:** título e no máximo ~300 caracteres de escopo/fonte; sem passos "(1)…", sem "What to conclude",
+  sem "Use the controls…". Passos na lista após a figura; explicação em "How to read Figure N." e conclusão em "What
+  Figure N shows.", parágrafos do texto (o CI recusa o resto).
 - **Afirmações sobre sintaxe ou comportamento do LF se conferem compilando** com o
   `lfc` do tarball de release (baixa do GitHub neste ambiente), não de memória nem da
   documentação antiga.

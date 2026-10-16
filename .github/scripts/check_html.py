@@ -3,6 +3,9 @@
 figures without a stable id, and the reference list (every [n] cited resolves, every reference is cited).
 Tables: every <table> has an id and a caption "Table N &mdash; title.", numbered 1, 2, ... in document order, and
 the text never points at a table as "the table" or "this table": it names "Table N", with a link.
+Figure captions are short: the title plus at most about 300 characters of scope or source; no numbered steps "(1)",
+no "What to conclude" and no usage instructions ("Use the controls ..."): steps go in the list after the figure,
+explanation and conclusion in the text ("How to read Figure N", "What Figure N shows").
 No position words for a referent: never "the figure above", "the table below", "everything above/below",
 "described/listed above/below"; name it ("Figure N", "Table N", "Section N.M") with a link.
 Figures and tables "show"; the text never says that a figure "draws" (no draw, draws, drawn, drew anywhere).
@@ -37,7 +40,13 @@ for fn in args:
     text = re.sub(r"<[^>]*>", " ", body)
     vague = re.findall(r"\b(?:[Tt]he|[Tt]his|[Tt]hat) tables?\b(?! of contents)", text)
     quiz = "".join(re.findall(r'<script type="application/json"[^>]*>(.*?)</script>', s, re.S))
-    spatial = re.findall(r"\b(?:(?:the|this) (?:figure|table|diagram|list) (?:above|below)|(?:everything|anything) (?:above|below)|(?:described|listed|shown|given) (?:above|below))\b", re.sub(r"\s+", " ", text + " " + quiz), re.I)
+    spatial = re.findall(r"\b(?:(?:the|this) (?:figure|table|diagram|list) (?:above|below)|the (?:next|previous|following|preceding) (?:figure|table|diagram)|(?:everything|anything) (?:above|below)|(?:described|listed|shown|given|stated) (?:above|below))\b", re.sub(r"\s+", " ", text + " " + quiz), re.I)
+    capbad = []
+    for c in re.findall(r"<figcaption>(.*?)</figcaption>", body, re.S):
+        rest = re.sub(r"<[^>]+>", "", re.sub(r"^\s*<b>.*?</b>", "", c, flags=re.S))
+        rest = re.sub(r"&[a-z]+;|&#\d+;", "x", re.sub(r"\s+", " ", rest)).strip()
+        if len(rest) > 320 or re.search(r"\(1\)|What to conclude|Use the controls", c):
+            capbad.append((re.search(r"Figure (\d+)", c) or [None, "?"])[1])
     drawn = re.findall(r"\b(?:draw|draws|drawn|drew)\b", text + " " + quiz, re.I)
     lowsec = re.findall(r"\bsections?(?=(?:&nbsp;|\s)+(?:<a\b[^>]*>)?\d)", s)
     problems = []
@@ -45,6 +54,7 @@ for fn in args:
     if bad: problems.append(f"internal links without a target: {bad}")
     if nofig: problems.append(f"{nofig} <figure> without a stable id")
     if spatial: problems.append(f"{len(spatial)} position reference(s) {sorted(set(spatial))[:3]}; name the figure, table or section with a link")
+    if capbad: problems.append(f"long or step-carrying caption(s), figures {capbad}")
     if drawn: problems.append(f"{len(drawn)} use(s) of 'draw(s)/drawn'; write 'shows'")
     if lowsec: problems.append(f"{len(lowsec)} lowercase numbered reference(s) 'section N'; write 'Section N'")
     if tab_bad: problems.append(f"table(s) without id or numbered caption, by position: {tab_bad}")

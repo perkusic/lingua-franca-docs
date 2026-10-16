@@ -545,6 +545,13 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Legenda curta; explicação no texto (16/out/2026, regra permanente).** A `<figcaption>` tem só o título
+  ("Figure N &mdash; título.") e, se preciso, uma ou duas frases de escopo, fonte ou legenda de cores (até ~300
+  caracteres). Nunca: passos numerados "(1)…" (vão só na lista "The steps of Figure N", que o Play usa), "What to
+  conclude" e instruções de uso ("Use the controls below the figure…", removida de todas as figuras). Depois da lista de
+  passos (ou da figura, se não houver lista) vêm, quando necessários, `<p><strong>How to read <a>Figure N</a>.</strong> …</p>`
+  (como ler o desenho) e `<p><strong>What <a>Figure N</a> shows.</strong> …</p>` (a conclusão). O CI recusa legenda longa
+  ou com "(1)", "What to conclude" ou "Use the controls".
 - **Nada de "above/below" para apontar texto, figura ou tabela; nada de metáfora no lugar do fato.** Não escreva "the
   figure above", "the table below", "everything above/below", "described/listed above"; nomeie com link ("The steps of
   Figure&nbsp;N", "Table N", "Sections 4.1–4.14"). Prefira a frase literal à imagem: não "rides along", "collapses into",

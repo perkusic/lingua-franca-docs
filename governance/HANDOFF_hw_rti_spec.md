@@ -66,6 +66,10 @@ defasado.
 - **Figuras com `id` estável (16/out/2026):** `fig-question-rti-answers` … `fig-equivalence-test`, uma por figura; cite
   "Figure N" com link (`#fig-…`). Os títulos das listas de passos são "The steps of Figure N" com link, nunca "the figure
   above"; o CI recusa "the figure/table above/below", "everything above/below" e "described/listed above".
+- **Legendas curtas (16/out/2026):** título e uma ou duas frases; passos só na lista após a figura; explicação em "How
+  to read Figure N." e conclusão em "What Figure N shows." no texto; sem "Use the controls…" (removida). As Figuras 1, 2,
+  3, 7, 8, 9 e 11 ganharam "How to read", as 4 e 12 "What … shows". A legenda da Figura 2 agora diz que o trabalho
+  uniforme "costs area, not time", alinhada à L-2.
 - **Remissões aos documentos irmãos** aparecem como "§N do companion document".
   A numeração de §4 deles mudou em setembro/2026 — ao renumerar lá, varra aqui.
 - **Estilo de prosa:** direto, sem ênfase decorativa; afirmações quantificadas

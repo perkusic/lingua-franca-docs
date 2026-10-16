@@ -209,7 +209,7 @@ execution ends with 4 and another with 3. The nondeterminism is not a race on me
 left open. <a href="#fig-actor-model-message">Figure&nbsp;1</a> plays both executions.</p>
 <figure id="fig-actor-model-message">
 <!--@svg:fig-actor-model-message@-->
-<figcaption><b>Figure 1 &mdash; the actor model, message by message.</b> Two executions of the same actor program, one above the other. (1)&nbsp;Actor C keeps x private and receives messages in a mailbox; its behaviour takes one message at a time. Here the mailbox is first-in-first-out, one common policy among several. (2)&nbsp;Producers P1 and P2 each send one message over a link of its own, with a delay of its own; nothing orders the two sends. (3)&nbsp;The messages arrive in a different order in each execution, and the mailbox keeps the order of arrival. (4)&nbsp;Taken one at a time, they bring x to 4 in one execution and to 3 in the other. <em>What to conclude:</em> there is no shared memory and no lost update, and still two outcomes: the order of arrival, which nothing in the program fixes, decides the result. Use the controls below the figure to step through it, or Play to watch both executions run: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step, with the messages as they arrived and x&nbsp;=&nbsp;1 before C processes them.</figcaption>
+<figcaption><b>Figure 1 &mdash; the actor model, message by message.</b> Two executions of the same actor program, one above the other.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-actor-model-message">Figure&nbsp;1</a></p>
 <ol class="figsteps">
@@ -218,6 +218,7 @@ left open. <a href="#fig-actor-model-message">Figure&nbsp;1</a> plays both execu
 <li><b>Arrival.</b> In execution 1 the increment arrives first; in execution 2 the doubling does. The mailbox keeps the order of arrival, so the two executions hand C the same messages in opposite orders.</li>
 <li><b>Processing.</b> C takes the front message, updates x, then takes the next: 1&nbsp;&rarr;&nbsp;2&nbsp;&rarr;&nbsp;4 in execution 1 and 1&nbsp;&rarr;&nbsp;2&nbsp;&rarr;&nbsp;3 in execution 2. Each message is handled whole, no update is lost, and the results still differ.</li>
 </ol>
+<p><strong>What <a href="#fig-actor-model-message">Figure&nbsp;1</a> shows.</strong> There is no shared memory and no lost update, and still two outcomes: the order of arrival, which nothing in the program fixes, decides the result.</p>
 <p>This is not a verdict on actors. An actor program can be deterministic when an order is imposed: by a protocol
 that sequences the messages, by restrictions on who may send to whom, or by operations whose order does not matter.
 Commutative operations &mdash; two increments, say &mdash; make the final state independent of order, but not
@@ -236,7 +237,7 @@ the incrementing reaction first: every execution computes <code>1 &rarr; 2 &rarr
 first and every execution gives 3. Either way the program chose, not the scheduler. The program <code>Levels.lf</code> in the tutorial&rsquo;s <code>examples/</code> folder prints the same rule at work.</p>
 <figure id="fig-message-time-not-order">
 <!--@svg:fig-message-time-not-order@-->
-<figcaption><b>Figure 2 &mdash; one message at a time is not one order.</b> Panel A: (1)&nbsp;an actor holds x&nbsp;=&nbsp;1 while two independent producers send &ldquo;increment&rdquo; and &ldquo;double&rdquo;; (2)&nbsp;processing them one at a time, in either admissible order, ends with 4 or with 3. Panel B: (1)&nbsp;the same two operations as reactions to two ports, with both events at one tag; (2, 3)&nbsp;the reaction declared first runs first; the result is 4 in every execution that receives these events. <em>What to conclude:</em> nondeterminism does not need shared memory &mdash; an order left open is enough &mdash; and the reactor closes it in the program text. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 2 &mdash; one message at a time is not one order.</b> Panel A, an actor; panel B, a reactor with the same two operations.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-message-time-not-order">Figure&nbsp;2</a></p>
 <ol class="figsteps">
@@ -245,6 +246,7 @@ first and every execution gives 3. Either way the program chose, not the schedul
 <li><b>Then the second reaction.</b> Reaction&nbsp;2 runs next, at the same tag, and doubles x to 4. The order came from the program text, not from which event happened to arrive first.</li>
 <li><b>The same result every time.</b> Every execution that receives these two events at this tag ends with 4. Declaring the doubling first would give 3 &mdash; again in every execution.</li>
 </ol>
+<p><strong>What <a href="#fig-message-time-not-order">Figure&nbsp;2</a> shows.</strong> Nondeterminism does not need shared memory &mdash; an order left open is enough &mdash; and the reactor closes it in the program text.</p>
 <p>What the reactor guarantee covers, and what it does not:</p>
 <ul>
 <li><strong>Same inputs, same tags.</strong> Two executions are compared when they receive the same input events
@@ -293,11 +295,12 @@ resolved yet: every reaction whose level is lower than that of the first reactio
 
 <figure id="fig-reactor-ports-levels">
 <!--@svg:fig-reactor-ports-levels@-->
-<figcaption><b>Figure 3 &mdash; a reactor, its ports, and levels.</b> Reactions are ordered by their dependencies &mdash; which, inside one reactor, include the order in which they are declared &mdash; not by the order their inputs happen to arrive. Reactions 1 and 2 therefore occupy consecutive levels even though neither feeds the other. If <code>in2</code> is a
+<figcaption><b>Figure 3 &mdash; a reactor, its ports, and levels.</b> Reactions are ordered by their dependencies &mdash; which, inside one reactor, include the order in which they are declared &mdash; not by the order their inputs happen to arrive.</figcaption>
+</figure>
+<p><strong>How to read <a href="#fig-reactor-ports-levels">Figure&nbsp;3</a>.</strong> Because of that order, reactions 1 and 2 occupy consecutive levels even though neither feeds the other. If <code>in2</code> is a
 network port whose status is still unknown, reaction 1 may nevertheless run to completion at
 this tag; reaction 3 may not, and neither may any reaction at a higher level. That is the mechanism
-<a href="#s8">Section&nbsp;8</a> calls the maximum-level cap.</figcaption>
-</figure>
+<a href="#s8">Section&nbsp;8</a> calls the maximum-level cap.</p>
 <p>Everything else in this document is one question asked at four scales: <em>how does a
 component earn the right to advance to a tag &mdash; that is, to conclude that no
 earlier-tagged input can still arrive?</em></p>
@@ -354,7 +357,7 @@ Nothing reaches a federate before its start tag does.</p>
 
 <figure id="fig-joining-federation">
 <!--@svg:fig-joining-federation@-->
-<figcaption><b>Figure 5 &mdash; joining a federation.</b> Steps 1&ndash;4 are one federate&rsquo;s handshake, step&nbsp;5 the same for B, and steps 6&ndash;9 the agreement on a start time. <em>What to conclude:</em> no federate learns the start time until every persistent federate has proposed one, and nothing else reaches a federate before its start time does. Use the controls below the figure to step through it: the explanation of the current step appears under the controls and changes as you go, and every step is explained in the list after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 5 &mdash; joining a federation.</b> Steps 1&ndash;4 are one federate&rsquo;s handshake, step&nbsp;5 the same for B, and steps 6&ndash;9 the agreement on a start time.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-joining-federation">Figure&nbsp;5</a></p>
 <ol class="figsteps">
@@ -368,6 +371,7 @@ Nothing reaches a federate before its start tag does.</p>
 <li><b>the start time.</b> <code>start_time = max(t_A, t_B) + DELAY_START</code>, with <code>DELAY_START</code> one second in the current source. The maximum keeps a federate whose clock is ahead from being asked to start in its own past; the margin covers the delivery of the answer.</li>
 <li><b>TIMESTAMP(start_time).</b> Each federate&rsquo;s own thread sends the start time on that federate&rsquo;s socket &mdash; there is no broadcast loop &mdash; and moves its state from <code>PENDING</code> to <code>GRANTED</code>. Until then no TAG, PTAG, DNET or forwarded message may be written to it. The federate unblocks and starts at tag (start_time,&nbsp;0).</li>
 </ol>
+<p><strong>What <a href="#fig-joining-federation">Figure&nbsp;5</a> shows.</strong> No federate learns the start time until every persistent federate has proposed one, and nothing else reaches a federate before its start time does.</p>
 
 <p><strong>Shutdown: two-phase, at the latest proposal.</strong> Any federate (or a timeout,
 or Ctrl-C) can send <code>STOP_REQUEST</code> with a proposed stop tag. The RTI forwards the
@@ -513,14 +517,14 @@ exchanging messages and absence notices under a PTAG. The RTI&rsquo;s part conce
 
 <figure id="fig-question-rti-answers">
 <!--@svg:fig-question-rti-answers@-->
-<figcaption><b>Figure 6 &mdash; the question the RTI answers.</b> Node e requests an advance to
-g&nbsp;=&nbsp;15&nbsp;ms. Its upstreams can still send, but no input reaches e earlier than the
+<figcaption><b>Figure 6 &mdash; the question the RTI answers.</b> Node e requests an advance to g&nbsp;=&nbsp;15&nbsp;ms.</figcaption>
+</figure>
+<p><strong>How to read <a href="#fig-question-rti-answers">Figure&nbsp;6</a>.</strong> Its upstreams can still send, but no input reaches e earlier than the
 sender&rsquo;s NET plus the connection delay; the least of these is the earliest incoming message
 tag, EIMT&nbsp;=&nbsp;17&nbsp;ms (<a href="#s4-6">Section&nbsp;4.6</a>). Every tag at or below g lies where no input can arrive, so e is
 granted &mdash; and granted maximally, up to the latest tag below EIMT. Had u1 reported
 NET&nbsp;=&nbsp;10&nbsp;ms, EIMT would equal g and e would have to wait. The sequence chart in
-<a href="#s4-2">Section&nbsp;4.2</a> replays the same numbers as messages on the wire.</figcaption>
-</figure>
+<a href="#s4-2">Section&nbsp;4.2</a> replays the same numbers as messages on the wire.</p>
 
 <h3 id="s4-1">4.1 &mdash; State per federate (from <code>rti_common.h</code>)<sup class="c"><a href="#ref5">[5]</a></sup></h3>
 <pre><code>scheduling_node_t {                // shared by federates and enclaves
@@ -584,7 +588,7 @@ ignores cycle members, still clears) yields a PTAG; anything else waits.</figcap
 
 <figure id="fig-safety-conditions-wire">
 <!--@svg:fig-safety-conditions-wire@-->
-<figcaption><b>Figure 8 &mdash; the two safety conditions, on the wire.</b> Above the line the RTI proves safety from intentions: u&rsquo;s NET pushed through the 5&nbsp;ms delay bounds what can reach e, so e is granted up to (17&nbsp;ms&nbsp;&minus;&nbsp;1&nbsp;ns, UINT_MAX), the predecessor of (17&nbsp;ms,&nbsp;0), more than it asked for. Below it, u has <em>completed</em> 18&nbsp;ms, a fact about the past, and the low-cost condition alone grants e up to the predecessor of (23&nbsp;ms,&nbsp;0) without computing EIMT. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 8 &mdash; the two safety conditions, on the wire.</b> u is upstream of e through a connection with <code>after 5 ms</code>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-safety-conditions-wire">Figure&nbsp;8</a></p>
 <ol class="figsteps">
@@ -598,6 +602,7 @@ ignores cycle members, still clears) yields a PTAG; anything else waits.</figcap
 <li><b>The low-cost condition.</b> completed(u)&nbsp;=&nbsp;18&nbsp;ms plus the 5&nbsp;ms delay means nothing from u can arrive before 23&nbsp;ms, and every tag strictly below 23&nbsp;ms covers the requested 19.</li>
 <li><b>TAG(23&nbsp;ms&nbsp;&minus;&nbsp;1&nbsp;ns, UINT_MAX).</b> The grant follows from the completion alone, without computing EIMT.</li>
 </ol>
+<p><strong>How to read <a href="#fig-safety-conditions-wire">Figure&nbsp;8</a>.</strong> Above the line the RTI proves safety from intentions: u&rsquo;s NET pushed through the 5&nbsp;ms delay bounds what can reach e, so e is granted up to (17&nbsp;ms&nbsp;&minus;&nbsp;1&nbsp;ns, UINT_MAX), the predecessor of (17&nbsp;ms,&nbsp;0), more than it asked for. Below it, u has <em>completed</em> 18&nbsp;ms, a fact about the past, and the low-cost condition alone grants e up to the predecessor of (23&nbsp;ms,&nbsp;0) without computing EIMT.</p>
 
 <h3 id="s4-3">4.3 &mdash; Why PTAG exists, and why it is contagious</h3>
 <p>A cycle of federates whose connections carry no delay is legal as long as the program is
@@ -617,7 +622,7 @@ federate's job (<a href="#s8">Section&nbsp;8</a>); the protocol is cooperative, 
 keyed-hash message authentication code (HMAC) exists.</p>
 <figure id="fig-zero-delay-cycle-message-message">
 <!--@svg:fig-zero-delay-cycle-message-message@-->
-<figcaption><b>Figure 9 &mdash; a zero-delay cycle, message by message.</b> Both members request g, and neither can be given a TAG, because each may still send the other a message at g. The strict EIMT shows the tie comes from the cycle itself, so the RTI issues PTAGs; A&rsquo;s propagates upstream to B. Released provisionally, the two exchange presence and absence at g until every input is known, then confirm with LTC. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 9 &mdash; a zero-delay cycle, message by message.</b> Both members of the cycle request the same tag g.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-zero-delay-cycle-message-message">Figure&nbsp;9</a></p>
 <ol class="figsteps">
@@ -633,6 +638,7 @@ keyed-hash message authentication code (HMAC) exists.</p>
 <li><b>LTC(g) from A.</b> A has completed g.</li>
 <li><b>LTC(g) from B.</b> g is committed for both; their next NETs open the next tag.</li>
 </ol>
+<p><strong>How to read <a href="#fig-zero-delay-cycle-message-message">Figure&nbsp;9</a>.</strong> Both members request g, and neither can be given a TAG, because each may still send the other a message at g. The strict EIMT shows the tie comes from the cycle itself, so the RTI issues PTAGs; A&rsquo;s propagates upstream to B. Released provisionally, the two exchange presence and absence at g until every input is known, then confirm with LTC.</p>
 
 
 <h3 id="s4-4">4.4 &mdash; The grant algebra: tag arithmetic itself</h3>
@@ -653,8 +659,9 @@ a positive time first would wrongly erase microsteps the rest of the path preser
 
 <figure id="fig-superdense-time">
 <!--@svg:fig-superdense-time@-->
-<figcaption><b>Figure 10 &mdash; superdense time.</b> A tag is a time and a microstep, ordered by time first. Crossing an <code>after 0</code> connection adds one microstep; crossing a positive delay adds time and resets the microstep to zero, which is why the order of additions along a path matters. The hollow point is the predecessor of (10&nbsp;ms,&nbsp;0), that is (10&nbsp;ms&nbsp;&minus;&nbsp;1&nbsp;ns, UINT_MAX): the value of <code>lf_tag_latest_earlier</code> at (10&nbsp;ms,&nbsp;0), and the value <code>lf_delay_strict</code> produces when a positive delay lands on (10&nbsp;ms,&nbsp;0).</figcaption>
+<figcaption><b>Figure 10 &mdash; superdense time.</b> A tag is a time and a microstep, ordered by time first.</figcaption>
 </figure>
+<p><strong>How to read <a href="#fig-superdense-time">Figure&nbsp;10</a>.</strong> Crossing an <code>after 0</code> connection adds one microstep; crossing a positive delay adds time and resets the microstep to zero, which is why the order of additions along a path matters. The hollow point is the predecessor of (10&nbsp;ms,&nbsp;0), that is (10&nbsp;ms&nbsp;&minus;&nbsp;1&nbsp;ns, UINT_MAX): the value of <code>lf_tag_latest_earlier</code> at (10&nbsp;ms,&nbsp;0), and the value <code>lf_delay_strict</code> produces when a positive delay lands on (10&nbsp;ms,&nbsp;0).</p>
 
 <h3 id="s4-5">4.5 &mdash; The min-delay matrix</h3>
 <p><code>update_min_delays()</code> lazily builds an n&times;n matrix of tags,
@@ -706,7 +713,7 @@ means a genuine external threat, and the node must wait.</p>
 
 <figure id="fig-graph-becomes-decision">
 <!--@svg:fig-graph-becomes-decision@-->
-<figcaption><b>Figure 11 &mdash; how the graph becomes a decision.</b> The federation of <a href="#s4-13">Section&nbsp;4.13</a> (<a href="#fig-example-federation">Figure&nbsp;14</a>), with A asking for (20,&nbsp;0). (1)&nbsp;Every path into A, including the one from A back to itself through B. (2)&nbsp;The matrix column for A stores the least delay of each of those paths, so the graph search happens once, when the topology is built. (3)&nbsp;Each upstream NET pushed through its delay; the minimum is A&rsquo;s own promise, relayed around the cycle. (4)&nbsp;Ignoring the cycle, the nearest outside threat is S at 50. <em>What to conclude:</em> a tie on EIMT with a clear strict EIMT means the node blocks only itself, and a PTAG releases it. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 11 &mdash; how the graph becomes a decision.</b> The federation of <a href="#s4-13">Section&nbsp;4.13</a> (<a href="#fig-example-federation">Figure&nbsp;14</a>), with A asking for (20,&nbsp;0).</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-graph-becomes-decision">Figure&nbsp;11</a></p>
 <ol class="figsteps">
@@ -715,6 +722,7 @@ means a genuine external threat, and the node must wait.</p>
 <li><b>Push each NET through its delay.</b> S gives (50,0); A and B give (20,0). The minimum, (20,0), equals NET(A): a tie &mdash; something might still reach A at 20, so no TAG. That minimum is A&rsquo;s own promise, relayed around the cycle.</li>
 <li><b>Strict EIMT.</b> Of A&rsquo;s immediate upstreams, B is in the zero-delay cycle and is skipped; S gives min(NET(S), EIMT(S))&nbsp;=&nbsp;(50,0), above (20,0). The only outside threat comes later, so the tie is the cycle&rsquo;s own: PTAG(20,0).</li>
 </ol>
+<p><strong>What <a href="#fig-graph-becomes-decision">Figure&nbsp;11</a> shows.</strong> A tie on EIMT with a clear strict EIMT means the node blocks only itself, and a PTAG releases it.</p>
 <h3 id="s4-7">4.7 &mdash; The DNET candidate: tag subtraction</h3>
 <p>DNET runs the algebra in reverse. When node s reports a new NET, the RTI recomputes, for
 each node u upstream of s, &ldquo;what is the earliest tag at which anything u could send
@@ -910,7 +918,7 @@ in a socket buffer. The clamp is small, and it is the difference between a coord
 reasons about the network it is running and one that reasons about the network it was told about.</p>
 <figure id="fig-rti-cannot-trust-net-alone">
 <!--@svg:fig-rti-cannot-trust-net-alone@-->
-<figcaption><b>Figure 12 &mdash; why the RTI cannot trust the NET alone.</b> Same federation as <a href="#fig-example-federation">Figure&nbsp;14</a>. (1)&nbsp;The RTI forwards a message tagged 4 and remembers it. (2)&nbsp;A, which has not received it, truthfully reports NET(10). (3)&nbsp;The RTI records the smaller of the two, so what it reports to A&rsquo;s downstreams accounts for the message still on the wire. (4)&nbsp;Only A&rsquo;s LTC proves the message was handled, and only then does the entry go. <em>What to conclude:</em> a NET describes the federate&rsquo;s queue; the RTI&rsquo;s record also covers the network between them. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 12 &mdash; why the RTI cannot trust the NET alone.</b> Same federation as <a href="#fig-example-federation">Figure&nbsp;14</a>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-rti-cannot-trust-net-alone">Figure&nbsp;12</a></p>
 <ol class="figsteps">
@@ -919,6 +927,7 @@ reasons about the network it is running and one that reasons about the network i
 <li><b>The RTI clamps.</b> The RTI records min(10,&nbsp;4)&nbsp;=&nbsp;4 as A&rsquo;s next event, so C, 10&nbsp;ms downstream of A through B, can be granted only up to the predecessor of (14&nbsp;ms,&nbsp;0), not 20&nbsp;ms. The record covers the message still on the wire.</li>
 <li><b>LTC(4) clears the entry.</b> The message lands; A handles tag 4 and sends LTC(4). Only then does the RTI drop every in-transit entry up to 4, and A&rsquo;s next NET, 10, is recorded as it is.</li>
 </ol>
+<p><strong>What <a href="#fig-rti-cannot-trust-net-alone">Figure&nbsp;12</a> shows.</strong> A NET describes the federate&rsquo;s queue; the RTI&rsquo;s record also covers the network between them.</p>
 
 <figure id="fig-cost-net">
 <!--@svg:fig-cost-net@-->
@@ -1109,8 +1118,9 @@ and knowing the question explains why the answer has the shape it has &mdash; in
 parts that look like accidents of implementation.</p>
 <figure id="fig-algebra-comes-from">
 <!--@svg:fig-algebra-comes-from@-->
-<figcaption><b>Figure 17 &mdash; where the algebra comes from.</b> Two lines of work meet in the RTI. Distributed simulation provided the protocol: null messages and lookahead, their centralized form in the HLA, and the proof that zero lookahead forces a provisional grant. The semantics of time provided the meaning: superdense tags, and fixed points that make zero-delay cycles well defined. Years are those of the works cited in <a href="#s4-14">Section&nbsp;4.14</a>.</figcaption>
+<figcaption><b>Figure 17 &mdash; where the algebra comes from.</b> Two lines of work meet in the RTI.</figcaption>
 </figure>
+<p><strong>How to read <a href="#fig-algebra-comes-from">Figure&nbsp;17</a>.</strong> Distributed simulation provided the protocol: null messages and lookahead, their centralized form in the HLA, and the proof that zero lookahead forces a provisional grant. The semantics of time provided the meaning: superdense tags, and fixed points that make zero-delay cycles well defined. Years are those of the works cited in <a href="#s4-14">Section&nbsp;4.14</a>.</p>
 
 <p><strong>Conservative synchronization and lookahead.</strong> Chandy and Misra, and
 independently Bryant, posed the problem in the late 1970s: logical processes exchange timestamped
@@ -1236,13 +1246,14 @@ latency but keep STA at zero; a nonzero STA adds physical lag at the receiver bu
 smaller delays. Both purchase headroom against E + L + D.</p>
 <figure id="fig-absence-safe-assume">
 <!--@svg:fig-absence-safe-assume@-->
-<figcaption><b>Figure 18 &mdash; when absence is safe to assume.</b> Both panels share one physical time axis. The bars are the budget E&nbsp;+&nbsp;L&nbsp;+&nbsp;D; the vertical line is the message&rsquo;s tag, the instant at which B, with <code>@maxwait(0)</code> (STA&nbsp;=&nbsp;0), stops waiting and treats the input as absent. (1)&nbsp;With <code>after 100 msec</code> the budget ends 84&nbsp;ms before B looks. (2)&nbsp;With the lab&rsquo;s recipe the tag comes first and the message second, and the handler fires. <em>What to conclude:</em> the inequality <code>after &gt; E + L + D</code> is the statement that the budget fits before the tag; nothing checks it at run time except the handler. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 18 &mdash; when absence is safe to assume.</b> Both panels share one physical time axis. The bars are the budget E&nbsp;+&nbsp;L&nbsp;+&nbsp;D; the vertical line is the message&rsquo;s tag, the instant at which B, with <code>@maxwait(0)</code> (STA&nbsp;=&nbsp;0), stops waiting and treats the input as absent.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-absence-safe-assume">Figure&nbsp;18</a></p>
 <ol class="figsteps">
 <li><b>Within the window.</b> With <code>after 100 msec</code>, sender lag D&nbsp;=&nbsp;10&nbsp;ms, network L&nbsp;=&nbsp;5&nbsp;ms and clock error E&nbsp;=&nbsp;1&nbsp;ms, the message arrives at about 15&nbsp;ms and B decides &ldquo;absent&rdquo; only at the tag, 100&nbsp;ms: a margin of 84&nbsp;ms, so the message is always in before B looks.</li>
 <li><b>Late arrival.</b> With the lab&rsquo;s violation recipe &mdash; <code>after 1 msec</code> and the sender slowed by 50&nbsp;ms &mdash; the tag comes at 1&nbsp;ms and the message at about 55&nbsp;ms. B has already moved past the tag, so the <code>tardy</code> body, the STAA violation handler, runs instead of the reaction: the error is detected, not silent.</li>
 </ol>
+<p><strong>What <a href="#fig-absence-safe-assume">Figure&nbsp;18</a> shows.</strong> The inequality <code>after &gt; E + L + D</code> is the statement that the budget fits before the tag; nothing checks it at run time except the handler.</p>
 
 
 
@@ -1432,7 +1443,7 @@ documentation&rsquo;s statement that federated programs keep their determinism g
 that condition.</p>
 <figure id="fig-ways-establish-tag-safe">
 <!--@svg:fig-ways-establish-tag-safe@-->
-<figcaption><b>Figure 19 &mdash; two ways to establish that a tag is safe.</b> Both architectures answer the question of the top box, for every input of F. (1)&nbsp;The question. (2)&nbsp;Centralized coordination: federates report their next events and completions, and the RTI, which also knows the topology and the messages in transit, issues a TAG or PTAG only when that logical knowledge excludes an earlier message. (3)&nbsp;Decentralized coordination in micro-LF: no RTI takes part; F combines, per input, the last tag received, a waiting bound written with <code>@maxwait</code> and its synchronized clock. (4)&nbsp;The failure modes differ: waiting on the left, a late message on the right, where (t&#8242;,&nbsp;m&#8242;) is the tag F is processing when the message arrives. <em>What to conclude:</em> the comparison is architectural. The left side excludes an unsafe advance under reliable delivery and correct federates; the right side also requires its timing bounds to hold, and detects, rather than excludes, the cases in which they do not. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 19 &mdash; two ways to establish that a tag is safe.</b> Both architectures answer the question of the top box, for every input of F.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-ways-establish-tag-safe">Figure&nbsp;19</a></p>
 <ol class="figsteps">
@@ -1441,6 +1452,7 @@ that condition.</p>
 <li><b>Decentralized, in micro-LF.</b> No RTI takes part. An input is resolved at g when a message with a tag at or after g has arrived on it; otherwise F waits until its synchronized clock reads t&nbsp;+&nbsp;W, W being the largest <code>@maxwait</code> among the unresolved inputs, and then commits to g.</li>
 <li><b>Failure modes.</b> On the left, a slow or silent federate delays grants, and F waits. On the right, a message later than the assumed bound finds its tag already processed: the runtime records a safe-to-process violation, moves the event to the next microstep of the tag being processed, and runs the reaction&rsquo;s <code>tardy</code> handler if it has one, otherwise its body on the late value.</li>
 </ol>
+<p><strong>What <a href="#fig-ways-establish-tag-safe">Figure&nbsp;19</a> shows.</strong> The comparison is architectural. The left side excludes an unsafe advance under reliable delivery and correct federates; the right side also requires its timing bounds to hold, and detects, rather than excludes, the cases in which they do not.</p>
 
 <p><strong>What follows for a hardware RTI (interpretation).</strong> micro-LF executes federated Lingua Franca
 programs with no RTI, so a run-time infrastructure is not required by the semantic model of Lingua Franca itself. An
@@ -1518,7 +1530,7 @@ source, two protocols. Output: one binary per federate, the RTI compiled from bu
 matching source, and a launcher script.</p>
 <figure id="fig-cycles-can-exist">
 <!--@svg:fig-cycles-can-exist@-->
-<figcaption><b>Figure 20 &mdash; which cycles can exist.</b> The feedback pair of the lab, twice. (1)&nbsp;At the level of federates both programs are the same zero-delay cycle, and that is all the RTI ever sees. (2)&nbsp;Opening the boxes shows the reactions and their dependencies: output to input across the network, declared order inside a reactor. (3)&nbsp;Left, the chain a1&nbsp;&#8594;&nbsp;b1&nbsp;&#8594;&nbsp;a2 ends; right, a2 also writes the output, and the chain closes on itself. <em>What to conclude:</em> the compiler decides on the reaction graph whether a cycle is meaningful; the RTI, with PTAG, only has to wait correctly on cycles that already passed. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 20 &mdash; which cycles can exist.</b> The feedback pair of the lab, twice.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-cycles-can-exist">Figure&nbsp;20</a></p>
 <ol class="figsteps">
@@ -1526,6 +1538,7 @@ matching source, and a launcher script.</p>
 <li><b>The boxes opened.</b> Inside, the reactions and their dependencies appear: output to input across the network, and declared order inside a reactor (a1 before a2).</li>
 <li><b>Allowed or rejected.</b> On the left, a1&nbsp;&rarr;&nbsp;b1&nbsp;&rarr;&nbsp;a2 ends: no reaction waits for its own output, the program is constructive, and at run time the RTI releases the cycle with PTAGs. On the right, a2 also writes the output, so a2&nbsp;&rarr;&nbsp;b1&nbsp;&rarr;&nbsp;a2 closes on itself at one tag: a causality loop, which the compiler rejects.</li>
 </ol>
+<p><strong>What <a href="#fig-cycles-can-exist">Figure&nbsp;20</a> shows.</strong> The compiler decides on the reaction graph whether a cycle is meaningful; the RTI, with PTAG, only has to wait correctly on cycles that already passed.</p>
 
 <p>The launcher is more than a convenience and worth knowing before you debug a deployment
 that will not start. It brings up the RTI first, passing the federation ID and the number of
@@ -1828,7 +1841,7 @@ EIMT while the decision tests the tightened one, so the hardware has to pick, an
 weaker grant.</p>
 <figure id="fig-cascade-snapshot">
 <!--@svg:fig-cascade-snapshot@-->
-<figcaption><b>Figure 25 &mdash; cascade and snapshot.</b> The software RTI judges the sender&rsquo;s downstream nodes one after another, and each judgement sees what the earlier ones wrote. A hardware RTI judges every node at once against one copy of the state, emits only for the nodes the software would have visited, and merges the grants one node can receive in one step. &ldquo;Fixed&rdquo; means fixed for the size the hardware is built for; the next figure shows how it grows with n. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 25 &mdash; cascade and snapshot.</b> One NET, judged by the software RTI and by a hardware RTI.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-cascade-snapshot">Figure&nbsp;25</a></p>
 <ol class="figsteps">
@@ -1837,6 +1850,7 @@ weaker grant.</p>
 <li><b>Node 3.</b> Node&nbsp;3, seeing the writes of nodes 1 and 2.</li>
 <li><b>Node 4.</b> The software is done: its time grew with the downstream set. The hardware&rsquo;s time was fixed for the build, and any grants one node received from two sources were merged into the strongest before emission.</li>
 </ol>
+<p><strong>How to read <a href="#fig-cascade-snapshot">Figure&nbsp;25</a>.</strong> The software RTI judges the sender&rsquo;s downstream nodes one after another, and each judgement sees what the earlier ones wrote. A hardware RTI judges every node at once against one copy of the state, emits only for the nodes the software would have visited, and merges the grants one node can receive in one step. &ldquo;Fixed&rdquo; means fixed for the size the hardware is built for; <a href="#fig-three-quantities-timeline">Figure&nbsp;26</a> shows how it grows with n.</p>
 
 <p><strong>The matrix is read whole, every time.</strong> Evaluating all n nodes means reading
 every column of the min-delay matrix on every message. A block RAM hands over two entries a
@@ -1849,7 +1863,7 @@ DNET computation reads the matrix by rows instead, and when its fast path does n
 cycles, which bounds throughput rather than latency.</p>
 <figure id="fig-three-quantities-timeline">
 <!--@svg:fig-three-quantities-timeline@-->
-<figcaption><b>Figure 26 &mdash; three quantities on one timeline.</b> Two messages through a hardware RTI built for 8 nodes with one EIMT tree and one two-node zero-delay cycle. (1)&nbsp;The second message arrives during the first and waits. (2)&nbsp;From acceptance, evaluating every node takes a fixed K&nbsp;=&nbsp;24 cycles. (3)&nbsp;A PTAG walk may follow, so grants leave by K<sub>max</sub>&nbsp;=&nbsp;38. (4)&nbsp;The next message is accepted a fixed I&nbsp;=&nbsp;34 cycles after the previous one. (5)&nbsp;K grows with n: by one cycle per doubling with a tree per node, by n with a single tree. <em>What to conclude:</em> &ldquo;fixed&rdquo; means fixed for the size the hardware was built for, and the wait in the queue is the part that is only bounded. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 26 &mdash; three quantities on one timeline.</b> Two messages through a hardware RTI built for 8 nodes with one EIMT tree and one two-node zero-delay cycle.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-three-quantities-timeline">Figure&nbsp;26</a></p>
 <ol class="figsteps">
@@ -1859,6 +1873,7 @@ cycles, which bounds throughput rather than latency.</p>
 <li><b>I.</b> The next message is accepted a fixed I&nbsp;=&nbsp;34 cycles after the previous one; the 4-cycle overlap is m1&rsquo;s dispatch running while m2 is decoded. The wait in the queue is the only part that varies, and it is bounded.</li>
 <li><b>K grows with n.</b> With d&nbsp;=&nbsp;4, one EIMT tree per node adds about one cycle per doubling of n; a single tree adds about n. K is fixed for a given build, not independent of the size the build is made for.</li>
 </ol>
+<p><strong>What <a href="#fig-three-quantities-timeline">Figure&nbsp;26</a> shows.</strong> &ldquo;fixed&rdquo; means fixed for the size the hardware was built for, and the wait in the queue is the part that is only bounded.</p>
 
 <p><strong>The in-transit queue becomes a small table.</strong> The priority queue of <a href="#s4-11">Section&nbsp;4.11</a>
 supports only three operations: insert a tag if absent, remove everything up to a completed tag,
@@ -2233,7 +2248,7 @@ unknown again. <a href="#fig-four-orders">Figure&nbsp;28</a> shows both, with th
 the order on delays used below.</p>
 <figure id="fig-four-orders">
 <!--@svg:fig-four-orders@-->
-<figcaption><b>Figure 28 &mdash; four orders.</b> Each diagram shows an element above another when it is larger, and joins neighbours with a line. (1)&nbsp;Tags form a chain: any two are comparable. (2)&nbsp;The status of one port at one tag is a flat order: unknown below present and absent, which are incomparable. (3)&nbsp;For two ports, compare port by port. The bottom, ??, is &ldquo;nothing known&rdquo;; the four maximal elements are the complete answers; the green path is the constructive run of <a href="#fig-fixed-point-tag">Figure&nbsp;33</a>. There is no top: PP and PA have no common upper bound. (4)&nbsp;A path delay ordered by information: FOREVER (no path known) at the bottom, and a smaller delay above a larger one; the entry S&#8594;C of <a href="#fig-closure-successive-approximations">Figure&nbsp;31</a> jumps from FOREVER to 10&nbsp;ms in iteration&nbsp;3. <em>What to conclude:</em> the two fixed points built in this appendix iterate on orders like (2)&ndash;(4): each has a least element, and an iteration can reach only finitely many values in it, which is all the Kleene iteration needs. Tags (1) play a different role. Among finite tags none is largest, and the runtime adds <code>FOREVER_TAG</code> as a sentinel above them all; neither fact decides whether a run ends. A finite program stops; a long-running federation keeps deciding because new events keep arriving (<a href="#s15-3">Section&nbsp;15.3</a>). Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 28 &mdash; four orders.</b> Each diagram shows an element above another when it is larger, and joins neighbours with a line.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-four-orders">Figure&nbsp;28</a></p>
 <ol class="figsteps">
@@ -2242,6 +2257,7 @@ the order on delays used below.</p>
 <li><b>Two ports.</b> Pairs compare port by port. ?? is the bottom; the four pairs with both ports known are maximal, and no element lies above all of them. The green path is the constructive run: p becomes present first, then q.</li>
 <li><b>A path delay.</b> Read by information, FOREVER (no path known) is the bottom and a smaller delay lies higher. The entry S&rarr;C stays at FOREVER for two iterations and becomes 10&nbsp;ms in the third.</li>
 </ol>
+<p><strong>What <a href="#fig-four-orders">Figure&nbsp;28</a> shows.</strong> The two fixed points built in this appendix iterate on orders like (2)&ndash;(4): each has a least element, and an iteration can reach only finitely many values in it, which is all the Kleene iteration needs. Tags (1) play a different role. Among finite tags none is largest, and the runtime adds <code>FOREVER_TAG</code> as a sentinel above them all; neither fact decides whether a run ends. A finite program stops; a long-running federation keeps deciding because new events keep arriving (<a href="#s15-3">Section&nbsp;15.3</a>).</p>
 <p>A function <em>f</em> on an ordered set is <strong>monotone</strong> if x&nbsp;&#8849;&nbsp;y implies
 f(x)&nbsp;&#8849;&nbsp;f(y): more information in never means less information out. A <strong>fixed point</strong> is
 an x with f(x)&nbsp;=&nbsp;x, and the <strong>least fixed point</strong> is the one below all others. Tarski&rsquo;s
@@ -2259,7 +2275,7 @@ in a finite-height order it reaches some y with f(y)&nbsp;=&nbsp;y. That y is a 
 the least one.</p></details>
 <figure id="fig-fixed-points-monotone-function">
 <!--@svg:fig-fixed-points-monotone-function@-->
-<figcaption><b>Figure 29 &mdash; fixed points of a monotone function.</b> A small function on a chain, shown as points (x,&nbsp;f(x)) with the diagonal f(x)&nbsp;=&nbsp;x. (1)&nbsp;f is monotone: a larger x never gives a smaller f(x). (2)&nbsp;Its fixed points are where the points touch the diagonal: 3, 5 and 6. (3)&nbsp;The Kleene iteration starts at the bottom and applies f until nothing changes: 0, 2, 3, 3. Each vertical step applies f, each dashed horizontal step carries the result to the diagonal, where it becomes the next x. (4)&nbsp;Monotonicity keeps every iterate below every fixed point, so the first repeat is the least one. (5)&nbsp;A function that is not monotone can climb and fall back forever. <em>What to conclude:</em> what makes the iteration stop at the <em>least</em> fixed point is monotonicity, a property of f at two comparable inputs (x&nbsp;&le;&nbsp;y implies f(x)&nbsp;&le;&nbsp;f(y)), not the fact that the sequence only climbs. Change f(2) to 4 and the sequence 0, 2, 4, 5, 5 still only climbs, yet stops above the fixed point 3. For the min-delay matrix, one relaxation step is monotone because <code>min</code> and &oplus; are (<a href="#s15-3">Section&nbsp;15.3</a>); for ports, a reaction whose inputs are resolved produces the same outputs however many other ports are resolved. The rule of <a href="#s8">Section&nbsp;8</a> that a resolved port never becomes unknown again describes how the runtime updates its state; it is a different property from the monotonicity the proof uses. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 29 &mdash; fixed points of a monotone function.</b> A small function on a chain, shown as points (x,&nbsp;f(x)) with the diagonal f(x)&nbsp;=&nbsp;x.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-fixed-points-monotone-function">Figure&nbsp;29</a></p>
 <ol class="figsteps">
@@ -2269,6 +2285,8 @@ the least one.</p></details>
 <li><b>Why the least.</b> By induction with monotonicity, every iterate is at or below every fixed point, so the first value that repeats lies below 5 and 6 as well.</li>
 <li><b>Without monotonicity.</b> g sends 1 to 2 but 2 to 1. Its iteration climbs and falls back forever, and g has no fixed point to find.</li>
 </ol>
+<p><strong>How to read <a href="#fig-fixed-points-monotone-function">Figure&nbsp;29</a>.</strong> In the Kleene iteration, each vertical step applies f, and each dashed horizontal step carries the result to the diagonal, where it becomes the next x.</p>
+<p><strong>What <a href="#fig-fixed-points-monotone-function">Figure&nbsp;29</a> shows.</strong> What makes the iteration stop at the <em>least</em> fixed point is monotonicity, a property of f at two comparable inputs (x&nbsp;&le;&nbsp;y implies f(x)&nbsp;&le;&nbsp;f(y)), not the fact that the sequence only climbs. Change f(2) to 4 and the sequence 0, 2, 4, 5, 5 still only climbs, yet stops above the fixed point 3. For the min-delay matrix, one relaxation step is monotone because <code>min</code> and &oplus; are (<a href="#s15-3">Section&nbsp;15.3</a>); for ports, a reaction whose inputs are resolved produces the same outputs however many other ports are resolved. The rule of <a href="#s8">Section&nbsp;8</a> that a resolved port never becomes unknown again describes how the runtime updates its state; it is a different property from the monotonicity the proof uses.</p>
 <p>For path delays the useful direction is downward: a delay only improves by getting smaller, the iteration starts from FOREVER (&ldquo;no path&rdquo;), and the least fixed point in the information order, of the function F of <a href="#s15-3">Section&nbsp;15.3</a> that includes the direct connections, is the matrix of <em>smallest</em> delays (step&nbsp;4 of <a href="#fig-four-orders">Figure&nbsp;28</a>). It is the same theory with the order read upside down.</p>
 <h3 id="s15-2">15.2 &mdash; Dependency graphs</h3>
 <p>A Lingua Franca program has two dependency graphs, and it matters which one is meant.</p>
@@ -2292,7 +2310,7 @@ problem</strong>: combine the delays along a path with the tag addition &oplus;,
 delays are accumulated in path order; associativity and monotonicity are all the relaxation needs.</p>
 <figure id="fig-dependency-graphs-program">
 <!--@svg:fig-dependency-graphs-program@-->
-<figcaption><b>Figure 30 &mdash; two dependency graphs of one program.</b> The federation of <a href="#s4-13">Section&nbsp;4.13</a>. (1)&nbsp;Its reactions and their same-tag dependencies: port to port across the network, and declared order inside A; the <code>after 10 ms</code> connection creates no dependency within a tag. (2)&nbsp;That graph has no cycle. (3)&nbsp;The federate graph keeps only federates, connections and delays. (4)&nbsp;There, A and B form a strongly connected component with zero delay. <em>What to conclude:</em> the compiler judges the left graph, the RTI works on the right one, and a zero-delay cycle on the right is legal exactly when the left has no cycle. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 30 &mdash; two dependency graphs of one program.</b> The federation of <a href="#s4-13">Section&nbsp;4.13</a>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-dependency-graphs-program">Figure&nbsp;30</a></p>
 <ol class="figsteps">
@@ -2301,6 +2319,7 @@ delays are accumulated in path order; associativity and monotonicity are all the
 <li><b>The federate graph.</b> Federates, the connections between them and the least delay on each, as <code>NEIGHBOR_STRUCTURE</code> reports them &mdash; all the RTI knows.</li>
 <li><b>A strongly connected component.</b> A and B reach each other at zero delay: a zero-delay cycle of federates. It is legal because the reaction graph has no cycle, and the RTI releases it with PTAGs.</li>
 </ol>
+<p><strong>What <a href="#fig-dependency-graphs-program">Figure&nbsp;30</a> shows.</strong> The compiler judges the left graph, the RTI works on the right one, and a zero-delay cycle on the right is legal exactly when the left has no cycle.</p>
 
 <h3 id="s15-3">15.3 &mdash; Two fixed points and a safe advance</h3>
 <p>Three computations take place while a federation runs, by different parties and over different orders. Two are fixed points in the sense of <a href="#s15-1">Section&nbsp;15.1</a>, and this appendix builds them explicitly. The third, the RTI&rsquo;s advance of time, is better described as a safe, monotone advance, and it is kept apart.</p>
@@ -2337,7 +2356,7 @@ least simple path from its last connection to its first, and applying monotonici
 entry is at most that path&rsquo;s delay. With the previous point, it equals it. <a href="#fig-any-relaxation-order-ends-least">Figure&nbsp;32</a> follows the three steps on a small graph.</p></details>
 <figure id="fig-closure-successive-approximations">
 <!--@svg:fig-closure-successive-approximations@-->
-<figcaption><b>Figure 31 &mdash; the closure as successive approximations.</b> The min-delay matrix of the federation of <a href="#s4-13">Section&nbsp;4.13</a>, computed as F(&perp;), F(F(&perp;)), &hellip; with F(D)&nbsp;=&nbsp;min(E,&nbsp;D&nbsp;&otimes;&nbsp;E) and E the matrix of direct connections. (1)&nbsp;One connection. (2)&nbsp;Up to two: S reaches B, and A and B reach themselves at zero delay. (3)&nbsp;Up to three: S reaches C. (4)&nbsp;Nothing more changes. <em>What to conclude:</em> each round is monotone and can only lower an entry, and an entry takes one of finitely many values &mdash; the delay of a simple path between two different federates, or of a simple cycle on the diagonal &mdash; so the iteration stops; where it stops is the least fixed point, whatever order the relaxation used. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 31 &mdash; the closure as successive approximations.</b> The min-delay matrix of the federation of <a href="#s4-13">Section&nbsp;4.13</a>, computed as F(&perp;), F(F(&perp;)), &hellip; with F(D)&nbsp;=&nbsp;min(E,&nbsp;D&nbsp;&otimes;&nbsp;E) and E the matrix of direct connections.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-closure-successive-approximations">Figure&nbsp;31</a></p>
 <ol class="figsteps">
@@ -2346,9 +2365,10 @@ entry is at most that path&rsquo;s delay. With the previous point, it equals it.
 <li><b>Iteration 3.</b> Paths of three connections: S reaches C through A and B, at 10&nbsp;ms.</li>
 <li><b>The fixed point.</b> A fourth iteration changes nothing. The matrix is the least fixed point of F, and it is <a href="#tab-min-delays">Table&nbsp;3</a>, in <a href="#s4-13">Section&nbsp;4.13</a>.</li>
 </ol>
+<p><strong>What <a href="#fig-closure-successive-approximations">Figure&nbsp;31</a> shows.</strong> Each round is monotone and can only lower an entry, and an entry takes one of finitely many values &mdash; the delay of a simple path between two different federates, or of a simple cycle on the diagonal &mdash; so the iteration stops; where it stops is the least fixed point, whatever order the relaxation used.</p>
 <figure id="fig-any-relaxation-order-ends-least">
 <!--@svg:fig-any-relaxation-order-ends-least@-->
-<figcaption><b>Figure 32 &mdash; why any relaxation order ends at the least delays.</b> A four-node graph, not the example federation, chosen so that the order of relaxation matters; every delay has microstep 0, so &oplus; adds times. (1)&nbsp;The least delay from u to e is 4&nbsp;ms, along u&rarr;x&rarr;y&rarr;e. (2)&nbsp;The recursion of <a href="#s4-5">Section&nbsp;4.5</a> from e, visiting the upstreams of e in two orders: with x first, the entry for u takes the values &infin;, 5, 4; with y first, &infin;, 4. Each change is a strict decrease. (3)&nbsp;Why the decreases stop: each one lowers the time, or keeps it and lowers the microstep, and that order on pairs of natural numbers has no infinite descending chain. (4)&nbsp;Why no entry drops below 4: every value written is the delay of some walk, and removing the cycle x&rarr;y&rarr;x from the walk u&nbsp;x&nbsp;y&nbsp;x&nbsp;y&nbsp;e takes 6 down to 4. (5)&nbsp;Why no entry stays above 4: when nothing changes, every connection satisfies d(v)&nbsp;&le;&nbsp;delay(v&rarr;w)&nbsp;&oplus;&nbsp;d(w); walking back along u&rarr;x&rarr;y&rarr;e gives d(u)&nbsp;&le;&nbsp;4. <em>What to conclude:</em> termination comes from the order on tags, the lower bound from x&nbsp;&le;&nbsp;x&nbsp;&oplus;&nbsp;d, and the upper bound from re-examining the connections after every improvement; the order of the updates changes the route to the answer, not the answer. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 32 &mdash; why any relaxation order ends at the least delays.</b> A four-node graph, not the example federation, chosen so that the order of relaxation matters; every delay has microstep 0, so &oplus; adds times.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-any-relaxation-order-ends-least">Figure&nbsp;32</a></p>
 <ol class="figsteps">
@@ -2358,6 +2378,7 @@ entry is at most that path&rsquo;s delay. With the previous point, it equals it.
 <li><b>Never below the least.</b> Each value written is the delay of a walk that may repeat nodes. Removing a cycle never increases a delay: u&nbsp;x&nbsp;y&nbsp;x&nbsp;y&nbsp;e costs 6, and without the cycle x&nbsp;y&nbsp;x it is u&nbsp;x&nbsp;y&nbsp;e at 4.</li>
 <li><b>Never stuck above the least.</b> At rest, no connection offers an improvement. Following the least path backwards, d(y)&nbsp;&le;&nbsp;1, d(x)&nbsp;&le;&nbsp;2 and d(u)&nbsp;&le;&nbsp;4; with the previous step, d(u)&nbsp;=&nbsp;4 in both orders.</li>
 </ol>
+<p><strong>What <a href="#fig-any-relaxation-order-ends-least">Figure&nbsp;32</a> shows.</strong> Termination comes from the order on tags, the lower bound from x&nbsp;&le;&nbsp;x&nbsp;&oplus;&nbsp;d, and the upper bound from re-examining the connections after every improvement; the order of the updates changes the route to the answer, not the answer.</p>
 
 <p><strong>The value of a tag.</strong> At a tag, each federate&rsquo;s runtime decides its reactions as their
 dependencies are resolved. A reaction runs when it is triggered and everything it depends on is resolved; when all
@@ -2377,7 +2398,7 @@ x<sub>0</sub> every port is present or absent, and in the flat order nothing lie
 itself, so x&nbsp;=&nbsp;x<sub>0</sub> port by port. Both steps assume that a reaction&rsquo;s outputs are determined by its inputs and state at the tag; physical actions and clock readings enter as inputs (<a href="#s15-4">Section&nbsp;15.4</a>). The same induction over the topological order fixes values as well as statuses: each reaction, when decided, reads inputs whose values are already determined and, being deterministic, produces determined outputs and a determined new state. <a href="#fig-acyclic-reaction-graph-gives-exactly">Figure&nbsp;34</a> shows both steps.</p></details>
 <figure id="fig-fixed-point-tag">
 <!--@svg:fig-fixed-point-tag@-->
-<figcaption><b>Figure 33 &mdash; the fixed point of one tag.</b> (1)&nbsp;A port&rsquo;s status at a tag starts unknown and can only rise, once, to present or absent. (2&ndash;4)&nbsp;For the constructive feedback pair of <a href="#fig-cycles-can-exist">Figure&nbsp;20</a>, each round decides every reaction whose triggers and dependencies are resolved &mdash; it runs if a trigger is present, and is not triggered if all are absent &mdash; and resolves a port once no reaction that may write it is still undecided; after three rounds nothing changes and every port is resolved, here both present. (5)&nbsp;When a2 may also write p, the same iteration stops with both ports unknown. <em>What to conclude:</em> a program is constructive at a tag exactly when this least fixed point leaves no port unknown. The compiler does not run this iteration: it rejects every cycle in the reaction graph, a structural condition that guarantees constructiveness at every tag and is stricter than constructiveness in general. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 33 &mdash; the fixed point of one tag.</b></figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-fixed-point-tag">Figure&nbsp;33</a></p>
 <ol class="figsteps">
@@ -2387,9 +2408,10 @@ itself, so x&nbsp;=&nbsp;x<sub>0</sub> port by port. Both steps assume that a re
 <li><b>Round 3.</b> a2 is triggered by q and runs. In the next round nothing is left to decide and nothing changes: this is the least fixed point, and every port is resolved.</li>
 <li><b>The loop variant.</b> If a2 may also write p, p is resolved only once a2 is decided; a2 waits for q, q for b1, b1 for p. After a1 runs nothing else can be decided: the iteration stops with both ports unknown.</li>
 </ol>
+<p><strong>What <a href="#fig-fixed-point-tag">Figure&nbsp;33</a> shows.</strong> A program is constructive at a tag exactly when this least fixed point leaves no port unknown. The compiler does not run this iteration: it rejects every cycle in the reaction graph, a structural condition that guarantees constructiveness at every tag and is stricter than constructiveness in general. Each round decides every reaction whose triggers and dependencies are resolved &mdash; it runs if a trigger is present, and is not triggered if all are absent &mdash; and resolves a port once no reaction that may write it is still undecided.</p>
 <figure id="fig-acyclic-reaction-graph-gives-exactly">
 <!--@svg:fig-acyclic-reaction-graph-gives-exactly@-->
-<figcaption><b>Figure 34 &mdash; why an acyclic reaction graph gives exactly one behaviour at a tag.</b> The constructive feedback pair of Figures&nbsp;<a href="#fig-cycles-can-exist">20</a> and <a href="#fig-fixed-point-tag">33</a>, with the two steps of the proof sketch in <a href="#s15-3">Section&nbsp;15.3</a>. (1)&nbsp;A topological order of its reaction graph: a1, b1, a2. (2)&nbsp;Suppose the iteration stopped with a reaction undecided, and take the earliest one in the order, say b1. Everything it depends on comes earlier and is decided, so p is resolved and b1 would be decided in the next round: the iteration had not stopped. (3)&nbsp;The least fixed point x&#8320; therefore resolves both ports, here PP, and no element of the order on pairs lies above a pair with both ports resolved. Every fixed point lies above x&#8320;, so every fixed point is x&#8320;. (4)&nbsp;In the loop variant, where a2 may also write p, the least fixed point is ??, which is not maximal; the argument establishes nothing about what lies above it, and the compiler rejects the program. <em>What to conclude:</em> acyclicity gives a total least fixed point, and totality gives uniqueness; the second step uses only the shape of the flat order, not the program. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 34 &mdash; why an acyclic reaction graph gives exactly one behaviour at a tag.</b> The constructive feedback pair of Figures&nbsp;<a href="#fig-cycles-can-exist">20</a> and <a href="#fig-fixed-point-tag">33</a>, with the two steps of the proof sketch in <a href="#s15-3">Section&nbsp;15.3</a>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-acyclic-reaction-graph-gives-exactly">Figure&nbsp;34</a></p>
 <ol class="figsteps">
@@ -2398,6 +2420,7 @@ itself, so x&nbsp;=&nbsp;x<sub>0</sub> port by port. Both steps assume that a re
 <li><b>The least fixed point is the only one.</b> In the order on pairs, PP has nothing above it. Every fixed point lies above the least one, x&#8320;&nbsp;=&nbsp;PP, so every fixed point equals it.</li>
 <li><b>Where the argument stops.</b> With a causality loop the least fixed point is ??, which has elements above it; nothing in the argument picks one of them, and <code>lfc</code> rejects the program instead.</li>
 </ol>
+<p><strong>What <a href="#fig-acyclic-reaction-graph-gives-exactly">Figure&nbsp;34</a> shows.</strong> Acyclicity gives a total least fixed point, and totality gives uniqueness; the second step uses only the shape of the flat order, not the program.</p>
 
 <p><strong>Time.</strong> The RTI&rsquo;s records are completions, next events and grants. Completions and grants
 only move forward: a grant is issued only when the safety conditions of <a href="#s4-2">Section&nbsp;4.2</a> hold, the guards drop anything that
@@ -2440,7 +2463,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <p><strong>What the compiler produces.</strong> The micro-LF compiler generates a separate C project for every federate and a launch script that starts one process per federate; no RTI process exists to be started<sup class="c"><a href="#ref49">[49]</a></sup>. Each federate&rsquo;s program contains a <code>FederatedEnvironment</code> and, for every neighbor, a <code>FederatedConnectionBundle</code>: one network channel to that neighbor, and the <code>FederatedOutputConnection</code> and <code>FederatedInputConnection</code> objects of the connections that the channel carries. When the program names no interface, the channel is TCP on the loopback address<sup class="c"><a href="#ref49">[49]</a></sup>. The startup, shutdown and clock-synchronization coordinators are part of every federate, with their event buffers sized at compile time, as are the event queue, the reaction queue and the payload buffer of each input connection (<a href="#s5-3">Section&nbsp;5.3</a>). The decision examined in this section reads three fields of each <code>FederatedInputConnection</code>: <code>last_known_tag</code>, <code>max_wait</code> (the value of <code>@maxwait</code>) and the payload buffer. <a href="#fig-compiler-builds-example-16-1">Figure&nbsp;35</a> shows the result for <code>Tardy.ulf</code>.</p>
 <figure id="fig-compiler-builds-example-16-1">
 <!--@svg:fig-compiler-builds-example-16-1@-->
-<figcaption><b>Figure 35 &mdash; what the compiler builds for Example&nbsp;16.1.</b> (1)&nbsp;Each instance in the federated reactor becomes a separate program with its own reactors. (2)&nbsp;Each program has a <code>FederatedEnvironment</code>: the scheduler with its two queues and a <code>PhysicalClock</code> that the clock synchronization corrects in software. (3)&nbsp;For each neighbor, a <code>FederatedConnectionBundle</code> holds one network channel and the connection objects it carries; the input side keeps <code>last_known_tag</code>, <code>max_wait</code> and a fixed pool of payload slots. (4)&nbsp;Startup, shutdown and clock synchronization are coordinators inside every federate; the one channel carries all four kinds of <code>FederateMessage</code>. <em>What to conclude:</em> everything that <a href="#s3">Section&nbsp;3</a> assigns to the RTI is either inside the federates or absent; there is no third process. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 35 &mdash; what the compiler builds for Example&nbsp;16.1.</b></figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-compiler-builds-example-16-1">Figure&nbsp;35</a></p>
 <ol class="figsteps">
@@ -2449,6 +2472,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Connections.</b> A <code>FederatedConnectionBundle</code> per neighbor holds the network channel (here TCP; <code>src</code> is the server, <code>dst</code> the client) and the connection objects. The input connection holds the three fields the tag decision reads.</li>
 <li><b>Coordinators and messages.</b> Every federate contains a startup coordinator, a shutdown coordinator and a clock-synchronization component; <code>src</code> is grandmaster. Tagged data and all coordination traffic share the one channel. Every buffer is sized at compile time.</li>
 </ol>
+<p><strong>What <a href="#fig-compiler-builds-example-16-1">Figure&nbsp;35</a> shows.</strong> Everything that <a href="#s3">Section&nbsp;3</a> assigns to the RTI is either inside the federates or absent; there is no third process.</p>
 <h3 id="s16-2">16.2 &mdash; Startup, observed</h3>
 <p>With informational logging enabled, the receiving federate of the measured runs printed the following before its first reaction (timestamps in nanoseconds of its clock; the spelling is the runtime&rsquo;s):</p>
 <pre><code>[INFO] [NET] TcpIpChannel: [client] Connected to server on 127.0.0.1:8911
@@ -2461,7 +2485,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <p>The sequence is the one described in <a href="#s5-3">Section&nbsp;5.3</a>: a handshake with the only neighbor, then rounds of start-time proposals, the number of rounds being the longest path of the undirected graph of neighbors, here one. Because <code>src</code> is the grandmaster, only its proposal carries a time, its clock plus 100&nbsp;ms; in this run the agreed start time lay about 100&nbsp;ms after the moment at which negotiation completed. Nothing in the sequence involves a third process. The federation of <a href="#s3">Section&nbsp;3</a> performs the same three steps &mdash; joining, a common start time, the beginning of execution &mdash; through the RTI (<a href="#fig-joining-federation">Figure&nbsp;5</a>). <a href="#fig-startup-between-neighbors-logged">Figure&nbsp;36</a> lays the exchange out as a message sequence chart, with the times taken from a run with debug logging; it also shows the clock-synchronization traffic that the informational log omits.</p>
 <figure id="fig-startup-between-neighbors-logged">
 <!--@svg:fig-startup-between-neighbors-logged@-->
-<figcaption><b>Figure 36 &mdash; startup between two neighbors, as logged.</b> Measured with informational and debug logging, times in milliseconds relative to the agreed start on <code>dst</code>&rsquo;s clock; the chart is not to scale. (1)&nbsp;<code>dst</code> connects to <code>src</code>. (2)&nbsp;Clock synchronization establishes priorities, the hop count from the grandmaster. (3)&nbsp;Each side sends a handshake request and answers with its own coordination state. (4)&nbsp;One round of start-time proposals, because the longest path between neighbors is one; only the grandmaster proposes a time. (5)&nbsp;Both start at the same tag, and the first tagged message follows. <em>What to conclude:</em> the three services that the RTI provides at startup in <a href="#s3">Section&nbsp;3</a> (<a href="#fig-joining-federation">Figure&nbsp;5</a>) are performed pairwise between neighbors. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 36 &mdash; startup between two neighbors, as logged.</b> Measured with informational and debug logging, times in milliseconds relative to the agreed start on <code>dst</code>&rsquo;s clock; the chart is not to scale.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-startup-between-neighbors-logged">Figure&nbsp;36</a></p>
 <ol class="figsteps">
@@ -2471,10 +2495,11 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Proposals.</b> With clock synchronization enabled, only the grandmaster proposes a time: its clock plus 100&nbsp;ms. <code>dst</code> proposes NEVER. After one round, the longest path, both take the maximum.</li>
 <li><b>Start.</b> Both schedule their startup and timers at the agreed start tag. The first <code>TaggedMessage</code>, value 1 with tag (0&nbsp;ms,&nbsp;0), reaches <code>dst</code> 0.3&nbsp;ms later.</li>
 </ol>
+<p><strong>What <a href="#fig-startup-between-neighbors-logged">Figure&nbsp;36</a> shows.</strong> The three services that the RTI provides at startup in <a href="#s3">Section&nbsp;3</a> (<a href="#fig-joining-federation">Figure&nbsp;5</a>) are performed pairwise between neighbors.</p>
 <p><strong>Two state machines behind the chart.</strong> The startup coordinator moves through five states named in the protocol itself: UNINITIALIZED, CONNECTING, HANDSHAKING, NEGOTIATING and RUNNING (<a href="#fig-startup-coordinator-state-machine">Figure&nbsp;37</a>). The handshake response carries the sender&rsquo;s current state, and that is how a federate decides between negotiating a start time with neighbors that are also starting and joining neighbors that are already running; a mixture of the two stops startup with an error<sup class="c"><a href="#ref49">[49]</a></sup>. Underneath, every network channel runs a state machine of its own (<a href="#fig-tcp-network-channel-state-machine">Figure&nbsp;38</a>). Its one interaction with the tag decision is a precise one: a channel that is not connected is skipped by <code>acquire_tag</code>, so the inputs of a lost neighbor are treated as absent rather than awaited, and every change into or out of the connected state wakes the scheduler so that the decision is taken again.</p>
 <figure id="fig-startup-coordinator-state-machine">
 <!--@svg:fig-startup-coordinator-state-machine@-->
-<figcaption><b>Figure 37 &mdash; the startup coordinator as a state machine.</b> From <code>startup_coordinator.c</code> at <code>df7cfea</code>; the state names are those of the protocol. (1)&nbsp;A federate first opens every channel and blocks until all are connected. (2)&nbsp;It then exchanges handshakes with every neighbor; each response reports the neighbor&rsquo;s own state. (3)&nbsp;If every neighbor is still starting, the federate negotiates a start time over <code>longest_path</code> rounds and runs. (4)&nbsp;If every neighbor is already running, the federate joins: it asks for the start time and starts 50&nbsp;ms after the latest logical time reported, stepping its clock; a mixture of running and starting neighbors is an error. <em>What to conclude:</em> joining is decided locally from the neighbors&rsquo; reported states, without the membership records that the RTI keeps for transient federates (<a href="#s3-2">Section&nbsp;3.2</a>). Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 37 &mdash; the startup coordinator as a state machine.</b> From <code>startup_coordinator.c</code> at <code>df7cfea</code>; the state names are those of the protocol.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-startup-coordinator-state-machine">Figure&nbsp;37</a></p>
 <ol class="figsteps">
@@ -2483,9 +2508,10 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Negotiating, then running.</b> When all neighbors are still starting, the federate runs <code>longest_path</code> rounds of start-time proposals, keeps the maximum, and after the last round schedules startup reactions and timers at the start tag.</li>
 <li><b>Joining, or failing.</b> When all neighbors are running, the federate requests the start time and joins at the largest reported logical time plus 50&nbsp;ms, stepping its physical clock to it (policy <code>JOIN_IMMEDIATELY</code> or <code>JOIN_TIMER_ALIGNED</code>). A mixture of running and starting neighbors stops startup with an error.</li>
 </ol>
+<p><strong>What <a href="#fig-startup-coordinator-state-machine">Figure&nbsp;37</a> shows.</strong> Joining is decided locally from the neighbors&rsquo; reported states, without the membership records that the RTI keeps for transient federates (<a href="#s3-2">Section&nbsp;3.2</a>).</p>
 <figure id="fig-tcp-network-channel-state-machine">
 <!--@svg:fig-tcp-network-channel-state-machine@-->
-<figcaption><b>Figure 38 &mdash; the TCP network channel as a state machine.</b> From <code>tcp_ip_channel.c</code> at <code>df7cfea</code>; a worker thread drives the transitions. (1)&nbsp;Opening: the server binds and accepts, the client connects. (2)&nbsp;The connected state, and its loss on a read error or when the peer closes; entering or leaving CONNECTED wakes the scheduler. (3)&nbsp;A failed or lost connection waits the channel&rsquo;s expected connection time, resets the socket and tries again; <code>close_connection</code> ends in CLOSED. <em>What to conclude:</em> a lost neighbor does not stall its receivers: <code>acquire_tag</code> waits only for inputs on connected channels, so from the receiver&rsquo;s side a disconnected neighbor is treated as having nothing to send. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 38 &mdash; the TCP network channel as a state machine.</b> From <code>tcp_ip_channel.c</code> at <code>df7cfea</code>; a worker thread drives the transitions.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-tcp-network-channel-state-machine">Figure&nbsp;38</a></p>
 <ol class="figsteps">
@@ -2493,23 +2519,25 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Connected, and lost.</b> In CONNECTED the channel receives messages and <code>is_connected()</code> is true. A read error or a closed peer leads to LOST_CONNECTION. Every change into or out of CONNECTED calls the platform&rsquo;s <code>notify()</code>, so the scheduler re-examines its inputs.</li>
 <li><b>Retry and close.</b> From CONNECTION_FAILED or LOST_CONNECTION the worker waits the expected connection time, resets the socket and returns to OPEN. <code>close_connection</code> moves the channel to CLOSED.</li>
 </ol>
+<p><strong>What <a href="#fig-tcp-network-channel-state-machine">Figure&nbsp;38</a> shows.</strong> A lost neighbor does not stall its receivers: <code>acquire_tag</code> waits only for inputs on connected channels, so from the receiver&rsquo;s side a disconnected neighbor is treated as having nothing to send.</p>
 <p><strong>Clock synchronization, one round.</strong> The priority exchange at the top of <a href="#fig-startup-between-neighbors-logged">Figure&nbsp;36</a> builds a tree rooted at the grandmaster: each federate&rsquo;s priority is one more than the smallest priority among its neighbors, and it synchronizes with the neighbor that supplied it. Each round, once a second by default, is the four-timestamp exchange of <a href="#fig-clock-synchronization-round">Figure&nbsp;39</a>. In the logged round the computed offset was 742&nbsp;ns over a loopback round trip of 133&nbsp;&micro;s; both federates read the same host clock, so the figure measures the method&rsquo;s own noise on this host, not a real clock error. The correction is applied to the federate&rsquo;s <code>PhysicalClock</code> in software &mdash; an offset, and a rate that a proportional&ndash;integral servo adjusts &mdash; so the hardware needs only a free-running counter (<a href="#s16-6">Section&nbsp;16.6</a>).</p>
 <figure id="fig-clock-synchronization-round">
 <!--@svg:fig-clock-synchronization-round@-->
-<figcaption><b>Figure 39 &mdash; one clock-synchronization round.</b> From <code>clock_synchronization.c</code> at <code>df7cfea</code>, with the timestamps of one logged round on one host. (1)&nbsp;The slave asks its master neighbor for a sync; the master answers with its send time T1, and the slave records the arrival T2. (2)&nbsp;The slave sends a delay request at T3; the master answers with its arrival time T4. (3)&nbsp;The slave computes the round-trip time, assumes a symmetric path, and corrects its <code>PhysicalClock</code>: a step above 100&nbsp;ms, otherwise a rate adjustment by a proportional&ndash;integral servo with the linuxptp default gains. <em>What to conclude:</em> E in the condition of <a href="#s16-4">Section&nbsp;16.4</a> is the residual of this loop, which depends on the symmetry and jitter of the channel, on the clock resolution of the platform (<a href="#s16-6">Section&nbsp;16.6</a>) and on the period, one second by default. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 39 &mdash; one clock-synchronization round.</b> From <code>clock_synchronization.c</code> at <code>df7cfea</code>, with the timestamps of one logged round on one host.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-clock-synchronization-round">Figure&nbsp;39</a></p>
 <ol class="figsteps">
 <li><b>Sync.</b> <code>dst</code> sends RequestSync to its master neighbor. <code>src</code> replies with SyncResponse carrying T1, its clock when sending; <code>dst</code> takes T2 from the arrival time.</li>
 <li><b>Delay.</b> <code>dst</code> sends DelayRequest and records T3; <code>src</code> replies with DelayResponse carrying T4, its clock at the arrival of the request.</li>
-<li><b>Correction.</b> RTT&nbsp;=&nbsp;(T4&nbsp;&minus;&nbsp;T1)&nbsp;&minus;&nbsp;(T3&nbsp;&minus;&nbsp;T2); with half of it as the one-way delay, the offset in the logged round was 742&nbsp;ns. Offsets above 100&nbsp;ms are stepped; smaller ones are corrected by the servo through the clock&rsquo;s rate.</li>
+<li><b>Correction.</b> RTT&nbsp;=&nbsp;(T4&nbsp;&minus;&nbsp;T1)&nbsp;&minus;&nbsp;(T3&nbsp;&minus;&nbsp;T2); with half of it as the one-way delay, the offset in the logged round was 742&nbsp;ns. Offsets above 100&nbsp;ms are stepped; smaller ones are corrected through the clock&rsquo;s rate by a proportional&ndash;integral servo with the linuxptp default gains.</li>
 </ol>
+<p><strong>What <a href="#fig-clock-synchronization-round">Figure&nbsp;39</a> shows.</strong> E in the condition of <a href="#s16-4">Section&nbsp;16.4</a> is the residual of this loop, which depends on the symmetry and jitter of the channel, on the clock resolution of the platform (<a href="#s16-6">Section&nbsp;16.6</a>) and on the period, one second by default.</p>
 <h3 id="s16-3">16.3 &mdash; Following one tag</h3>
 <p>Consider <code>dst</code> at the tag g&nbsp;=&nbsp;(400&nbsp;ms,&nbsp;0), with <code>@maxwait(50ms)</code>. The steps below follow the scheduler&rsquo;s state machine of <a href="#fig-micro-lf-federate-advances-state">Figure&nbsp;40</a>; the outcomes were measured, and <a href="#fig-example-16-1-dst-physical">Figure&nbsp;41</a> places them on <code>dst</code>&rsquo;s physical timeline.</p>
 
 <figure id="fig-micro-lf-federate-advances-state">
 <!--@svg:fig-micro-lf-federate-advances-state@-->
-<figcaption><b>Figure 40 &mdash; how a micro-LF federate advances, as two state machines.</b> From <code>scheduler.c</code>, <code>federated_environment.c</code> and <code>federated.c</code> at <code>df7cfea</code>. (1)&nbsp;The loop selects the earliest tag and sleeps until the clock reaches it; a notification sends it back to SELECT, and system events (startup, clock synchronization, shutdown) are handled without the input check. (2)&nbsp;For a tag event, ACQUIRE computes W from the unresolved inputs on connected channels and, if W is positive, waits until the absolute deadline g.t&nbsp;+&nbsp;W; a message interrupts the wait. (3)&nbsp;COMMIT runs the tag. (4)&nbsp;On the receive side, a message with a future tag is scheduled and raises <code>last_known_tag</code>. (5)&nbsp;A message whose tag is not in the future becomes a safe-to-process violation one microstep later; full buffers drop messages. <em>What to conclude:</em> the only inputs to the decision are local &mdash; the queues, the per-input records and the clock &mdash; and the only coupling between the two machines is the event queue, the <code>last_known_tag</code> fields under their locks, and <code>notify()</code>. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 40 &mdash; how a micro-LF federate advances, as two state machines.</b> From <code>scheduler.c</code>, <code>federated_environment.c</code> and <code>federated.c</code> at <code>df7cfea</code>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-micro-lf-federate-advances-state">Figure&nbsp;40</a></p>
 <ol class="figsteps">
@@ -2519,6 +2547,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Receive: in time.</b> The channel&rsquo;s receive callback computes the message&rsquo;s tag, the sender&rsquo;s tag plus the connection&rsquo;s <code>after</code>. If it is later than the current tag, the event is scheduled, <code>last_known_tag</code> rises to it, and the loop is notified.</li>
 <li><b>Receive: too late, or no room.</b> If the tag is not later than the current tag, the runtime records a safe-to-process violation and schedules the event at the current time with the microstep plus one, keeping the intended tag. A full payload pool drops the message and leaves <code>last_known_tag</code> unchanged; a decoding error or a full event queue drops it but still advances <code>last_known_tag</code>.</li>
 </ol>
+<p><strong>What <a href="#fig-micro-lf-federate-advances-state">Figure&nbsp;40</a> shows.</strong> The only inputs to the decision are local &mdash; the queues, the per-input records and the clock &mdash; and the only coupling between the two machines is the event queue, the <code>last_known_tag</code> fields under their locks, and <code>notify()</code>.</p>
 
 <h4>Step 1 &mdash; the clock reaches the tag</h4>
 <p>The timer event at g is the head of <code>dst</code>&rsquo;s event queue. The scheduler sleeps until the physical clock reads 400&nbsp;ms after the start time and then calls <code>acquire_tag(g)</code><sup class="c"><a href="#ref49">[49]</a></sup>.</p>
@@ -2542,7 +2571,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <p>Without a handler, the runtime runs the body on the late value at the later tag and logs only the safe-to-process warning; the program cannot then tell a late value from a timely one unless it inspects the tag. With W&nbsp;=&nbsp;150&nbsp;ms the deadline at tag 400&nbsp;ms is 550&nbsp;ms; message 3 arrives at 500&nbsp;ms, interrupts the wait and is processed at its own tag, 100&nbsp;ms late in physical time and on time logically. One deviation recurred. In 13 of 20 runs (10 with each value of W) the reaction at 600&nbsp;ms ran 38&ndash;43&nbsp;ms late, with the right value. The debug log of one such run is consistent with message 4 reaching <code>dst</code> about 40&nbsp;ms after <code>src</code> sent it, at the moment the first clock-synchronization round (<a href="#fig-clock-synchronization-round">Figure&nbsp;39</a>) crossed the same TCP connection. The TCP channel at the examined commit does not set <code>TCP_NODELAY</code>, and 40&nbsp;ms is the delayed-acknowledgement time of Linux, so an interaction between Nagle&rsquo;s algorithm and delayed acknowledgements is a plausible cause; it was not tested. Whatever its cause, it is an instance of L: latency added by the transport, which W has to cover. Here it did, because 40&nbsp;ms is below both values of W.</p>
 <figure id="fig-example-16-1-dst-physical">
 <!--@svg:fig-example-16-1-dst-physical@-->
-<figcaption><b>Figure 41 &mdash; Example 16.1 on <code>dst</code>&rsquo;s physical timeline.</b> Measured runs, one host, loopback TCP. (1)&nbsp;<code>src</code> sends at its timer tags, except that message 3, tagged (400&nbsp;ms,&nbsp;0), leaves 100&nbsp;ms late. (2)&nbsp;With <code>@maxwait(50ms)</code>, <code>dst</code> waits until 450&nbsp;ms, commits (400&nbsp;ms,&nbsp;0) with the input absent, and receives message 3 at 500&nbsp;ms: a safe-to-process violation, handled by <code>tardy</code> at (400&nbsp;ms,&nbsp;1). (3)&nbsp;With <code>@maxwait(150ms)</code>, the deadline is 550&nbsp;ms; message 3 arrives first, interrupts the wait and is processed at (400&nbsp;ms,&nbsp;0). (4)&nbsp;When <code>src</code> sends nothing at a tag, nothing tells <code>dst</code> so, and every such tag costs the whole wait. <em>What to conclude:</em> W does not enter the program&rsquo;s logical behaviour while the timing bound holds; it sets how late, in physical time, a federate may commit a tag, and therefore the latency paid for every absent input. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 41 &mdash; Example 16.1 on <code>dst</code>&rsquo;s physical timeline.</b> Measured runs, one host, loopback TCP.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-example-16-1-dst-physical">Figure&nbsp;41</a></p>
 <ol class="figsteps">
@@ -2551,13 +2580,14 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>W&nbsp;=&nbsp;150&nbsp;ms.</b> The deadline for (400&nbsp;ms,&nbsp;0) is 550&nbsp;ms. Message 3 arrives at 500&nbsp;ms, interrupts the wait and resolves the input; <code>dst</code> processes (400&nbsp;ms,&nbsp;0) with the value 3, 100&nbsp;ms late in physical time, at the right tag.</li>
 <li><b>A silent sender.</b> With <code>src</code> sending only odd counts, no message exists for the tags 200 and 600&nbsp;ms, and the protocol has no message that says so. <code>dst</code> waits the whole 150&nbsp;ms at each of them; at 400&nbsp;ms the message cuts the wait short.</li>
 </ol>
+<p><strong>What <a href="#fig-example-16-1-dst-physical">Figure&nbsp;41</a> shows.</strong> W does not enter the program&rsquo;s logical behaviour while the timing bound holds; it sets how late, in physical time, a federate may commit a tag, and therefore the latency paid for every absent input.</p>
 <h3 id="s16-4">16.4 &mdash; What absence costs, and choosing W</h3>
 <p><strong>Absence is paid for in time.</strong> The fourth row of <a href="#tab-tardy-variants">Table&nbsp;11</a> is the cost of the design choice noted in <a href="#s5-3">Section&nbsp;5.3</a>: the protocol carries no message that reports absence, so a federate learns that an input is absent at g in one of three ways &mdash; a later-tagged message on the same connection, the passage of its clock to t&nbsp;+&nbsp;W, or the joining announcement of a neighbor. In the measured runs the second is what happened at 200 and 600&nbsp;ms. The first was visible in a run with <code>@maxwait(500ms)</code> and the sparse sender: at the tag 200&nbsp;ms <code>dst</code> did not wait until 700&nbsp;ms, but committed at 500&nbsp;ms, when message 3, tagged 400&nbsp;ms, arrived and established that nothing tagged 200&nbsp;ms would follow on that connection. A sender with nothing to say therefore delays its receivers by up to W at every tag at which they have something to do; a sender that stops altogether delays them by W at every such tag for as long as its channel stays connected (inputs on a disconnected channel are not waited for).</p>
 <p><strong>The same question under centralized coordination.</strong> In <a href="#s4">Section&nbsp;4</a> the absence of a message is established by logical evidence: the upstream federate&rsquo;s NET and LTC tell the RTI that it will produce nothing earlier, and the RTI grants the tag (Sections&nbsp;<a href="#s4-2">4.2</a>, <a href="#s4-6">4.6</a>). The cost of that evidence is a round trip through the RTI and the RTI&rsquo;s serialized decision (Sections&nbsp;<a href="#s4-10">4.10</a>, <a href="#s4-12">4.12</a>), not a bound chosen in advance, and DNET (<a href="#s4-7">Section&nbsp;4.7</a>) reduces how many NETs a federate has to send. The two architectures therefore move the cost of silence to different places: micro-LF pays it as waiting time at the receiver, bounded by W and independent of the network; centralized coordination pays it in messages and in the latency of the decision, and needs no timing assumption to be correct. <a href="#fig-tag-nothing-send-under-both">Figure&nbsp;42</a> sets the two message patterns side by side for one silent tag.</p>
 
 <figure id="fig-tag-nothing-send-under-both">
 <!--@svg:fig-tag-nothing-send-under-both@-->
-<figcaption><b>Figure 42 &mdash; a tag with nothing to send, under both architectures.</b> Schematic; the left side reproduces the fourth row of <a href="#fig-example-16-1-dst-physical">Figure&nbsp;41</a>, the right side the message pattern of <a href="#s4">Section&nbsp;4</a> in simplified form (DNET, <a href="#s4-7">Section&nbsp;4.7</a>, can remove some NETs). (1)&nbsp;In micro-LF no message reports that <code>src</code> has nothing at 200&nbsp;ms; <code>dst</code> waits until 200&nbsp;ms&nbsp;+&nbsp;W and then treats the input as absent. (2)&nbsp;Under centralized coordination <code>src</code> reports completion and its next event, and the RTI grants the tag to <code>dst</code>. (3)&nbsp;Both give the same logical result. <em>What to conclude:</em> the micro-LF commit time is fixed by W and needs no traffic but rests on the timing bounds; the centralized commit follows the evidence as soon as it arrives and rests on none. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 42 &mdash; a tag with nothing to send, under both architectures.</b> Schematic; the left side reproduces the fourth row of <a href="#fig-example-16-1-dst-physical">Figure&nbsp;41</a>, the right side the message pattern of <a href="#s4">Section&nbsp;4</a> in simplified form (DNET, <a href="#s4-7">Section&nbsp;4.7</a>, can remove some NETs).</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-tag-nothing-send-under-both">Figure&nbsp;42</a></p>
 <ol class="figsteps">
@@ -2565,13 +2595,14 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Centralized.</b> <code>dst</code> has asked to advance to 200&nbsp;ms. When <code>src</code> completes 200&nbsp;ms it sends LTC and its next event, NET(400); the RTI can then exclude a message at 200&nbsp;ms and sends TAG(200) to <code>dst</code>.</li>
 <li><b>Comparison.</b> The logical outcome, input absent at 200&nbsp;ms, is the same. What differs is when the receiver may commit, and whether that rests on messages or on a timing bound.</li>
 </ol>
+<p><strong>What <a href="#fig-tag-nothing-send-under-both">Figure&nbsp;42</a> shows.</strong> The micro-LF commit time is fixed by W and needs no traffic but rests on the timing bounds; the centralized commit follows the evidence as soon as it arrives and rests on none.</p>
 
 <p><strong>Choosing W (interpretation).</strong> <a href="#s5-3">Section&nbsp;5.3</a> gives the sufficient condition after&nbsp;+&nbsp;W&nbsp;&gt;&nbsp;E&nbsp;+&nbsp;L&nbsp;+&nbsp;D, which the runtime does not compute. In the program <code>Tardy.ulf</code> of the tutorial edition (Example&nbsp;16.1) the two federates run on one host, so the clock error E is small and the loopback latency L is far below a millisecond; the sender lag D at count 3 is 100&nbsp;ms, and the connection has no <code>after</code>. The condition asks for W above roughly 100&nbsp;ms: 50&nbsp;ms violates it and 150&nbsp;ms satisfies it, as the runs showed. Two remarks follow from the mechanism. First, W and <code>after</code> are not interchangeable. An <code>after</code> delay is part of the program: it shifts the tag of every message and changes what the program computes. W is not: while the condition holds it changes only when, in physical time, the receiver commits each tag, and it enters the logical behaviour only through the violations it fails to prevent. Second, D is the term the programmer controls most directly, and a <code>deadline</code> on the sending reaction makes its bound checkable, as in Example&nbsp;5.1 (<a href="#s5">Section&nbsp;5</a>); E depends on the clock synchronization of <a href="#s6">Section&nbsp;6</a>, which in micro-LF runs between neighbors along the tree rooted at the grandmaster (<a href="#s5-3">Section&nbsp;5.3</a>).</p>
 <h3 id="s16-5">16.5 &mdash; What a hardware implementation would hold</h3>
 <p>(Interpretation.) <a href="#s9-9">Section&nbsp;9.9</a> lists what a hardware RTI would have to implement: per-federate records, the min-delay matrix, the EIMT of every node and the grant rules, for the whole federation in one place. The decision of <a href="#s16-3">Section&nbsp;16.3</a> needs much less, and needs it in every federate rather than in one place: for each incoming federated connection a <code>last_known_tag</code> register and a <code>max_wait</code> constant, the maximum of the constants over the inputs whose register is below the candidate tag, a comparison of the physical clock with t&nbsp;+&nbsp;W against an absolute deadline, and a path by which an arriving message interrupts the wait and restarts the decision. The state grows with the number of the federate&rsquo;s inputs, not with the size of the federation, and no part of it describes another federate. What it gives up is what <a href="#s16-4">Section&nbsp;16.4</a> described: absence costs W, the guarantee rests on E, L and D, and a late message is detected and handed to the program rather than excluded. Which of the two is preferable is a property of the application &mdash; how often inputs are silent, whether the timing bounds can be established, whether a late value may be handled rather than prevented &mdash; and not of the language: both execute the same Lingua Franca semantics, under different assumptions. <a href="#fig-micro-lf-decision-datapath-interpretation">Figure&nbsp;43</a> shows the per-federate datapath next to what the centralized design keeps.</p>
 <figure id="fig-micro-lf-decision-datapath-interpretation">
 <!--@svg:fig-micro-lf-decision-datapath-interpretation@-->
-<figcaption><b>Figure 43 &mdash; the micro-LF decision as a datapath (interpretation).</b> The decision of <a href="#s16-3">Section&nbsp;16.3</a> read as hardware; no such design exists in the sources. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 43 &mdash; the micro-LF decision as a datapath (interpretation).</b> The decision of <a href="#s16-3">Section&nbsp;16.3</a> read as hardware; no such design exists in the sources.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-micro-lf-decision-datapath-interpretation">Figure&nbsp;43</a></p>
 <ol class="figsteps">
@@ -2588,7 +2619,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <p><strong>What a platform must provide.</strong> The runtime is split in two layers (<a href="#fig-micro-lf-program-meets-hardware">Figure&nbsp;44</a>). The code the compiler generates for the program and the runtime core &mdash; scheduler, event queues, federated coordination, the synchronized clock &mdash; are the same C source on every target. Only two small interfaces differ from one platform to another, and porting micro-LF to new hardware means implementing them. A platform implements the <code>Platform</code> interface &mdash; <code>get_physical_time</code> in nanoseconds, <code>wait_until</code> and <code>wait_for</code>, <code>wait_until_interruptible</code>, which must return early when <code>notify</code> is called from an interrupt or another thread, and a <code>Mutex</code> with <code>lock</code> and <code>unlock</code> &mdash; and, for a federated program, at least one <code>NetworkChannel</code>: <code>open_connection</code>, <code>is_connected</code>, <code>send_blocking</code>, and either a receive callback (an asynchronous channel) or a <code>poll</code> function that the scheduler calls (a polled channel)<sup class="c"><a href="#ref49">[49]</a></sup>. Read as hardware requirements, this is a short list: a time source that can be read as a monotonically increasing count, a way to sleep until a time that an interrupt can cut short, a way to make a critical section, and a communication peripheral with a driver. The synchronized clock does not have to be a hardware feature: the runtime keeps it in software, as the hardware count corrected by an offset and a rate (<a href="#s16-2">Section&nbsp;16.2</a>). Nor is a heap needed: every queue and buffer is sized at compile time, by the generator and by the annotations <code>@max_pending_events</code> and <code>@buffer</code><sup class="c"><a href="#ref49">[49]</a></sup>.</p>
 <figure id="fig-micro-lf-program-meets-hardware">
 <!--@svg:fig-micro-lf-program-meets-hardware@-->
-<figcaption><b>Figure 44 &mdash; where a micro-LF program meets the hardware.</b> From <code>platform.h</code>, <code>network_channel.h</code> and the platform directories at <code>df7cfea</code>. (1)&nbsp;The application and the C the compiler generates from it, with every size fixed. (2)&nbsp;The portable runtime core. (3)&nbsp;The two interfaces a port implements: five platform functions and a mutex, and, for federated programs, a network channel. (4)&nbsp;The platforms with an implementation in the repository, and the three things the hardware must offer. <em>What to conclude:</em> the hardware micro-LF requires is a short list &mdash; a time source, an interruptible sleep, a critical section and, for federation, a channel &mdash; and the properties of these, not the processor, set the clock error E and the smallest useful W. Use the controls below the figure to step through it: the current step is explained under the controls, and every step is listed after the figure. The static figure, which is also what prints, shows every step.</figcaption>
+<figcaption><b>Figure 44 &mdash; where a micro-LF program meets the hardware.</b> From <code>platform.h</code>, <code>network_channel.h</code> and the platform directories at <code>df7cfea</code>.</figcaption>
 </figure>
 <p class="figsteps-t">The steps of <a href="#fig-micro-lf-program-meets-hardware">Figure&nbsp;44</a></p>
 <ol class="figsteps">
@@ -2597,6 +2628,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Two interfaces.</b> A platform supplies five functions and a mutex; a federated program also needs a <code>NetworkChannel</code>, either asynchronous (with a receive callback) or polled.</li>
 <li><b>Platforms and hardware.</b> Nine platform directories exist at the examined commit. Underneath, the hardware needs a readable time source, a sleep that can be cut short, a way to make a critical section, and a communication peripheral.</li>
 </ol>
+<p><strong>What <a href="#fig-micro-lf-program-meets-hardware">Figure&nbsp;44</a> shows.</strong> The hardware micro-LF requires is a short list &mdash; a time source, an interruptible sleep, a critical section and, for federation, a channel &mdash; and the properties of these, not the processor, set the clock error E and the smallest useful W.</p>
 <p><strong>Support at the examined commit.</strong> The repository contains nine platform implementations. <a href="#tab-micro-lf-platforms">Table&nbsp;12</a> records, from the source, how each one obtains time, sleeps with a wake-up and makes a critical section, which network channels it has, and whether the micro-LF documentation has a page for it<sup class="c"><a href="#ref48">[48]</a>,<a href="#ref49">[49]</a></sup>. A program can also supply its own channel on any platform with <code>@interface_custom</code>.</p>
 <table id="tab-micro-lf-platforms"><caption><b>Table 12 &mdash; micro-LF platforms at commit df7cfea.</b></caption>
 <thead><tr><th>platform</th><th>physical time (resolution)</th><th>interruptible sleep</th><th>critical section</th><th>federated channels in the source</th><th>documentation page</th></tr></thead>
