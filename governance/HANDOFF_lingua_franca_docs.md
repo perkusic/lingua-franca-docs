@@ -526,6 +526,15 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
   `--allow-section-sign`). Conversão de um arquivo antigo: `lf-docs/sectwords.py` (`--lessons` para o tutorial). Ao
   alongar um texto de SVG, confira que ele cabe (houve um rótulo encurtado na Figura 19).
 
+- **Tabelas numeradas e citadas (16/out/2026, regra permanente, todos os HTMLs do projeto).** Toda `<table>` tem
+  `id="tab-…"` estável e, como primeiro filho, `<caption><b>Table N &mdash; título.</b></caption>`, numerada 1, 2, … na
+  ordem do documento (as duas edições de LF têm as mesmas 12 tabelas, com os mesmos números). **O texto nunca aponta para
+  "the table", "this table" ou "the fourth row of the table":** escreve `<a href="#tab-…">Table&nbsp;N</a>` (também em
+  legendas, perguntas e dicas do quiz; dentro de SVG, "Table N" sem link). Tabela nova: dê `id` e legenda e renumere as
+  seguintes, junto com os textos dos links (os hrefs não mudam). `lf-docs/tablecaps.py` numera um arquivo sem legendas.
+  O CI recusa tabela sem `id` ou sem legenda na ordem certa e recusa "the/this/that table" no texto; para uma estrutura
+  interna (fila, tabela de estado), escreva o nome dela ("the in-transit table", "the state table").
+
 ## Como quero as edições
 
 - Edite os arquivos diretamente e devolva os arquivos editados.
@@ -535,6 +544,7 @@ qualquer figura ≥ 18 citada numa entrada anterior soma mais 1. Os números atu
 - Sem resumo longo — uma ou duas linhas bastam.
 - Só verifique (overflow de SVG, referências órfãs, balanceamento de tags) se eu
   pedir, ou se a edição mexer em figuras, numeração ou citações.
+- **Tabelas: sempre "Table N" com link, nunca "the table"; toda tabela com `id` e legenda numerada.** O CI barra.
 - **Remissões: "section N.M" (e "Lesson N" no tutorial), sempre como link; nunca "§N"** — inclusive em legendas, quiz,
   código e SVG. O CI barra o "§".
 - Ao renumerar seções, **varra também a especificação HW-RTI**: ela cita seções

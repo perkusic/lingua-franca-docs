@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `4d2e8fc162bb3f59` |
-| `tutorial/lingua_franca_tutorial.html` | `95a0f6fc505f016a` |
-| `hw-rti/HW-RTI_project_specification.html` | `690258aaf21eef48` |
+| `tutorial/lingua_franca_rti.html` | `8350865f17a4c326` |
+| `tutorial/lingua_franca_tutorial.html` | `affa3c99c40ff9a9` |
+| `hw-rti/HW-RTI_project_specification.html` | `f437eacd756bc8d0` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 617.076 | 799.569 | 256.445 |
-| Bytes (UTF-8) | 617.102 | 799.683 | 256.457 |
-| Palavras de texto (sem SVG, CSS) | 40.524 | 55.299 | 22.534 |
+| Caracteres | 618.772 | 801.362 | 259.726 |
+| Bytes (UTF-8) | 618.798 | 801.476 | 259.738 |
+| Palavras de texto (sem SVG, CSS) | 40.634 | 55.413 | 22.761 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 434 | 521 | 22 |
+| Links `<a href>` | 440 | 529 | 26 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -320,3 +320,11 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   links +1 em cada edição (o intervalo). `fig-tag-nothing-send-under-both` passou a ter um SVG por edição; o rótulo de
   `fig-ways-establish-tag-safe` foi encurtado para caber ("centralized: reactor-c, HW-RTI (section 9.9)"). O CI recusa
   "§" seguido de número nos HTMLs de LF.
+- 16/out/2026 (manhã): **tabelas numeradas.** Toda `<table>` dos cinco HTMLs do projeto tem `id="tab-…"` estável e legenda
+  `<caption><b>Table N &mdash; título.</b></caption>`, numerada na ordem do documento (`lf-docs/tablecaps.py`): 12 em cada
+  edição de LF (mesma ordem e números nas duas), 32 na especificação, 3 na nota micro-LF, 6 no guia. Remissões vagas
+  ("the table", "the fourth row of the table") viraram "Table N" com link: LF, 8 no tutorial e 6 na referência (Tabelas 3,
+  7, 11 e 12; a dica do quiz C16.6 também); especificação, 4 (Tabelas 6, 16 e 28). Texto de SVG: "the table of section
+  4.13" virou "Table 3 of section 4.13". "grow the table" (fila em trânsito em hardware) virou "grow the in-transit table".
+  Palavras pelo delta: +114 tutorial, +110 referência, +227 especificação; links +8, +6, +4. Nota micro-LF: ids de marcador
+  duplicados (`mk-n` em 5 SVGs) renomeados e a referência [6] citada. O CI confere as legendas e recusa "the table".

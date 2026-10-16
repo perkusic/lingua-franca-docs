@@ -47,6 +47,8 @@ figure svg{width:100%;height:auto;display:block;background:#fff;
 figcaption{font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);
   margin-top:10px;padding-left:2px}
 figcaption b{color:var(--ink);font-weight:500}
+caption{caption-side:top;text-align:left;font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);padding:0 2px 8px}
+caption b{color:var(--ink);font-weight:500}
 table{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.5px}
 th{font-family:"Space Grotesk",sans-serif;font-weight:500;text-align:left;
   border-bottom:2px solid var(--ink);padding:8px 10px 8px 0}
@@ -198,7 +200,7 @@ messages from different senders, and mailbox policies &mdash; FIFO, priorities, 
 &mdash; differ from one system to another; there is no single policy that all actor systems share.</p>
 <p>A small example makes the point. An actor holds <code>x&nbsp;=&nbsp;1</code>; two independent producers send it
 A, &ldquo;increment <code>x</code>&rdquo;, and B, &ldquo;multiply <code>x</code> by two&rdquo;.</p>
-<table>
+<table id="tab-actor-orders"><caption><b>Table 1 &mdash; two processing orders, two results.</b></caption>
 <tr><th style="width:34%">Processing</th><th>Evolution of <code>x</code></th><th style="width:16%">Result</th></tr>
 <tr><td>A, then B</td><td><code>1 &rarr; 2 &rarr; 4</code></td><td>4</td></tr>
 <tr><td>B, then A</td><td><code>1 &rarr; 2 &rarr; 3</code></td><td>3</td></tr>
@@ -453,7 +455,7 @@ its effective start tag, are drained from the socket and discarded with a warnin
 <h3 id="s3-3">3.3 &mdash; The wire vocabulary</h3>
 <p>The protocol is a small binary format over TCP; the first byte tags the message type.
 The families that matter:</p>
-<table>
+<table id="tab-wire-vocabulary"><caption><b>Table 2 &mdash; the message families of the RTI protocol.</b></caption>
 <tr><th style="width:34%">Message</th><th>Meaning</th></tr>
 <tr><td><code>FED_IDS</code> / <code>TRANSIENT_FED_IDS</code> / <code>ACK</code> / <code>REJECT</code></td><td>Join handshake; federation UUID checked so strays are refused. A separate first byte distinguishes a transient joiner, because the RTI accepts one and rejects the other once execution has begun. <code>REJECT</code> carries a reason code &mdash; <code>JOINING_TOO_LATE</code> is the one a persistent federate receives if it connects after the start tag was fixed.</td></tr>
 <tr><td><code>FED_NONCE</code> / <code>RTI_RESPONSE</code> / <code>FED_RESPONSE</code></td><td>Optional HMAC authentication, interposed before the handshake completes: nonce out, keyed digest back, in both directions. The protocol is cooperative (<a href="#s4">section&nbsp;4</a>), so this is what keeps a stranger from speaking the grant protocol at all.</td></tr>
@@ -1006,14 +1008,14 @@ the 10&nbsp;ms hop to C &mdash; exists to give the algebra something to compute.
 
 <p>The closure of <a href="#s4-5">section&nbsp;4.5</a> over that topology is small enough to print in full. Rows are upstream,
 columns downstream; FOREVER means &ldquo;no path&rdquo;:</p>
-<table>
+<table id="tab-min-delays"><caption><b>Table 3 &mdash; the min-delay matrix of the example federation.</b></caption>
 <tr><th style="width:16%">min_delays</th><th>&rarr; S</th><th>&rarr; A</th><th>&rarr; B</th><th>&rarr; C</th></tr>
 <tr><td><strong>from S</strong></td><td>FOREVER</td><td>(0,0)</td><td>(0,0)</td><td>(10ms,0)</td></tr>
 <tr><td><strong>from A</strong></td><td>FOREVER</td><td><strong>(0,0)</strong></td><td>(0,0)</td><td>(10ms,0)</td></tr>
 <tr><td><strong>from B</strong></td><td>FOREVER</td><td>(0,0)</td><td><strong>(0,0)</strong></td><td>(10ms,0)</td></tr>
 <tr><td><strong>from C</strong></td><td>FOREVER</td><td>FOREVER</td><td>FOREVER</td><td>FOREVER</td></tr>
 </table>
-<p>Three observations follow from it. The column for S is entirely FOREVER, because nothing is upstream
+<p>Three observations follow from <a href="#tab-min-delays">Table&nbsp;3</a>. The column for S is entirely FOREVER, because nothing is upstream
 of a source. The row for C is entirely FOREVER, because nothing is downstream of a sink. And the
 two <strong>diagonal entries</strong> are the interesting ones: A is upstream of itself at zero
 delay, and so is B, because the relaxation of <a href="#s4-5">section&nbsp;4.5</a> walked out of each of them and came back.
@@ -1301,7 +1303,7 @@ event-driven kernel and the deadline-as-semantics discipline are the software an
 what FlexPRET later did in silicon &mdash; unsurprisingly, since PRET and Ptides ran as
 companion projects in the same group.</p>
 <h3 id="s5-2">5.2 &mdash; What Lingua Franca inherited, and what it changed</h3>
-<table>
+<table id="tab-ptides-lf"><caption><b>Table 4 &mdash; Ptides concepts and their Lingua Franca constructs.</b></caption>
 <tr><th style="width:44%">Ptides concept</th><th>LF construct</th></tr>
 <tr><td>Sensor binding: timestamp = physical time of occurrence</td><td>Physical action (sections&nbsp;<a href="#s2">2</a>, <a href="#s8">8</a>)</td></tr>
 <tr><td>Actuator binding: timestamp = delivery deadline</td><td><code>deadline</code> clause on reactions</td></tr>
@@ -1624,7 +1626,7 @@ state, <code>lf_get_array</code>/<code>lf_set_array</code> for bulk ports,
 <p>As VHDL defines a synthesizable subset of itself, HW reactors are a subset of the reactor
 model, chosen so structure is static and bounded. The result drifts from discrete-event
 toward homogeneous synchronous dataflow:</p>
-<table>
+<table id="tab-hw-reactor-subset"><caption><b>Table 5 &mdash; the restrictions of the synthesizable subset.</b></caption>
 <tr><th style="width:38%">Restriction</th><th>Reason</th></tr>
 <tr><td>Every reaction fires at every tag, producing a token to <em>every</em> output &mdash; possibly an explicit <strong>absent token</strong> inserted by the runtime.</td><td>Token traffic becomes statically dense: absence is a wire that is always driven, deleting the entire PORT_ABSENT machinery structurally.</td></tr>
 <tr><td><strong>Logical actions banned.</strong></td><td>A reaction with a logical action can schedule unboundedly many future events &mdash; an unbounded sorted queue, poison in hardware. The paper's analogy: VHDL's <code>after</code>, likewise outside the synthesizable subset.</td></tr>
@@ -1721,7 +1723,7 @@ ordinary process before ever running Vivado.</figcaption>
 <p>Synthesized with Vivado at a 5&nbsp;ns clock target (Zynq-7000 class); area is
 reported in lookup tables (LUTs) and flip-flops (FFs). Standalone Chisel
 target &mdash; runtime overhead with near-empty bodies:</p>
-<table>
+<table id="tab-reactor-chisel-cost"><caption><b>Table 6 &mdash; area and clock of reactor-chisel, Vivado, Zynq-7000 class.</b></caption>
 <tr><th>Configuration</th><th>LUTs</th><th>FFs</th><th>Fmax</th></tr>
 <tr><td>1 reaction (baseline)</td><td>62</td><td>119</td><td>319 MHz</td></tr>
 <tr><td>10 reactions</td><td>165</td><td>180</td><td>303 MHz</td></tr>
@@ -1872,7 +1874,7 @@ cycles, which bounds throughput rather than latency.</p>
 supports only three operations: insert a tag if absent, remove everything up to a completed tag,
 read the minimum. In hardware each is one parallel compare over a few entries per federate, and
 since each message touches one destination, one bank of comparators serves them all. What
-hardware cannot do is grow the table. A full table cannot drop an entry, because the bound it
+hardware cannot do is grow the in-transit table. A full in-transit table cannot drop an entry, because the bound it
 carries would vanish while its message is still in flight. Merging entries is safe, but inside a
 zero-delay cycle it can slow progress to one microstep per round trip. So the synthesizable RTI
 treats overflow as an error: the one case in which it must refuse where the software allocates and accepts.</p>
@@ -1953,7 +1955,7 @@ cycles SRTTs absorb.</p>
 <p>Strip every layer to its skeleton and the same sentence remains: <em>a component may
 advance to a tag only when it is safe to conclude that no earlier-tagged input can still
 arrive.</em> The layers differ only in how safety is established.</p>
-<table>
+<table id="tab-unifying-invariant"><caption><b>Table 7 &mdash; how each layer establishes safety.</b></caption>
 <tr><th style="width:26%">Layer</th><th style="width:30%">Transport</th><th>How safety is established</th></tr>
 <tr><td>Centralized federation</td><td>NET/TAG/PTAG/LTC over TCP</td><td><strong>Communication:</strong> the RTI's grant algebra proves it and signals it with a grant.</td></tr>
 <tr><td>Decentralized federation</td><td>Peer sockets + synchronized clocks</td><td><strong>Assumption:</strong> after &gt; E + L + D, with a violation handler for when reality objects.</td></tr>
@@ -2015,7 +2017,7 @@ debug (<code>cmake -DCMAKE_BUILD_TYPE=DEBUG</code> in <code>core/federated/RTI</
 each printed grant to its branch in <code>tag_advance_grant_if_safe()</code>.</p>
 <span class="msg" id="s13">&sect; 13 / apparatus</span>
 <h2>Glossary of acronyms</h2>
-<table class="gloss">
+<table id="tab-glossary" class="gloss"><caption><b>Table 8 &mdash; acronyms.</b></caption>
 <tr><td>AST</td><td>Abstract syntax tree: the compiler&rsquo;s structured representation of program source.</td></tr>
 <tr><td>AXI / AXI4-Lite</td><td>Advanced eXtensible Interface &mdash; ARM's on-chip bus family; -Lite is the simple register-access variant.</td></tr>
 <tr><td>BRAM</td><td>Block RAM: dedicated on-chip memory blocks in an FPGA.</td></tr>
@@ -2187,7 +2189,7 @@ binary <code>.lft</code> file into the folder they run in. The converters are pa
 <code>Receiving NET</code>&hellip; with logical and physical times in nanoseconds), and <code>rti_summary.csv</code>
 with the counts. A microstep printed as <code>-1</code> is UINT_MAX.</p>
 <h3 id="s14-5">14.5 &mdash; When something goes wrong</h3>
-<table>
+<table id="tab-troubleshooting"><caption><b>Table 9 &mdash; symptoms, causes and remedies.</b></caption>
 <tr><th style="width:38%">Symptom</th><th>Cause and remedy</th></tr>
 <tr><td>&ldquo;Port 15045 is not available&rdquo; when a federation starts</td><td>An RTI from an earlier run still holds the port. Find that process with <code>lsof -i :15045</code>, confirm with <code>ps -o pid,args -p <i>pid</i></code> that it is the stale run (the path shows which program it belongs to), and stop only it with <code>kill <i>pid</i></code>. Avoid <code>pkill RTI</code>: it would also stop an RTI that another experiment on the same machine is still using.</td></tr>
 <tr><td>A decentralized federation starts and then prints nothing</td><td>No federate has a bound: with the default STA of forever, each waits for inputs that never arrive. Add <code>@maxwait(&hellip;)</code>.</td></tr>
@@ -2313,7 +2315,7 @@ delays are accumulated in path order; associativity and monotonicity are all the
 
 <h3 id="s15-3">15.3 &mdash; Two fixed points and a safe advance</h3>
 <p>Three computations take place while a federation runs, by different parties and over different orders. Two are fixed points in the sense of <a href="#s15-1">section&nbsp;15.1</a>, and this appendix builds them explicitly. The third, the RTI&rsquo;s advance of time, is better described as a safe, monotone advance, and it is kept apart.</p>
-<table>
+<table id="tab-three-computations"><caption><b>Table 10 &mdash; two fixed points and a safe advance.</b></caption>
 <tr><th style="width:18%">Computation</th><th style="width:20%">Over</th><th style="width:22%">Computed by</th><th style="width:14%">When</th><th>Guaranteed by</th></tr>
 <tr><td>The structure: least path delays</td><td>tags, combined with <code>min</code> and &oplus;</td><td>the RTI (or the compiler)</td><td>once per topology</td><td>a monotone step (<code>min</code> and &oplus; are monotone); each entry takes finitely many values, those of simple paths and, on the diagonal, simple cycles</td></tr>
 <tr><td>The value of a tag: every port present or absent</td><td>port status, at one tag</td><td>the federates, under a TAG or PTAG</td><td>once per tag</td><td>constructiveness: the reaction graph has no cycle at that tag</td></tr>
@@ -2353,7 +2355,7 @@ entry is at most that path&rsquo;s delay. With the previous point, it equals it.
 <li><b>Iteration 1.</b> F applied to the all-FOREVER matrix gives the direct connections: (0,0) on S&rarr;A, A&rarr;B and B&rarr;A, (10ms,0) on B&rarr;C; every other entry is FOREVER.</li>
 <li><b>Iteration 2.</b> Paths of two connections: S reaches B through A; A and B reach C through B; and A and B reach themselves at zero delay &mdash; the diagonal that marks the zero-delay cycle.</li>
 <li><b>Iteration 3.</b> Paths of three connections: S reaches C through A and B, at 10&nbsp;ms.</li>
-<li><b>The fixed point.</b> A fourth iteration changes nothing. The matrix is the least fixed point of F, and it is the table of <a href="#s4-13">section&nbsp;4.13</a>.</li>
+<li><b>The fixed point.</b> A fourth iteration changes nothing. The matrix is the least fixed point of F, and it is <a href="#tab-min-delays">Table&nbsp;3</a>, in <a href="#s4-13">section&nbsp;4.13</a>.</li>
 </ol>
 <figure id="fig-any-relaxation-order-ends-least">
 <!--@svg:fig-any-relaxation-order-ends-least@-->
@@ -2539,8 +2541,8 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <p>At about 500&nbsp;ms message 3 arrives, tagged (400&nbsp;ms,&nbsp;0). The tag is not later than <code>dst</code>&rsquo;s current tag, so it cannot be scheduled: the runtime logs that it tried to schedule an event into the past, reports a safe-to-process violation and schedules the event at the current time with the microstep increased by one, (400&nbsp;ms,&nbsp;1), keeping (400&nbsp;ms,&nbsp;0) as its intended tag. At (400&nbsp;ms,&nbsp;1) the input is present with an intended tag different from the current one, so the scheduler runs the reaction&rsquo;s <code>tardy</code> handler instead of its body; the handler printed the value, the intended tag and the tag at which it ran<sup class="c"><a href="#ref49">[49]</a></sup>.</p>
 <p><strong>What the run shows.</strong> The value is not lost and the violation is not silent: the program sees it, at a defined tag, with the tag it was meant for. What the violation does change is the logical behaviour. At (400&nbsp;ms,&nbsp;0) the reaction saw the input absent; had the bound held, it would have seen 3 at that tag. Under micro-LF&rsquo;s decentralized coordination the behaviour of a federated program is the behaviour defined by its tags as long as the timing bounds hold (<a href="#s5-3">section&nbsp;5.3</a>), and a <code>tardy</code> handler is where the program states what to do when they did not.</p>
 
-<p><strong>Four variants.</strong> The table lists what <code>dst</code> printed at the tags 200, 400 and 600&nbsp;ms in four configurations, each run several times. The lag is the physical lag at which the reaction ran.</p>
-<table>
+<p><strong>Four variants.</strong> <a href="#tab-tardy-variants">Table&nbsp;11</a> lists what <code>dst</code> printed at the tags 200, 400 and 600&nbsp;ms in four configurations, each run several times. The lag is the physical lag at which the reaction ran.</p>
+<table id="tab-tardy-variants"><caption><b>Table 11 &mdash; what dst printed in four configurations.</b></caption>
 <thead><tr><th>configuration</th><th>200&nbsp;ms</th><th>400&nbsp;ms</th><th>600&nbsp;ms</th></tr></thead>
 <tbody>
 <tr><td><code>@maxwait(50ms)</code>, <code>tardy</code> handler</td><td>2, lag 0</td><td>absent, lag 50; then <code>tardy</code> with 3 at (400&nbsp;ms,&nbsp;1)</td><td>4, lag 0</td></tr>
@@ -2561,7 +2563,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>A silent sender.</b> With <code>src</code> sending only odd counts, no message exists for the tags 200 and 600&nbsp;ms, and the protocol has no message that says so. <code>dst</code> waits the whole 150&nbsp;ms at each of them; at 400&nbsp;ms the message cuts the wait short.</li>
 </ol>
 <h3 id="s16-4">16.4 &mdash; What absence costs, and choosing W</h3>
-<p><strong>Absence is paid for in time.</strong> The fourth row of the table is the cost of the design choice noted in <a href="#s5-3">section&nbsp;5.3</a>: the protocol carries no message that reports absence, so a federate learns that an input is absent at g in one of three ways &mdash; a later-tagged message on the same connection, the passage of its clock to t&nbsp;+&nbsp;W, or the joining announcement of a neighbor. In the measured runs the second is what happened at 200 and 600&nbsp;ms. The first was visible in a run with <code>@maxwait(500ms)</code> and the sparse sender: at the tag 200&nbsp;ms <code>dst</code> did not wait until 700&nbsp;ms, but committed at 500&nbsp;ms, when message 3, tagged 400&nbsp;ms, arrived and established that nothing tagged 200&nbsp;ms would follow on that connection. A sender with nothing to say therefore delays its receivers by up to W at every tag at which they have something to do; a sender that stops altogether delays them by W at every such tag for as long as its channel stays connected (inputs on a disconnected channel are not waited for).</p>
+<p><strong>Absence is paid for in time.</strong> The fourth row of <a href="#tab-tardy-variants">Table&nbsp;11</a> is the cost of the design choice noted in <a href="#s5-3">section&nbsp;5.3</a>: the protocol carries no message that reports absence, so a federate learns that an input is absent at g in one of three ways &mdash; a later-tagged message on the same connection, the passage of its clock to t&nbsp;+&nbsp;W, or the joining announcement of a neighbor. In the measured runs the second is what happened at 200 and 600&nbsp;ms. The first was visible in a run with <code>@maxwait(500ms)</code> and the sparse sender: at the tag 200&nbsp;ms <code>dst</code> did not wait until 700&nbsp;ms, but committed at 500&nbsp;ms, when message 3, tagged 400&nbsp;ms, arrived and established that nothing tagged 200&nbsp;ms would follow on that connection. A sender with nothing to say therefore delays its receivers by up to W at every tag at which they have something to do; a sender that stops altogether delays them by W at every such tag for as long as its channel stays connected (inputs on a disconnected channel are not waited for).</p>
 <p><strong>The same question under centralized coordination.</strong> In <a href="#s4">section&nbsp;4</a> the absence of a message is established by logical evidence: the upstream federate&rsquo;s NET and LTC tell the RTI that it will produce nothing earlier, and the RTI grants the tag (sections&nbsp;<a href="#s4-2">4.2</a>, <a href="#s4-6">4.6</a>). The cost of that evidence is a round trip through the RTI and the RTI&rsquo;s serialized decision (sections&nbsp;<a href="#s4-10">4.10</a>, <a href="#s4-12">4.12</a>), not a bound chosen in advance, and DNET (<a href="#s4-7">section&nbsp;4.7</a>) reduces how many NETs a federate has to send. The two architectures therefore move the cost of silence to different places: micro-LF pays it as waiting time at the receiver, bounded by W and independent of the network; centralized coordination pays it in messages and in the latency of the decision, and needs no timing assumption to be correct. <a href="#fig-tag-nothing-send-under-both">Figure&nbsp;42</a> sets the two message patterns side by side for one silent tag.</p>
 
 <figure id="fig-tag-nothing-send-under-both">
@@ -2601,8 +2603,8 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <li><b>Two interfaces.</b> A platform supplies five functions and a mutex; a federated program also needs a <code>NetworkChannel</code>, either asynchronous (with a receive callback) or polled.</li>
 <li><b>Platforms and hardware.</b> Nine platform directories exist at the examined commit. Underneath, the hardware needs a readable time source, a sleep that can be cut short, a way to make a critical section, and a communication peripheral.</li>
 </ol>
-<p><strong>Support at the examined commit.</strong> The repository contains nine platform implementations. The table records, from the source, how each one obtains time, sleeps with a wake-up and makes a critical section, which network channels it has, and whether the micro-LF documentation has a page for it<sup class="c"><a href="#ref48">[48]</a>,<a href="#ref49">[49]</a></sup>. A program can also supply its own channel on any platform with <code>@interface_custom</code>.</p>
-<table>
+<p><strong>Support at the examined commit.</strong> The repository contains nine platform implementations. <a href="#tab-micro-lf-platforms">Table&nbsp;12</a> records, from the source, how each one obtains time, sleeps with a wake-up and makes a critical section, which network channels it has, and whether the micro-LF documentation has a page for it<sup class="c"><a href="#ref48">[48]</a>,<a href="#ref49">[49]</a></sup>. A program can also supply its own channel on any platform with <code>@interface_custom</code>.</p>
+<table id="tab-micro-lf-platforms"><caption><b>Table 12 &mdash; micro-LF platforms at commit df7cfea.</b></caption>
 <thead><tr><th>platform</th><th>physical time (resolution)</th><th>interruptible sleep</th><th>critical section</th><th>federated channels in the source</th><th>documentation page</th></tr></thead>
 <tbody>
 <tr><td>POSIX (Linux, macOS)</td><td><code>clock_gettime(CLOCK_REALTIME)</code> (ns)</td><td>condition variable with timeout</td><td>pthread mutex</td><td>TCP</td><td>yes</td></tr>
@@ -2615,7 +2617,7 @@ timeouts are clock decisions. The guarantees of this appendix hold relative to t
 <tr><td>FlexPRET</td><td><code>rdtime64</code> (ns)</td><td>hardware <code>fp_wait_until</code> and a flag</td><td>interrupts disabled and a hardware lock</td><td>none; TCP rejected at compile time</td><td>no</td></tr>
 <tr><td>ADuCM355</td><td>32&nbsp;768&nbsp;Hz RTC (about 30.5&nbsp;&micro;s)</td><td>RTC alarm and hibernation; busy wait below 1&nbsp;ms</td><td>interrupts disabled</td><td>none</td><td>no</td></tr>
 </tbody></table>
-<p><strong>Why the clock and the channel matter more than the processor.</strong> (Interpretation.) The tag decision of <a href="#s16-3">section&nbsp;16.3</a> is cheap on any processor; what the hardware decides is how small the timing terms can be. The resolution of the time source is a floor under both E and W: a clock that advances in steps of 1&nbsp;ms, as on Zephyr at the examined commit, or of one FreeRTOS tick, quantizes the commit instant t&nbsp;+&nbsp;W and the timestamps of the synchronization exchange, so a bound below the step cannot be honoured. The channel sets L and the residual of the synchronization: a TCP connection over a shared network brings variable delay and, as <a href="#fig-clock-synchronization-round">Figure&nbsp;39</a> notes, an asymmetry the exchange cannot see; a UART or a dedicated link has fixed latency; and a time-division network-on-chip such as the S4NOC on Patmos (<a href="#s10-2">section&nbsp;10.2</a>) bounds L by construction. The two FPGA soft cores in the table, FlexPRET (<a href="#s10-1">section&nbsp;10.1</a>) and Patmos, are thus the targets on which the assumptions of decentralized coordination come closest to properties of the hardware, the theme of <a href="#s10">section&nbsp;10</a>; at the examined commit only Patmos has a federated channel for micro-LF, and its documentation page describes a different, statically scheduled flow.</p>
+<p><strong>Why the clock and the channel matter more than the processor.</strong> (Interpretation.) The tag decision of <a href="#s16-3">section&nbsp;16.3</a> is cheap on any processor; what the hardware decides is how small the timing terms can be. The resolution of the time source is a floor under both E and W: a clock that advances in steps of 1&nbsp;ms, as on Zephyr at the examined commit, or of one FreeRTOS tick, quantizes the commit instant t&nbsp;+&nbsp;W and the timestamps of the synchronization exchange, so a bound below the step cannot be honoured. The channel sets L and the residual of the synchronization: a TCP connection over a shared network brings variable delay and, as <a href="#fig-clock-synchronization-round">Figure&nbsp;39</a> notes, an asymmetry the exchange cannot see; a UART or a dedicated link has fixed latency; and a time-division network-on-chip such as the S4NOC on Patmos (<a href="#s10-2">section&nbsp;10.2</a>) bounds L by construction. The two FPGA soft cores in <a href="#tab-micro-lf-platforms">Table&nbsp;12</a>, FlexPRET (<a href="#s10-1">section&nbsp;10.1</a>) and Patmos, are thus the targets on which the assumptions of decentralized coordination come closest to properties of the hardware, the theme of <a href="#s10">section&nbsp;10</a>; at the examined commit only Patmos has a federated channel for micro-LF, and its documentation page describes a different, statically scheduled flow.</p>
 <p><strong>Memory, measured and reported.</strong> The federates of the program <code>Tardy.ulf</code> of the tutorial edition (Example&nbsp;16.1) were built for POSIX on x86-64 with GCC&nbsp;13.3, optimization for size and logging at the warning level. Each executable has about 67&nbsp;KB of code, 2.4&nbsp;KB of initialized data and 24.5&nbsp;to 24.9&nbsp;KB of zero-initialized data, the last holding every queue, pool and message buffer; the C library is linked dynamically and not counted. These are measurements of this project on a desktop target, not a microcontroller footprint: code size depends on the instruction set and the compiler, and the static data on the sizes the program declares. For microcontrollers, the comparison of the reactor-uc and reactor-c code generators on an RP2040 reports a memory footprint very similar for the two runtimes, the reactor-uc runtime being slightly smaller, without giving figures in the text<sup class="c"><a href="#ref50">[50]</a></sup>.</p>
 </div>
 <script>

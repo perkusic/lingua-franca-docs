@@ -152,6 +152,9 @@ das substituídas nas edições de 28/set. A pasta agora contém só `README.md`
 - **Nos documentos LF, remissão se escreve por extenso e como link:** "section N.M"; seção de topo "Lesson N" no
   tutorial e "section N" na referência; nunca "§N" (inclusive em legendas, quiz, código e SVG). O CI recusa o "§"
   nos dois HTMLs de LF. A especificação HW-RTI e as notas mantêm a convenção "§".
+- **Em todos os HTMLs do projeto, tabela se cita por número e com link:** toda `<table>` tem `id="tab-…"` e legenda
+  "Table N — título." numerada na ordem do documento; o texto escreve "Table N" (link para `#tab-…`), nunca "the
+  table" nem "the fourth row of the table". O CI confere as legendas e recusa as formas vagas.
 - **Afirmações sobre sintaxe ou comportamento do LF se conferem compilando** com o
   `lfc` do tarball de release (baixa do GitHub neste ambiente), não de memória nem da
   documentação antiga.

@@ -2,7 +2,8 @@ name: check
 
 # Runs on every push and pull request: the figures must rebuild the canonical HTMLs byte for byte,
 # and the published HTMLs must have no duplicate ids, no internal links without a target,
-# a consistent reference list, and (the Lingua Franca HTMLs) no section-sign cross-references.
+# a consistent reference list, numbered and captioned tables referred to as "Table N", and (the Lingua
+# Franca HTMLs) no section-sign cross-references.
 on:
   push:
   pull_request:
@@ -21,5 +22,5 @@ jobs:
         run: python3 assemble.py --check
       - name: Lingua Franca HTMLs, structure and links
         run: python3 .github/scripts/check_html.py tutorial/lingua_franca_tutorial.html tutorial/lingua_franca_rti.html
-      - name: HW-RTI specification, structure and links
-        run: python3 .github/scripts/check_html.py --no-figure-ids --allow-section-sign hw-rti/HW-RTI_project_specification.html
+      - name: HW-RTI specification, design note and implementation guide, structure and links
+        run: python3 .github/scripts/check_html.py --no-figure-ids --allow-section-sign hw-rti/HW-RTI_project_specification.html micro-lf/micro_lf_fpga_design_note.html program/implementation_guide.html

@@ -57,6 +57,11 @@ defasado.
   Play / ▶ / All (a 9 e a 11 só têm Play: ponto e cursor contínuos). Sem script,
   com `prefers-reduced-motion` ou na impressão, a figura aparece inteira. O mesmo
   script e o mesmo CSS estão nos documentos de LF.
+- **Tabelas (16/out/2026):** 32, todas com `id="tab-…"` e legenda `<caption><b>Table N &mdash; título.</b></caption>`
+  numerada na ordem do documento. O texto cita "Table N" com link (`#tab-…`), nunca "the table" (§1.3 → Table 6, §5.2 →
+  Table 16, §11.1 → Table 28). Tabela nova: id e legenda, e renumere as seguintes e os textos dos links. O CI confere
+  as legendas e recusa "the/this table"; uma estrutura interna se nomeia ("the state table"). As remissões a seções
+  continuam com "§" nesta especificação.
 - **Remissões aos documentos irmãos** aparecem como "§N do companion document".
   A numeração de §4 deles mudou em setembro/2026 — ao renumerar lá, varra aqui.
 - **Estilo de prosa:** direto, sem ênfase decorativa; afirmações quantificadas

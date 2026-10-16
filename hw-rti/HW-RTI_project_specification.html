@@ -45,6 +45,8 @@ figure svg{width:100%;height:auto;display:block;background:#fff;
 figcaption{font-family:"Space Grotesk",sans-serif;font-size:13px;color:var(--muted);
   margin-top:9px}
 figcaption b{color:var(--ink);font-weight:500}
+caption{caption-side:top;text-align:left;font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);padding:0 2px 8px}
+caption b{color:var(--ink);font-weight:500}
 table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
 th{font-family:"Space Grotesk",sans-serif;font-weight:500;text-align:left;
   border-bottom:2px solid var(--ink);padding:8px 10px 8px 0;vertical-align:bottom}
@@ -144,7 +146,7 @@ level of detail needed to read the requirements. Terms are grouped by layer: the
 model, the coordination protocol, and the hardware vocabulary.</p>
 
 <h3>0.1 Lingua Franca and the reactor model</h3>
-<table class="term">
+<table id="tab-terms-language" class="term"><caption><b>Table 1 &mdash; terms of the language and the reactor model.</b></caption>
 <tr><td>Lingua Franca<br>(LF)</td><td>coordination language</td><td>A polyglot language that adds deterministic, timed composition on top of components written in C, C++, Python, Rust or TypeScript. LF specifies <em>how components are wired and when they run</em>; the computation inside them stays in the target language.</td></tr>
 <tr><td>Reactor</td><td>component</td><td>A stateful concurrent component with typed input and output <em>ports</em>, private state, timers, actions, and <em>reactions</em>. Reactors compose by connecting ports.</td></tr>
 <tr><td>Reaction</td><td>event handler</td><td>A body of target-language code triggered by an input, timer, or action. Reactions of one reactor execute in declaration order at any shared tag, so shared state never races.</td></tr>
@@ -162,7 +164,7 @@ model, the coordination protocol, and the hardware vocabulary.</p>
 <p>The problem the protocol solves, stated once: <strong>a component may advance to a tag only
 when it is safe to conclude that no input with an earlier or equal tag can still arrive.</strong>
 Everything below is machinery for establishing that conclusion.</p>
-<table class="term">
+<table id="tab-terms-protocol" class="term"><caption><b>Table 2 &mdash; terms of the coordination protocol.</b></caption>
 <tr><td>RTI</td><td>Run-Time Infrastructure</td><td>The coordinator process of a federation. It admits federates at startup, decides when each may advance its logical time, and coordinates shutdown. In the default <em>centralized</em> coordination mode it is consulted before every tag advance. <strong>HW-RTI</strong>, the subject of this document, is a synthesizable implementation of its decision logic.</td></tr>
 <tr><td>Scheduling node</td><td>coordinated unit</td><td>The RTI's internal name for anything it coordinates &mdash; a federate or an enclave. Used throughout because the algebra does not distinguish them. Written <code>e</code> for the node under consideration, <code>u</code> for an upstream node.</td></tr>
 <tr><td>Upstream /<br>downstream</td><td>topology</td><td><code>u</code> is <em>immediately upstream</em> of <code>e</code> if a connection runs u&rarr;e; <em>transitively upstream</em> if any path does. A node can only be affected by its upstreams, which is why every safety question is a question about them.</td></tr>
@@ -181,7 +183,7 @@ Everything below is machinery for establishing that conclusion.</p>
 </table>
 
 <h3>0.3 Hardware and tooling</h3>
-<table class="term">
+<table id="tab-terms-hardware" class="term"><caption><b>Table 3 &mdash; terms of hardware and tooling.</b></caption>
 <tr><td>Chisel</td><td>Scala-embedded HDL</td><td>A hardware construction language: a Chisel design is a Scala program that, when run, <em>elaborates</em> a circuit, which is then emitted as Verilog. No Scala executes at runtime. Chosen because reactor-chisel is written in it (D-6 context).</td></tr>
 <tr><td>Elaboration time</td><td>build phase</td><td>When the Scala generator runs and structure is fixed. Parameters such as node count <code>n</code> and tag width are elaboration-time (NFR-05); they cannot change while the design runs.</td></tr>
 <tr><td>FPGA</td><td>field-programmable<br>gate array</td><td>Reconfigurable logic fabric. Resources are counted in <strong>LUTs</strong> (lookup tables &mdash; combinational logic), <strong>FFs</strong> (flip-flops &mdash; one bit of clocked storage), and <strong>BRAM</strong> (block RAM &mdash; dedicated on-chip memory).</td></tr>
@@ -206,7 +208,7 @@ Everything below is machinery for establishing that conclusion.</p>
 </table>
 
 <h3>0.4 Notation</h3>
-<table class="term">
+<table id="tab-notation" class="term"><caption><b>Table 4 &mdash; notation.</b></caption>
 <tr><td>n</td><td>&mdash;</td><td>Number of scheduling nodes in the federation (elaboration-time maximum; <code>NUM_NODES</code> may be lower at runtime).</td></tr>
 <tr><td>d</td><td>&mdash;</td><td>Maximum in-degree: the largest number of immediate upstreams any node has.</td></tr>
 <tr><td>e, u, w</td><td>&mdash;</td><td>The node under consideration; an upstream node; a downstream node.</td></tr>
@@ -391,7 +393,7 @@ is what makes the timing uniform, and it is free because they are parallel.</fig
 
 <h4>Why the software coordinator cannot offer this</h4>
 <p>Every one of these terms is data- or environment-dependent, and they compound:</p>
-<table>
+<table id="tab-software-variance"><caption><b>Table 5 &mdash; sources of variance in a software coordinator.</b></caption>
 <tr><th style="width:32%">Source of variance</th><th>Why it is unbounded in practice</th></tr>
 <tr><td>OS scheduling</td><td>The RTI thread may be preempted, migrated between cores, or delayed by priority inversion against unrelated work. No bound without a hard-real-time OS and CPU isolation, and even then only a coarse one.</td></tr>
 <tr><td>Mutex contention</td><td>One coarse lock serializes n listener threads (&sect;4.12 of the companion document). Wait time depends on the arrival pattern of <em>other</em> federates &mdash; i.e. on the application's behaviour, not the coordinator's.</td></tr>
@@ -435,10 +437,10 @@ every node&rsquo;s grant decided and ready to leave &mdash; is:</p>
 <p>&mdash; the constant 10 covering decode, state write, and dispatch; the
 &lceil;log&#8322;n&rceil; term the EIMT reduction tree; the two &lceil;log&#8322;d&rceil;
 terms the tightening pass and the Phase&nbsp;1 minimum over immediate upstreams; and the last term
-the extra rounds when fewer than n trees are built (&sect;5.2). The table is for
+the extra rounds when fewer than n trees are built (&sect;5.2). <a href="#tab-k-closed-form">Table&nbsp;6</a> is for
 P_EIMT&nbsp;=&nbsp;n, where the last term vanishes and <strong>doubling the federation costs one
 cycle</strong>; at a fixed P_EIMT it costs about n/P_EIMT cycles.</p>
-<table>
+<table id="tab-k-closed-form"><caption><b>Table 6 &mdash; evaluation latency K by federation size and degree.</b></caption>
 <tr><th class="id">n</th><th class="id">d=2</th><th class="id">d=4</th><th class="id">d=8</th><th>At 200 MHz (d=4, P_EIMT&nbsp;=&nbsp;n); derived from K, not synthesized</th></tr>
 <tr><td class="id">4</td><td class="id">14</td><td class="id">16</td><td class="id">18</td><td>80 ns</td></tr>
 <tr><td class="id">8</td><td class="id">15</td><td class="id">17</td><td class="id">19</td><td>85 ns</td></tr>
@@ -477,7 +479,7 @@ the sequencer accepts messages, which sets throughput and queueing (&sect;7.2).<
 <h4>The design rules that make it true</h4>
 <p>A fixed latency is not automatic in hardware; it is obtained by forgoing several optimizations that would otherwise be natural. These are binding constraints on the
 implementation, not observations about it:</p>
-<table>
+<table id="tab-design-rules"><caption><b>Table 7 &mdash; design rules that keep the latency constant.</b></caption>
 <tr><th class="id">Rule</th><th>Constraint</th><th class="id">Spec</th></tr>
 <tr><td class="id">L-1</td><td>No data-dependent iteration anywhere on the decision path. Reduction trees are fixed depth; no early exit on a satisfied comparison.</td><td class="id">NFR-01</td></tr>
 <tr><td class="id">L-2</td><td>All n decision units evaluate on every update, whether or not their inputs changed. Doing uniformly more work is what makes the timing uniform. It costs no time per message, because the units are parallel, but it is not free: every unit reads the full node state on every update, so area, wiring and the depth of the reduction trees grow with n, and their effect on frequency is known only after synthesis (M-2).</td><td class="id">D-3</td></tr>
@@ -498,7 +500,7 @@ P_EIMT&nbsp;=&nbsp;n, no zero-delay cycles and DNET enabled, I&nbsp;=&nbsp;17 an
 273 cycles &asymp; 1.37&nbsp;&micro;s at 200&nbsp;MHz), but a bound rather than a constant. What is
 constant is K, per message once accepted. Three further preconditions must be stated with the
 property, since each is a way the bound leaks:</p>
-<table>
+<table id="tab-latency-assumptions"><caption><b>Table 8 &mdash; assumptions of the latency bound.</b></caption>
 <tr><th class="id">ID</th><th>Assumption</th><th>Consequence if violated</th></tr>
 <tr><td class="id">A-1</td><td>Outbound channels are ready when a grant is emitted.</td><td>Dispatch stalls; the bound covers core-internal latency only. Federates must not backpressure grants, which is why the reactor-chisel binding accepts a grant unconditionally.</td></tr>
 <tr><td class="id">A-2</td><td>No closure recomputation is in progress.</td><td>The CLOSURE super-state pre-empts decisions for O(n&sup3;/P) cycles. In Phase&nbsp;1 this occurs only at startup; with transients (Phase&nbsp;2) it becomes a scheduled blackout window that must itself be specified and bounded.</td></tr>
@@ -531,7 +533,7 @@ measurement would be exactly the weak form of evidence this subsection argues ag
 <p>The decision logic HW-RTI implements is the current form of a line of work much older than
 Lingua Franca, and each strand of it constrains the hardware in a specific way. &sect;4.14 of the companion document presents the history; this subsection records what each result obliges or permits
 here. Full citations are in &sect;14.3.</p>
-<table>
+<table id="tab-foundations"><caption><b>Table 9 &mdash; theoretical foundations and what they oblige.</b></caption>
 <tr><th style="width:20%">Result</th><th>What it establishes</th><th style="width:40%">Consequence for HW-RTI</th></tr>
 <tr><td>Conservative synchronization (Chandy &amp; Misra 1979; Bryant 1977)</td><td>A process may advance to t only when no input channel can still deliver anything earlier. Promises travel as null messages carrying clock plus lookahead; with zero lookahead around a cycle they stall or deadlock.</td><td>A NET is a null message addressed to a coordinator, and the matrix is composed lookahead. Centralizing the promises turns hop-by-hop propagation into one closure lookup &mdash; which is what lets fan-out become a parallel reduction (G-3) rather than message traffic.</td></tr>
 <tr><td>HLA time management (Fujimoto &amp; Weatherly 1996; IEEE 1516)</td><td>LBTS for a federate is the minimum over its senders of current time plus lookahead; a Time Advance Grant is issued once everything at or below the requested time has been delivered.</td><td>EIMT is LBTS over the transitive closure, in superdense time: HW-RTI is a hardware LBTS engine. Hardware-accelerated HLA RTIs are related prior work; whether any of them implements the time-management decision itself in hardware has not been surveyed here, and a bounded literature review (named works and dates) is required before any novelty claim.</td></tr>
@@ -547,7 +549,7 @@ here. Full citations are in &sect;14.3.</p>
 <span class="msg" id="s2">&sect; 2</span>
 <h2>Goals and non-goals</h2>
 <h3>2.1 Goals</h3>
-<table>
+<table id="tab-goals"><caption><b>Table 10 &mdash; goals.</b></caption>
 <tr><th class="id">ID</th><th>Goal</th><th style="width:34%">Success measure</th></tr>
 <tr><td class="id">G-1</td><td>Behavioural equivalence with the C reference (the remote variant, &sect;10.2) for the grant decision, on all reachable inputs, under the equivalence contract of &sect;5.3: its comparison relation and its three documented exclusions.</td><td>Zero mismatches over the differential campaign of &sect;10.2; every excluded case detected, counted and reported, none counted as a pass.</td></tr>
 <tr><td class="id">G-2</td><td>Decision latency bounded and small.</td><td>Evaluation latency K &le; 32 cycles at the Phase&nbsp;1 target, n&nbsp;=&nbsp;8 (K&nbsp;=&nbsp;24 with P_EIMT&nbsp;=&nbsp;1), identical for every message; grant latency bounded by K<sub>max</sub> (&sect;1.3). Larger n is reported, not required (OQ-6).</td></tr>
@@ -557,7 +559,7 @@ here. Full citations are in &sect;14.3.</p>
 <tr><td class="id">G-6</td><td>Formally stated and machine-checked safety property.</td><td>Property FV-1 (&sect;10.3) checked by bounded model checking to depth &ge; 20 for n&nbsp;&le;&nbsp;4, reported with solver, design revision, parameters, depth and result.</td></tr>
 </table>
 <h3>2.2 Non-goals (Phase 1)</h3>
-<table>
+<table id="tab-non-goals"><caption><b>Table 11 &mdash; non-goals of Phase 1.</b></caption>
 <tr><th class="id">ID</th><th>Excluded</th><th style="width:42%">Reason / disposition</th></tr>
 <tr><td class="id">NG-1</td><td>TCP/IP or Ethernet transport.</td><td>A hardware TCP stack exceeds the effort of the entire grant engine. On-chip transports only; off-chip deferred to Phase&nbsp;3 behind the transport adapter of &sect;7.1.</td></tr>
 <tr><td class="id">NG-2</td><td>Dynamic membership: transient federates joining or leaving a running federation.</td><td>Effective-start-tag negotiation is control-heavy, irregular logic. Handled by the control plane (&sect;7.9) in Phase&nbsp;2; topology is static in Phase&nbsp;1.</td></tr>
@@ -573,7 +575,7 @@ here. Full citations are in &sect;14.3.</p>
 <p>Requirements are testable statements; each references the verification activity that
 discharges it. &ldquo;The core&rdquo; means the HW-RTI hardware module.</p>
 <h3>3.1 Functional</h3>
-<table>
+<table id="tab-functional"><caption><b>Table 12 &mdash; functional requirements.</b></caption>
 <tr><th class="id">ID</th><th>Requirement</th><th class="id">Verify</th></tr>
 <tr><td class="id">FR-01</td><td>The core shall maintain, per scheduling node, the fields <code>completed</code>, <code>last_granted</code>, <code>last_provisionally_granted</code>, <code>next_event</code>, <code>last_DNET</code>, <code>state</code>, and cycle flags.</td><td class="id">UT-1</td></tr>
 <tr><td class="id">FR-02</td><td>On receipt of NET(e,&nbsp;g), the core shall set <code>next_event(e)&nbsp;=&nbsp;min(g,&nbsp;minInTransit(e))</code> and re-evaluate the grant decision for e (when e has an immediate upstream) and for every transitive downstream of e, emitting only for that set (&sect;5.3).</td><td class="id">DT-1</td></tr>
@@ -597,7 +599,7 @@ discharges it. &ldquo;The core&rdquo; means the HW-RTI hardware module.</p>
 <tr><td class="id">FR-20</td><td><strong>reactor-chisel port adapter.</strong> Each hardware federate shall connect through an adapter that (a) converts between the tag of &sect;6.1 and the federate&rsquo;s scalar tag in both directions, mapping the sentinels explicitly and raising the FR-18 error when a time falls outside the scalar range or a microstep other than 0 would be required; (b) retains each granted TAG and presents to the federate min(TAG,&nbsp;NET) until the federate&rsquo;s NET passes it; and (c) forwards no PTAG to a hardware federate. A topology in which a hardware federate belongs to a zero-delay cycle shall be rejected at load. See &sect;8.1.</td><td class="id">UT-9</td></tr>
 </table>
 <h3>3.2 Non-functional</h3>
-<table>
+<table id="tab-non-functional"><caption><b>Table 13 &mdash; non-functional requirements.</b></caption>
 <tr><th class="id">ID</th><th>Requirement</th><th class="id">Verify</th></tr>
 <tr><td class="id">NFR-01</td><td>Every accepted message shall complete evaluation exactly K cycles after acceptance (&sect;1.3), in every reachable state and independently of tag values. Grants, when the message produces any, shall leave between K and K<sub>max</sub>&nbsp;=&nbsp;K&nbsp;+&nbsp;(n&nbsp;&minus;&nbsp;1)&middot;z cycles after acceptance, exactly K when no PTAG walk runs. Waiting before acceptance shall be bounded by (n&minus;1)&middot;I cycles.</td><td class="id">PT-1, FV-6</td></tr>
 <tr><td class="id">NFR-02</td><td>The sequencer shall accept one message every I cycles in steady state, with I&nbsp;=&nbsp;K<sub>max</sub>&nbsp;&minus;&nbsp;4, or max(K<sub>max</sub>&nbsp;&minus;&nbsp;4, n&nbsp;+&nbsp;1) with DNET enabled (&sect;7.2). I is a constant of the build.</td><td class="id">PT-1</td></tr>
@@ -662,7 +664,7 @@ which lets the core learn that a message was sent without carrying its payload.<
 </figure>
 
 <h3>4.1 Deployment configurations</h3>
-<table>
+<table id="tab-deployment"><caption><b>Table 14 &mdash; deployment configurations.</b></caption>
 <tr><th class="id">Cfg</th><th>Composition</th><th>Transport</th><th style="width:26%">Phase</th></tr>
 <tr><td class="id">C-A</td><td>All-hardware federation: 2&ndash;8 reactor-chisel subsystems.</td><td>Direct wires / ready-valid</td><td>1 &mdash; primary target</td></tr>
 <tr><td class="id">C-B</td><td>Mixed: hardware federates plus CPU federates on the same SoC.</td><td>Wires + AXI4-Lite CSR shim</td><td>1 &mdash; secondary</td></tr>
@@ -733,7 +735,7 @@ value-independent in timing, so the critical path is topology size, never data.<
 </figure>
 
 <h3>5.1 Design decisions and their justification</h3>
-<table>
+<table id="tab-decisions"><caption><b>Table 15 &mdash; design decisions.</b></caption>
 <tr><th class="id">ID</th><th>Decision</th><th style="width:44%">Rationale / alternative rejected</th></tr>
 <tr><td class="id">D-1</td><td>Node state in flip-flops, not BRAM.</td><td>Every decision reads all upstream states simultaneously; a memory would serialize what is inherently a parallel read. Cost is ~512&nbsp;bits&nbsp;&times;&nbsp;n, affordable to n&nbsp;=&nbsp;32.</td></tr>
 <tr><td class="id">D-2</td><td>Minimum-delay matrix in BRAM with row and column ports.</td><td>O(n&sup2;) is too large for registers beyond small n. Decisions need a column (upstreams of e); DNET needs a row. Dual-port BRAM serves both.<div class="note">Refined in &sect;5.2: evaluating every node reads a full column per cycle per reduction tree, which requires the matrix banked by row. The banks are shallow and wide and belong in distributed RAM, not BRAM. How many columns per cycle is OQ-6.</div></td></tr>
@@ -774,10 +776,10 @@ processed in &lceil;n/P_EIMT&rceil; rounds. Its two limits pull against G-2 and 
 document has so far quoted each at a different setting. The closed form of &sect;1.3 and the
 6-cycle entry of &sect;9.1 assume P_EIMT&nbsp;=&nbsp;n; the EIMT row of &sect;9.3 is a single tree
 (n&nbsp;&times;&nbsp;(tagAdd&nbsp;+&nbsp;comparator) &asymp; 16&nbsp;&times;&nbsp;170 &asymp;
-2.7k&nbsp;LUT at n&nbsp;=&nbsp;16). The table puts them side by side at n&nbsp;=&nbsp;16,
+2.7k&nbsp;LUT at n&nbsp;=&nbsp;16). <a href="#tab-eimt-trees">Table&nbsp;16</a> puts them side by side at n&nbsp;=&nbsp;16,
 d&nbsp;=&nbsp;4, from the per-primitive estimates of &sect;9.3; each port beyond the first adds a
 tree (2.8k) and a copy of the banks (1.0k).</p>
-<table>
+<table id="tab-eimt-trees"><caption><b>Table 16 &mdash; EIMT trees against the goals, n = 16, d = 4.</b></caption>
 <tr><th class="id">P_EIMT</th><th class="id">K(16,&nbsp;4)</th><th class="id">Total LUT (est.)</th><th class="id">Zynq-7020</th><th>Against the goals</th></tr>
 <tr><td class="id">1</td><td class="id">33</td><td class="id">11.3k</td><td class="id">21%</td><td>Misses G-2 (&le;&nbsp;32 cycles) by one cycle and G-5 (15%).</td></tr>
 <tr><td class="id">2</td><td class="id">25</td><td class="id">15.1k</td><td class="id">28%</td><td>Meets G-2; misses G-5.</td></tr>
@@ -809,7 +811,7 @@ emitted, because some writes made early in the cascade are read later in it. Thi
 states what the reference does for each message and how the core reproduces it, as read from
 <code>rti_common.c</code> and <code>rti_remote.c</code> at commit <code>ccd0512</code>
 (26&nbsp;September&nbsp;2026).</p>
-<table>
+<table id="tab-cascade"><caption><b>Table 17 &mdash; the reference cascade and its HW-RTI counterpart, per message.</b></caption>
 <tr><th style="width:14%">Message</th><th>Reference, in execution order</th><th style="width:34%">HW-RTI</th></tr>
 <tr><td>NET(e,&nbsp;g)</td><td><code>next_event(e)&nbsp;:=&nbsp;min(g, earliest in-transit tag of e)</code>. If e has no immediate upstream, <code>last_granted(e)&nbsp;:=&nbsp;next_event(e)</code> and e is not evaluated (FR-13); otherwise e is evaluated. Then every j with <code>minDelays[e][j]&nbsp;&ne;&nbsp;FOREVER</code> is evaluated in index order &mdash; e itself a second time if it lies on a cycle. Then, with DNET enabled, DNET is computed for every u&nbsp;&ne;&nbsp;e with <code>minDelays[u][e]&nbsp;&ne;&nbsp;FOREVER</code>.</td><td>UPDATE writes <code>nextEvent</code>, and <code>lastGranted</code> for a source. DECIDE evaluates all n nodes; emission is masked to row e of R, plus e when e has an upstream (D-8). The DNET engine runs on the same snapshot.</td></tr>
 <tr><td>MSG_SENT(u&rarr;w,&nbsp;g)</td><td>The reference's counterpart is the forwarding of a tagged message. The tag is added to w's in-transit set if <code>completed(w)&nbsp;&lt;&nbsp;g</code> and it is not already present. If <code>g&nbsp;&lt;&nbsp;next_event(w)</code>, the NET path above runs for w with value g; otherwise nothing is evaluated.</td><td>UPDATE inserts into the in-transit set (&sect;7.1). If g is below <code>nextEvent(w)</code> the message is then handled exactly as NET(w,&nbsp;g); otherwise nothing is emitted, but the message still occupies the sequencer for the full interval, so throughput stays value-independent.</td></tr>
@@ -920,7 +922,7 @@ targets it specifically.</p>
 <h3>6.2 Tag ALU operations</h3>
 <p>All are combinational, registered at the output for timing. <code>W</code> denotes the
 tag width.</p>
-<table>
+<table id="tab-tag-alu"><caption><b>Table 18 &mdash; tag ALU operations.</b></caption>
 <tr><th style="width:30%">Operation</th><th>Definition</th><th class="id">Cost</th></tr>
 <tr><td><code>cmp(a,b)</code></td><td>Lexicographic: compare <code>time</code>, then <code>microstep</code>. Returns &minus;1/0/+1.</td><td class="id">~W/2 LUT</td></tr>
 <tr><td><code>delay(g,d)</code><br><span style="font-size:12px;color:#5C6066">= lf_delay_tag</span></td><td>If <code>g.time==NEVER</code> or <code>d&lt;0</code> &rarr; <code>g</code>. Else if <code>g.time &ge; FOREVER&minus;d</code> &rarr; FOREVER (overflow guard). Else if <code>d==0</code> &rarr; <code>(g.time, g.m+1)</code>. Else <code>(g.time+d, 0)</code>.</td><td class="id">1 adder + mux</td></tr>
@@ -961,7 +963,7 @@ messages at distinct tags need the queue proper &mdash; see OQ-4, where this is 
 the argument.</div>
 
 <h3>6.4 Control message set</h3>
-<table>
+<table id="tab-control-messages"><caption><b>Table 19 &mdash; control message set.</b></caption>
 <tr><th style="width:23%">Message</th><th class="id">Dir</th><th>Payload</th><th class="id">Ref</th></tr>
 <tr><td><code>NET</code></td><td class="id">fed&rarr;RTI</td><td>node id, tag</td><td class="id">FR-02</td></tr>
 <tr><td><code>LTC</code></td><td class="id">fed&rarr;RTI</td><td>node id, tag</td><td class="id">FR-03</td></tr>
@@ -1332,7 +1334,7 @@ that is; software federates receive PTAGs through their mailboxes (&sect;8.2). T
 is what G-4 states.</p>
 
 <h3>8.2 AXI4-Lite control and software-federate map</h3>
-<table>
+<table id="tab-axi-map"><caption><b>Table 20 &mdash; AXI4-Lite control and software-federate map.</b></caption>
 <tr><th class="id">Offset</th><th style="width:22%">Name</th><th class="id">Acc</th><th>Meaning</th></tr>
 <tr><td class="id">0x000</td><td>ID / VERSION</td><td class="id">RO</td><td>Magic + spec revision; first read of any bring-up script.</td></tr>
 <tr><td class="id">0x004</td><td>CTRL</td><td class="id">RW</td><td>bit0 enable, bit1 soft reset, bit2 DNET enable (FR-12), bit3 trace enable.</td></tr>
@@ -1349,7 +1351,7 @@ is what G-4 states.</p>
 <span class="msg" id="s9">&sect; 9</span>
 <h2>Timing and resource budgets</h2>
 <h3>9.1 Latency budget (n = 16, target 200 MHz)</h3>
-<table>
+<table id="tab-latency-budget"><caption><b>Table 21 &mdash; latency budget, n = 16, 200 MHz.</b></caption>
 <tr><th>Stage</th><th class="id">Cycles</th><th>Notes</th></tr>
 <tr><td>Arbitrate and decode inbound message</td><td class="id">2</td><td>Round-robin + field extract.</td></tr>
 <tr><td>State table write (UPDATE)</td><td class="id">1</td><td>Registered.</td></tr>
@@ -1408,7 +1410,7 @@ levers when NFR-02 binds.</p>
 <p>Estimates from per-primitive counts: tag comparator &asymp;&nbsp;60&nbsp;LUT, tagAdd
 &asymp;&nbsp;110&nbsp;LUT, tag register 96&nbsp;FF. Treat as order-of-magnitude, to be
 replaced by synthesis results at M-2.</p>
-<table>
+<table id="tab-resource-budget"><caption><b>Table 22 &mdash; resource budget.</b></caption>
 <tr><th>Block</th><th class="id">n=8</th><th class="id">n=16</th><th class="id">n=32</th><th>Scaling</th></tr>
 <tr><td>State table (FF)</td><td class="id">4.6k</td><td class="id">9.3k</td><td class="id">18.5k</td><td>O(n)</td></tr>
 <tr><td>Matrix (RAM bits)</td><td class="id">6k</td><td class="id">25k</td><td class="id">98k</td><td>O(n&sup2;)</td></tr>
@@ -1452,7 +1454,7 @@ with directed and formal methods covering what randomization reaches poorly.</p>
 </ol>
 
 <h3>10.1 Unit tests (UT)</h3>
-<table>
+<table id="tab-unit-tests"><caption><b>Table 23 &mdash; unit tests.</b></caption>
 <tr><th class="id">ID</th><th>Target</th><th>Method</th></tr>
 <tr><td class="id">UT-1</td><td>State table read/write, reset values.</td><td>Directed; every field, every node index, boundary indices.</td></tr>
 <tr><td class="id">UT-2</td><td>Tag ALU (FR-04).</td><td>Exhaustive over a curated corner set (NEVER, FOREVER, zero, &plusmn;1, overflow boundaries, microstep saturation) &times; all six operations, compared against the C functions compiled directly.</td></tr>
@@ -1466,7 +1468,7 @@ with directed and formal methods covering what randomization reaches poorly.</p>
 </table>
 
 <h3>10.2 Differential tests (DT) &mdash; primary method</h3>
-<table>
+<table id="tab-differential-tests"><caption><b>Table 24 &mdash; differential tests.</b></caption>
 <tr><th class="id">ID</th><th>Scenario</th><th>Pass criterion</th></tr>
 <tr><td class="id">DT-1</td><td>Randomized federations: n &isin; [2,16], random topologies, 10&#8309; message traces of NET/LTC/MSG_SENT.</td><td>Each trace is a preamble of one NET per node, whose grants are not compared, followed by the body. At the end of the preamble the normalized per-node states are compared; a difference is reported under exclusion (i) of &sect;5.3 and the trace set aside. In the body, per input message and per node: the same strongest grant under the authorization order (weaker grants dropped on both sides), the same DNET, and the same normalized state; grants to different nodes compared as a set. Traces that enter exclusion (ii) or (iii) are flagged and reported separately, never counted as passes. Zero mismatches over 10&#8309; body messages.</td></tr>
 <tr><td class="id">DT-2</td><td>Closure equivalence against the reference's sparse relaxation (see &sect;7.3 deviation note).</td><td>Matrices and both flag vectors identical on 10&#8308; random topologies including pathological cycles.</td></tr>
@@ -1504,7 +1506,7 @@ shrinker that minimizes both the topology and the trace, which experience with t
 bug suggests is essential: raw counterexamples in cyclic topologies are unreadable.</p>
 
 <h3>10.3 Formal properties (FV)</h3>
-<table>
+<table id="tab-formal-properties"><caption><b>Table 25 &mdash; formal properties.</b></caption>
 <tr><th class="id">ID</th><th>Property</th><th>Method</th></tr>
 <tr><td class="id">FV-1</td><td><strong>Safety.</strong> Every grant emitted to node e at cycle c is justified, at cycle c, by the branch that produced it: a TAG of g from the EIMT branch satisfies g &lt; EIMT(e) &mdash; for a TAG issued by the PTAG walk, the plain EIMT of &sect;7.6; a TAG from the fast path satisfies g &le; M(e), the least connected upstream completion pushed through <code>delayStrict</code>; a TAG of FOREVER is emitted only when no immediate upstream of e is connected (FR-14, termination: EIMT(e) is then FOREVER and no input can arrive at all); a PTAG of g from e&rsquo;s own decision satisfies g&nbsp;=&nbsp;nextEvent(e)&nbsp;=&nbsp;EIMT(e), with e in a zero-delay cycle and strict EIMT(e)&nbsp;&gt;&nbsp;g; and a PTAG of g from the walk, sent to an immediate upstream u of a node already sent PTAG(g), satisfies g&nbsp;=&nbsp;plain EIMT(u) and strict EIMT(u)&nbsp;&gt;&nbsp;g, with nextEvent(u) free to be later (in A&nbsp;&#8646;&nbsp;B with NETs 5 and 10, A&rsquo;s PTAG(5) reaches B). No TAG authorizes a tag at which an input can still arrive, and no PTAG of g one before g. The walk&rsquo;s plain-EIMT tests are exact while every node is connected, since plain and tightened EIMT then coincide (&sect;5.3).</td><td>Bounded model check, depth &ge; 20, n &le; 4 (G-6). Establishes the absence of counterexamples within these bounds only.</td></tr>
 <tr><td class="id">FV-2</td><td><strong>Algebra.</strong> The tag ALU is associative and monotone per &sect;6.2, with correct sentinel absorption.</td><td>Unbounded proof over symbolic tags (the ALU is stateless).</td></tr>
@@ -1517,7 +1519,7 @@ bug suggests is essential: raw counterexamples in cyclic topologies are unreadab
 <div class="note"><strong>Scope of the formal results.</strong> A bounded model check establishes the absence of counterexamples within its configuration (n&nbsp;&le;&nbsp;4) and depth; it does not by itself establish a property for the Phase&nbsp;1 target of n&nbsp;=&nbsp;8 or for executions of arbitrary length. Where a property above is stated &ldquo;in every reachable state&rdquo;, that is the property to be established, not a result already obtained. Each result is to be reported with its method, solver and version, design revision, parameter values, depth reached and outcome. FV-2 and FV-7 are unbounded proofs over stateless combinational units, and FV-4 is an inductive invariant; their scope differs from that of the bounded checks.</div>
 
 <h3>10.4 System tests (ST) and performance tests (PT)</h3>
-<table>
+<table id="tab-system-tests"><caption><b>Table 26 &mdash; system and performance tests.</b></caption>
 <tr><th class="id">ID</th><th>Test</th></tr>
 <tr><td class="id">ST-1</td><td>Two reactor-chisel federates, feedback topology with a delayed edge (the tutorial's <code>FeedbackCentralized</code> shape), co-simulated under Verilator against HW-RTI. Output token sequence must match the software-federated run of the same LF program (G-4).</td></tr>
 <tr><td class="id">ST-2</td><td>Coordinated shutdown from each of: timeout, federate request, external stop (FR-15).</td></tr>
@@ -1532,7 +1534,7 @@ bug suggests is essential: raw counterexamples in cyclic topologies are unreadab
 <h2>Evaluation plan</h2>
 <p>Verification asks &ldquo;is it correct?&rdquo;; evaluation asks &ldquo;was it worth
 building?&rdquo; The claims of &sect;1.1 must be measured, not asserted.</p>
-<table>
+<table id="tab-kpis"><caption><b>Table 27 &mdash; key performance indicators.</b></caption>
 <tr><th class="id">KPI</th><th>Question</th><th>Method and baseline</th></tr>
 <tr><td class="id">KPI-1</td><td>How much coordination latency is removed?</td><td>NET&rarr;TAG round trip, HW-RTI vs. the C RTI on the same SoC's CPU serving the same federation over CSRs. Report mean, p99, and max.</td></tr>
 <tr><td class="id">KPI-2</td><td>Is the latency actually constant?</td><td>Histogram of round-trip cycles over 10&#8310; decisions in both systems. Target: zero variance in HW-RTI&rsquo;s evaluation latency K, and grant latency confined to [K, K<sub>max</sub>]; the interesting result is the software tail.</td></tr>
@@ -1545,10 +1547,10 @@ building?&rdquo; The claims of &sect;1.1 must be measured, not asserted.</p>
 <h3>11.1 &mdash; What the hardware removes, and what it does not</h3>
 <p>The KPIs above compare two systems; this subsection states in advance which parts of the gap
 they are measuring, so that a favourable number is not read as evidence for a claim it does not
-support. Figure&nbsp;2 gives the per-stage anatomy. The table below gives the <em>disposition</em>
+support. Figure&nbsp;2 gives the per-stage anatomy. <a href="#tab-what-hw-removes">Table&nbsp;28</a> gives the <em>disposition</em>
 of each term: removed, reduced, untouched, or &mdash; the row that deserves explicit acknowledgement &mdash;
 fixable in software without any of this.</p>
-<table>
+<table id="tab-what-hw-removes"><caption><b>Table 28 &mdash; what the hardware removes, term by term.</b></caption>
 <tr><th style="width:22%">Term</th><th style="width:30%">In the software RTI</th><th style="width:26%">Under HW-RTI</th><th>Verdict</th></tr>
 <tr><td>The decision itself</td><td>1&ndash;3&nbsp;&micro;s (planning estimate); cost depends on the graph, since the tightening pass calls EIMT once per immediate upstream</td><td>6 of the 18 cycles of &sect;9.1, fixed at elaboration</td><td><strong>Removed as a variable.</strong> For these endpoints only (the decision, not the full pipeline), 6 cycles are 30&nbsp;ns at 200&nbsp;MHz, roughly 33&ndash;100&times; below the planning estimate; the design targets zero variation in these cycles under the assumptions of &sect;1.3.</td></tr>
 <tr><td>Notification fan-out</td><td>One NET re-decides every transitive downstream, serialized under one lock: O(n&middot;(n&middot;d)) worst case</td><td>All n decision units evaluate on every update, in parallel</td><td><strong>Removed per message</strong> (G-3): every message costs the build&rsquo;s constant K however many nodes it reaches. K itself grows with n, logarithmically with one tree per node and near-linearly with the single tree of the Phase&nbsp;1 build (&sect;1.3). The parallel units are paid for in area, in the wiring that feeds them the full state and in the critical path, all measured at M-2.</td></tr>
@@ -1561,7 +1563,7 @@ fixable in software without any of this.</p>
 <tr><td>Reaction execution</td><td>The application&rsquo;s own code</td><td>Untouched</td><td><strong>Not a coordination cost.</strong> Listed so that end-to-end numbers are not credited to the coordinator.</td></tr>
 <tr><td>Protocol round trips</td><td>One ask-and-wait per tag advance, minus what DNET suppresses</td><td>Identical</td><td><strong>Not removed.</strong> A property of centralized coordination, not of its implementation. HW-RTI shortens each wait; it does not remove the dependency.</td></tr>
 </table>
-<p>Read the table as an Amdahl argument. In an all-hardware federation (C-A) the removed rows are
+<p>Read <a href="#tab-what-hw-removes">Table&nbsp;28</a> as an Amdahl argument. In an all-hardware federation (C-A) the removed rows are
 essentially the whole round trip, which is why the premise holds there and why NG-1 exists. In a
 mixed federation the untouched rows do not shrink, so the end-to-end improvement is bounded by the
 software federate&rsquo;s own path however fast the coordinator becomes. Any KPI-1 figure must
@@ -1642,7 +1644,7 @@ The go/no-go criterion is stated in advance deliberately.</div>
 
 <span class="msg" id="s12">&sect; 12</span>
 <h2>Risks and mitigations</h2>
-<table>
+<table id="tab-risks"><caption><b>Table 29 &mdash; risks and mitigations.</b></caption>
 <tr><th class="id">ID</th><th style="width:30%">Risk</th><th class="id">L&times;I</th><th>Mitigation</th></tr>
 <tr><td class="id">R-1</td><td>Semantic divergence from the reference in a corner the random campaign never reaches (sentinel interaction, microstep saturation, nested ZDC).</td><td class="id">M&times;H</td><td>DT-1 volume plus deliberately seeded ZDC topologies (DT-3); FV-1/FV-2 cover the two most error-prone layers; UT-2 uses a curated corner set rather than uniform randomness.</td></tr>
 <tr><td class="id">R-2</td><td>The reference is a moving target: the RTI has changed substantially between releases (DNET, transients, disconnect handling all post-date the original design).</td><td class="id">H&times;M</td><td>Pin a specific commit in the metadata block and re-run DT against newer commits as a scheduled activity; treat divergence as a spec change, not a bug.</td></tr>
@@ -1659,7 +1661,7 @@ The go/no-go criterion is stated in advance deliberately.</div>
 <h2>Work breakdown and schedule</h2>
 <p>Effort assumes one engineer proficient in Chisel and familiar with the source of the C runtime.
 Durations are working weeks; the critical path runs M-1 &rarr; M-2 &rarr; M-4 &rarr; M-6.</p>
-<table>
+<table id="tab-milestones"><caption><b>Table 30 &mdash; milestones.</b></caption>
 <tr><th class="id">ID</th><th style="width:26%">Milestone</th><th>Contents</th><th class="id">Wks</th></tr>
 <tr><td class="id">M-0</td><td>Foundations</td><td>Pin the reference commit; build <code>rti_common.c</code> standalone with a trace shim; write the trace generator and comparator; reactor-chisel build spike on the working ZCU106 port, recording its reactor-chisel and LF-fork commits (R-6, OQ-8). <em>Exit: golden model runs a random trace and prints a grant sequence.</em></td><td class="id">2</td></tr>
 <tr><td class="id">M-1</td><td>Tag ALU + state table</td><td>&sect;6.2 operations in Chisel, UT-1/UT-2 passing, FV-2 discharged. <em>Exit: bit-exact ALU vs. C on the corner set.</em></td><td class="id">2</td></tr>
@@ -1677,7 +1679,7 @@ Durations are working weeks; the critical path runs M-1 &rarr; M-2 &rarr; M-4 &r
 <span class="msg" id="s14">&sect; 14</span>
 <h2>Deliverables and open questions</h2>
 <h3>14.1 Deliverables</h3>
-<table>
+<table id="tab-deliverables"><caption><b>Table 31 &mdash; deliverables.</b></caption>
 <tr><th class="id">ID</th><th>Artifact</th></tr>
 <tr><td class="id">DL-1</td><td>Chisel source for the HW-RTI core, parameterized in n and tag width, with generated Verilog for the reference configurations.</td></tr>
 <tr><td class="id">DL-2</td><td>Differential verification harness: golden-model shim, trace generator, comparator, shrinker, and the seeded ZDC topology corpus.</td></tr>
@@ -1688,7 +1690,7 @@ Durations are working weeks; the critical path runs M-1 &rarr; M-2 &rarr; M-4 &r
 <tr><td class="id">DL-7</td><td>This specification, revised to as-built, plus a short design-rationale document recording every divergence from the reference and its justification.</td></tr>
 </table>
 <h3>14.2 Open questions for review</h3>
-<table>
+<table id="tab-open-questions"><caption><b>Table 32 &mdash; open questions.</b></caption>
 <tr><th class="id">ID</th><th>Question</th></tr>
 <tr><td class="id">OQ-1</td><td>Should Phase&nbsp;1 target <em>enclave</em> coordination inside a single LF program rather than federate coordination? Enclaves use the same algebra with no transport at all, which would remove the reactor-chisel integration risk (R-6) entirely and could be the faster route to a demonstrable result.
 <div class="note"><strong>Resolved, 17 September 2026: no.</strong> Phase&nbsp;1 keeps federate coordination. The reasoning is recorded here because the question is a reasonable one and will otherwise be asked again.

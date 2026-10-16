@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Structural checks of the published HTMLs: duplicate ids, internal links without a target,
 figures without a stable id, and the reference list (every [n] cited resolves, every reference is cited).
+Tables: every <table> has an id and a caption "Table N &mdash; title.", numbered 1, 2, ... in document order, and
+the text never points at a table as "the table" or "this table": it names "Table N", with a link.
 Also: no section sign before a number (cross-references are written "section N.M", or "Lesson N" for a
 lesson of the tutorial, never "\u00a7N.M"); the banner labels "\u00a7 01 / ..." have a space and pass.
 Usage: python3 check_html.py [--no-figure-ids] [--allow-section-sign] file.html [...]   exit 1 on any problem.
@@ -26,13 +28,19 @@ for fn in args:
     cited = set(re.findall(r'href="#(ref\d+)"', body))
     refs = set(re.findall(r'<li id="(ref\d+)"', body))
     sect = re.findall(r"(?:&sect;|&#167;|&#[xX]0*[aA]7;|\u00a7)\d[\d.]*", s) if no_sect else []
+    tabs = re.findall(r"<table\b([^>]*)>\s*(<caption><b>Table (\d+) &mdash;)?", body)
+    tab_bad = [k for k, (attrs, cap, num) in enumerate(tabs, 1) if 'id="' not in attrs or not cap or int(num) != k]
+    text = re.sub(r"<[^>]*>", " ", body)
+    vague = re.findall(r"\b(?:[Tt]he|[Tt]his|[Tt]hat) tables?\b(?! of contents)", text)
     problems = []
     if dup: problems.append(f"duplicate ids: {dup}")
     if bad: problems.append(f"internal links without a target: {bad}")
     if nofig: problems.append(f"{nofig} <figure> without a stable id")
+    if tab_bad: problems.append(f"table(s) without id or numbered caption, by position: {tab_bad}")
+    if vague: problems.append(f"{len(vague)} vague table reference(s) ('the table'); write 'Table N' with a link")
     if sect: problems.append(f"{len(sect)} section-sign reference(s), write 'section N.M' instead: {sorted(set(sect))[:5]}")
     if refs and refs - cited: problems.append(f"references never cited: {sorted(refs - cited)}")
-    print(f"{fn}: {len(ids)} ids, {nlinks} internal links, {len(refs)} references"
+    print(f"{fn}: {len(ids)} ids, {nlinks} internal links, {len(refs)} references, {len(tabs)} tables"
           + ("" if not problems else " | " + " | ".join(problems)))
     ok &= not problems
 print("PASS" if ok else "FAIL")

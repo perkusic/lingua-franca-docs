@@ -3,10 +3,10 @@
  "placeholder": "<!--@svg:{id}@-->",
  "documents": {
   "lingua_franca_tutorial.html": {
-   "sha256": "95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2",
-   "bytes": 799683,
+   "sha256": "affa3c99c40ff9a9ecd11c7df3c409673708f4da9cd0e1ca222e0f06a5a47252",
+   "bytes": 801476,
    "skeleton": "skeleton/lingua_franca_tutorial.skel.html",
-   "skeleton_sha256": "bb543f7639f323deee3f06fe3246244e6da44f419339cd9e05b9fac28b6b81bd",
+   "skeleton_sha256": "e328112520a78ad2c17d5c875b75145619d74b24bf03fde9ae7946b385a8325b",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",
@@ -55,10 +55,10 @@
    ]
   },
   "lingua_franca_rti.html": {
-   "sha256": "4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c",
-   "bytes": 617102,
+   "sha256": "8350865f17a4c326a402f37c587b875010b3571ee99899c63ed232be802c3ef7",
+   "bytes": 618798,
    "skeleton": "skeleton/lingua_franca_rti.skel.html",
-   "skeleton_sha256": "028d6cc50e9c5d45f50c261ceb0a65886ecf347cf85c3d7021fcc3042c0bc1ce",
+   "skeleton_sha256": "9e3a4b55735bf60f91b48ecbdfa934d0ca3990b83d560688ebf18a72d6b67d55",
    "figures": [
     "fig-actor-model-message",
     "fig-message-time-not-order",
@@ -476,8 +476,8 @@
    },
    "title": "the closure as successive approximations",
    "file": "svg/fig-closure-successive-approximations.svg",
-   "sha256": "f09f8b1e8c60b2a2e14351eadfddfdbbe8d51e6f4e2d2a0db07deeb25f56c7fc",
-   "bytes": 10528,
+   "sha256": "9474d2c0e95c39ac0e3cc6ae148a3e0c7612df5f2d6378e808e6897618e26f86",
+   "bytes": 10526,
    "shared": true
   },
   {

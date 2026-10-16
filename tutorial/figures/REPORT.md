@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 799683 | `95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2` | `95a0f6fc505f016ab7821a6934c0eddb6308e5855c4dc3428d5e618cc04401b2` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 617102 | `4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c` | `4d2e8fc162bb3f594fcfe3ad179cec767d93d0e7458270e1bbea80fab4d7664c` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 801476 | `affa3c99c40ff9a9ecd11c7df3c409673708f4da9cd0e1ca222e0f06a5a47252` | `affa3c99c40ff9a9ecd11c7df3c409673708f4da9cd0e1ca222e0f06a5a47252` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 618798 | `8350865f17a4c326a402f37c587b875010b3571ee99899c63ed232be802c3ef7` | `8350865f17a4c326a402f37c587b875010b3571ee99899c63ed232be802c3ef7` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -20,6 +20,8 @@ The rebuild was run in the cloud workspace and again with `python3` 3.10 on this
 **15 October 2026, afternoon: 44 figures.** A new Figure 1 (`fig-actor-model-message`, the actor model with an animation that runs with Play) was added in §1.1; the former Figures 1–43 are now 2–44. Captions, links and one figure number written inside an SVG were renumbered from the stable ids. `fig-clock-synchronization-round.svg` changed for that reason only ("run of Figure 41"). The figure-level findings below date from the 43-figure extraction.
 
 **16 October 2026: no section signs.** Cross-references written with a section sign became words in both editions (`lf-docs/sectwords.py`): "section&nbsp;N.M" for a subsection, "Lesson&nbsp;N" (tutorial) or "section&nbsp;N" (reference) for a top-level section, with homogeneous lists as "sections&nbsp;4.10 and 4.12". Eight SVG texts changed with them, in seven files. One of them, `fig-tag-nothing-send-under-both`, now reads "Lesson 4" in the tutorial and "section 4" in the reference, so it is the first figure stored per edition (`svg/fig-tag-nothing-send-under-both.lingua_franca_tutorial.svg` and `….lingua_franca_rti.svg`): 44 figures, 43 shared. `assemble.py --check` is PASS.
+
+**16 October 2026, morning: numbered tables.** Every `<table>` received a stable `id` and a caption "Table&nbsp;N &mdash; title." (`lf-docs/tablecaps.py`); vague mentions ("the table") became links to "Table&nbsp;N". One SVG text changed with it (`fig-closure-successive-approximations`: "Table 3 of section 4.13"). Tables are not extracted: they stay in the skeletons. `assemble.py --check` is PASS.
 
 ## Findings
 
@@ -90,7 +92,7 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 28 | `fig-four-orders` | 11631 | `13f7c4ae6fd1603c` |
 | 29 | `fig-fixed-points-monotone-function` | 11255 | `94ec1cb1b98be845` |
 | 30 | `fig-dependency-graphs-program` | 7340 | `5783a950f1d912fb` |
-| 31 | `fig-closure-successive-approximations` | 10528 | `f09f8b1e8c60b2a2` |
+| 31 | `fig-closure-successive-approximations` | 10526 | `9474d2c0e95c39ac` |
 | 32 | `fig-any-relaxation-order-ends-least` | 8079 | `9a2cf59b5ec8ce4e` |
 | 33 | `fig-fixed-point-tag` | 7527 | `579fb525620c17e6` |
 | 34 | `fig-acyclic-reaction-graph-gives-exactly` | 8986 | `47b8a59d7a75f4b0` |
@@ -105,4 +107,4 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `8d020809fa9d1f1c` |
 | 44 | `fig-micro-lf-program-meets-hardware` | 7990 | `40a425e72e4eda9f` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `bb543f7639f323de`; `skeleton/lingua_franca_rti.skel.html` `028d6cc50e9c5d45`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `e328112520a78ad2`; `skeleton/lingua_franca_rti.skel.html` `9e3a4b55735bf60f`.

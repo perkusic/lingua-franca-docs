@@ -25,6 +25,8 @@ figure{margin:28px 0}
 figure svg{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--rule);border-radius:10px}
 figcaption{font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);margin-top:10px}
 figcaption b{color:var(--ink);font-weight:500}
+caption{caption-side:top;text-align:left;font-family:"Space Grotesk",sans-serif;font-size:13.5px;color:var(--muted);padding:0 2px 8px}
+caption b{color:var(--ink);font-weight:500}
 .svgtxt{font-family:"IBM Plex Mono",monospace}
 .tw{overflow-x:auto;margin:20px 0}
 table{width:100%;border-collapse:collapse;font-size:14.5px}
@@ -78,7 +80,7 @@ takes it as given but has not audited it. HW-RTI is specified and not yet implem
 micro-LF and possibly a hardware input engine, is exploratory. Both answer the same question &mdash; when may a participant
 commit to a tag &mdash; with different evidence: logical evidence collected by a coordinator, or local knowledge plus timing
 bounds (<a href="../tutorial/lingua_franca_tutorial.html#s5">tutorial &sect;5 and &sect;5.3</a>).</p>
-<div class="tw"><table>
+<div class="tw"><table id="tab-components"><caption><b>Table 1 &mdash; components and versions.</b></caption>
 <tr><th style="width:24%">Component</th><th style="width:26%">Version</th><th>Role, status</th></tr>
 <tr><td>reactor-c (C runtime and RTI)</td><td><a href="https://github.com/lf-lang/reactor-c/tree/ccd05124e4b2086de045a6857702ae5636da30a6"><code>ccd0512</code></a>, 26&nbsp;Sep&nbsp;2026</td><td>Reference model for HW-RTI decisions; pinned for the differential campaign at M-0.</td></tr>
 <tr><td>reactor-chisel</td><td><a href="https://github.com/erlingrj/reactor-chisel/tree/d94dd2d272ce46145ac13c3c6a141bc2ba9dfca1"><code>d94dd2d</code></a>, 5&nbsp;Jun&nbsp;2024</td><td>Hardware reactors and the <code>TriggerGenerator</code>; integration baseline cited by the ZCU106 note. To be confirmed against the working port.</td></tr>
@@ -90,7 +92,7 @@ bounds (<a href="../tutorial/lingua_franca_tutorial.html#s5">tutorial &sect;5 an
 
 <span class="msg" id="s2">&sect; 2</span>
 <h2>Decision register</h2>
-<div class="tw"><table class="dec">
+<div class="tw"><table id="tab-decision-register" class="dec"><caption><b>Table 2 &mdash; decision register.</b></caption>
 <tr><th style="width:9%">ID</th><th style="width:33%">Decision</th><th style="width:10%">Status</th><th>Basis</th><th style="width:17%">Carried by</th></tr>
 <tr id="dec-01"><td class="id">DEC-01</td><td><strong>Phase&nbsp;1 platform</strong><br>AMD ZCU106 (XCZU7EV-2). Zynq-7020 kept as the area reference for smaller parts.</td><td><span class="st ok">decided</span></td><td>Decision of 8&nbsp;Oct&nbsp;2026; working reactor-chisel port on the board (ZCU106 note &sect;1).</td><td>Spec: meta, G-5, NFR-03, &sect;9.3, ST-4, PT-2, M-6</td></tr>
 <tr id="dec-02"><td class="id">DEC-02</td><td><strong>First coordination policy</strong><br>Centralized, with HW-RTI as the authority to advance.</td><td><span class="st ok">decided</span></td><td>Specification scope; Codesign already has a grant-controlled execution boundary (ZCU106 note &sect;1, &sect;3).</td><td>Spec &sect;1, NG-4</td></tr>
@@ -121,7 +123,7 @@ P3&ndash;P4.</p>
 board federation brought forward; Track B measures first and builds hardware only on the participant infrastructure of Track A.
 OQ-7 sits before M-4, where the measurements of B1&ndash;B2 meet the KPI-1 go/no-go criterion.</figcaption>
 </figure>
-<div class="tw"><table>
+<div class="tw"><table id="tab-stages"><caption><b>Table 3 &mdash; stages and gates.</b></caption>
 <tr><th style="width:6%">Stage</th><th style="width:6%">Track</th><th style="width:32%">Content</th><th>Acceptance gate</th><th style="width:11%">Spec</th><th style="width:11%">ZCU106 / micro-LF note</th></tr>
 <tr><td class="id">P0</td><td class="id">both</td><td>Source manifest; matched build of the working ZCU106 port; golden model of <code>rti_common.c</code> with trace shim; decide DEC-05 and DEC-11.</td><td>Original Codesign example reproduced on the board; golden model prints a grant sequence for a random trace.</td><td>M-0</td><td>S0</td></tr>
 <tr><td class="id">P1</td><td class="id">A</td><td>Instrument the original Codesign path: WRITE, execute, LTC, READ, NET.</td><td>Observed transaction order matches the expected one; repeated commands are not lost.</td><td>(M-1 spike)</td><td>S1</td></tr>
@@ -141,7 +143,7 @@ OQ-7 sits before M-4, where the measurements of B1&ndash;B2 meet the KPI-1 go/no
 <p>At reactor-chisel <code>d94dd2d</code> the coordination interface of the <code>TriggerGenerator</code> cannot be driven
 directly by HW-RTI. The three incompatibilities below were confirmed in source on 8&nbsp;October&nbsp;2026 and are now
 recorded in the specification (&sect;8.1, FR-20, D-11, OQ-8).</p>
-<div class="tw"><table>
+<div class="tw"><table id="tab-chisel-boundary"><caption><b>Table 4 &mdash; the reactor-chisel boundary at d94dd2d.</b></caption>
 <tr><th style="width:22%">Property</th><th style="width:38%">At <code>d94dd2d</code></th><th>Adapter behaviour (FR-20)</th></tr>
 <tr><td>Tag representation</td><td>32-bit unsigned scalar of nanoseconds, no microstep (<code>Tag.scala</code>). <code>NEVER</code> = <code>Int.MinValue</code> as unsigned compares above <code>FOREVER</code> = <code>Int.MaxValue</code>. Range about 2.1&nbsp;s.</td><td>Convert in both directions with microstep 0 towards the core; map sentinels explicitly; compare only in the core encoding; FR-18 error outside the range or when a microstep other than 0 is needed. The hardware clock counts from the start of execution, so the conversion is relative to the federation start tag (spec &sect;8.2 <code>START_TAG</code>); confirm against the Codesign wrapper at P1.</td></tr>
 <tr><td>Grants above NET</td><td>The scheduler asserts &ldquo;TAG &gt; NET not allowed yet&rdquo; except for <code>FOREVER</code> (<code>Scheduler.scala</code>, line 48).</td><td>Retain the granted TAG and present min(TAG,&nbsp;NET), re-presenting as NET advances; unless DEC-05 removes the assertion.</td></tr>
@@ -172,7 +174,7 @@ manifest drives both policies.</li>
 
 <span class="msg" id="s6">&sect; 6</span>
 <h2>Validation matrix</h2>
-<div class="tw"><table>
+<div class="tw"><table id="tab-validation"><caption><b>Table 5 &mdash; validation matrix.</b></caption>
 <tr><th style="width:20%">Scenario</th><th>Centralized (Track A)</th><th>Distributed (Track B)</th></tr>
 <tr><td>Delayed input</td><td>No final execution before the input is visible (DT-1, ST-1)</td><td>Known-input wait, or a deliberate timeout with correct tardy classification</td></tr>
 <tr><td>Explicit absence</td><td>Absence or closure justifies the grant</td><td>Absence or progress information committed before release</td></tr>
@@ -212,7 +214,7 @@ OQ-7, R-9). The tutorial gained &sect;5.3 on micro-LF. Nothing else is pending.<
 
 <span class="msg" id="s9">&sect; 9</span>
 <h2>Documents</h2>
-<div class="tw"><table>
+<div class="tw"><table id="tab-documents"><caption><b>Table 6 &mdash; documents.</b></caption>
 <tr><th style="width:36%">Document</th><th>Role</th></tr>
 <tr><td><a href="../hw-rti/HW-RTI_project_specification.html">HW-RTI project specification</a>, revision 0.2</td><td>Normative for Track A: requirements, microarchitecture, verification, schedule.</td></tr>
 <tr><td><a href="lf_hardware_coordination_zcu106_expanded.docx">LF hardware coordination on the ZCU106</a> (ChatGPT note, 8&nbsp;Oct&nbsp;2026)</td><td>Source of the board-specific plan: Codesign findings, participant flow, stages S0&ndash;S5, validation scenarios. Its proposals are absorbed here; it is not maintained further.</td></tr>
