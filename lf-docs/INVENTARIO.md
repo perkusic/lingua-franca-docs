@@ -14,17 +14,17 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `4dfb0ad5a06423b1` |
-| `tutorial/lingua_franca_tutorial.html` | `9993dd1835f674e4` |
+| `tutorial/lingua_franca_rti.html` | `3696f730de665c27` |
+| `tutorial/lingua_franca_tutorial.html` | `3d0bfa2b1abaf5ec` |
 | `hw-rti/HW-RTI_project_specification.html` | `f437eacd756bc8d0` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 618.782 | 801.377 | 259.726 |
-| Bytes (UTF-8) | 618.808 | 801.491 | 259.738 |
-| Palavras de texto (sem SVG, CSS) | 40.634 | 55.413 | 22.761 |
+| Caracteres | 619.060 | 801.655 | 259.726 |
+| Bytes (UTF-8) | 619.086 | 801.769 | 259.738 |
+| Palavras de texto (sem SVG, CSS) | 40.677 | 55.456 | 22.761 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
@@ -335,3 +335,6 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   29 com "shown as points", e o ícone de diagrama do editor, 4× no tutorial). Onde "draw" era expressão idiomática:
   "make the wider distinction" e "states/stated the boundary" (Lesson/Section 7). Tutorial 13 trocas, referência 9;
   palavras e links iguais. O CI recusa draw/draws/drawn/drew em todos os HTMLs.
+- 16/out/2026 (09:15): em 16.6, "Everything above two narrow interfaces is the same portable C on every target" virou três
+  frases explícitas (o código gerado e o núcleo do runtime são o mesmo C em todo alvo; só as interfaces Platform e
+  NetworkChannel mudam; portar = implementá-las). Palavras pelo delta: +43 tutorial, +43 referência.
