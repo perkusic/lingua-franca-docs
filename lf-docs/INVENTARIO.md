@@ -14,24 +14,24 @@ Arquivos medidos (SHA-256, 16 primeiros dígitos):
 
 | Arquivo | SHA-256 |
 | --- | --- |
-| `tutorial/lingua_franca_rti.html` | `2b6d1e703b7db142` |
-| `tutorial/lingua_franca_tutorial.html` | `3a732e3c1c51395e` |
+| `tutorial/lingua_franca_rti.html` | `281ca5f2d5cee8f2` |
+| `tutorial/lingua_franca_tutorial.html` | `06126dc9ac327563` |
 | `hw-rti/HW-RTI_project_specification.html` | `30192caf669af35e` |
 
 ## 1. Números gerais
 
 | | `lingua_franca_rti.html` | `lingua_franca_tutorial.html` | `HW-RTI_project_specification.html` |
 | --- | --- | --- | --- |
-| Caracteres | 620.865 | 803.490 | 260.360 |
-| Bytes (UTF-8) | 620.891 | 803.604 | 260.372 |
-| Palavras de texto (sem SVG, CSS) | 40.727 | 55.509 | 22.763 |
+| Caracteres | 622.042 | 804.667 | 260.360 |
+| Bytes (UTF-8) | 622.068 | 804.781 | 260.372 |
+| Palavras de texto (sem SVG, CSS) | 40.897 | 55.679 | 22.763 |
 | h1 / h2 / h3 / h4 | 1 / 17 / 48 / 7 | 1 / 17 / 48 / 7 | 1 / 15 / 44 / 5 |
 | Figuras (`<figure>` = `<svg>`) | 44 | 44 | 12 |
 | Figuras animadas (`<svg class="anim">`) | 29 | 29 | 5 |
 | Tabelas | 12 | 12 | 32 |
 | Itens de lista | 226 | 331 | 67 |
 | Referências | 51 | 51 | 20 |
-| Links `<a href>` | 475 | 565 | 34 |
+| Links `<a href>` | 479 | 569 | 34 |
 | Caixas de checkpoint | 0 | 16 | 0 |
 | Perguntas após figura ou exemplo (`.fq`) | 0 | 48 | 0 |
 | Scripts inline | 2 | 5 | 1 |
@@ -348,3 +348,4 @@ Mais citados no corpo: DT-1 (16), G-2 (12), G-5 (11), KPI-1 (11), M-4 (11), FR-1
   §0.2 ("Everything below" → Table 2), OQ-1 ("requirements listed above" → FR-09 a FR-12 e FR-14), duas menções a
   "Figure 2" viraram links, e as 12 figuras ganharam `id`; a nota micro-LF (5) e o guia (1) também. Palavras pelo delta:
   +53 tutorial, +50 referência, +2 especificação.
+- 16/out/2026 (09:25): **Figura 43** — a legenda ficou só com título, escopo ("no such design exists in the sources") e a frase dos controles; a leitura em três estágios e a conclusão viraram cinco parágrafos de texto depois da lista de passos, em 16.5, nas duas edições. Palavras pelo delta: +170 tutorial, +170 referência.

@@ -6,8 +6,8 @@
 
 | document | bytes | SHA-256 before extraction | SHA-256 rebuilt from skeleton + svg/ | result |
 |---|---|---|---|---|
-| `lingua_franca_tutorial.html` | 803604 | `3a732e3c1c51395e9d03db98d7227c814818757d45dbc387bee65bc820981316` | `3a732e3c1c51395e9d03db98d7227c814818757d45dbc387bee65bc820981316` | identical byte for byte (`cmp` and SHA-256) |
-| `lingua_franca_rti.html` | 620891 | `2b6d1e703b7db142c5b2e4c0010f1bf56cfe3d65d9be550095065582dee1bbd7` | `2b6d1e703b7db142c5b2e4c0010f1bf56cfe3d65d9be550095065582dee1bbd7` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_tutorial.html` | 804781 | `06126dc9ac327563f50342f585ef10bf10005de4eaffe9a745a440295a362765` | `06126dc9ac327563f50342f585ef10bf10005de4eaffe9a745a440295a362765` | identical byte for byte (`cmp` and SHA-256) |
+| `lingua_franca_rti.html` | 622068 | `281ca5f2d5cee8f28adb36dbf7495fccfabd5df474bb30c7f0e4adb649218e4e` | `281ca5f2d5cee8f28adb36dbf7495fccfabd5df474bb30c7f0e4adb649218e4e` | identical byte for byte (`cmp` and SHA-256) |
 
 The rebuild was run in the cloud workspace and again with `python3` 3.10 on this computer, against the files in this folder: PASS in both, and `cmp` of the rebuilt files against the canonical HTMLs reports no difference.
 
@@ -107,4 +107,4 @@ Negative tests run: one byte appended to an SVG file → both editions MISMATCH 
 | 43 | `fig-micro-lf-decision-datapath-interpretation` | 9087 | `66f5b03bd51f9cca` |
 | 44 | `fig-micro-lf-program-meets-hardware` | 8009 | `71b1afbaf09f9c41` |
 
-Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `5997083bc610b3bf`; `skeleton/lingua_franca_rti.skel.html` `fae82d74dc48c07e`.
+Skeleton hashes: `skeleton/lingua_franca_tutorial.skel.html` `9bcd544474c8937a`; `skeleton/lingua_franca_rti.skel.html` `e89abff410b69264`.
