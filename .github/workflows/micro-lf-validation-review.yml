@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   validate:
     runs-on: ubuntu-24.04
@@ -22,7 +26,6 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
       - name: Fetch pinned runtime and compiler
         run: |
           git clone https://github.com/lf-lang/reactor-uc.git "$RUNNER_TEMP/reactor-uc"

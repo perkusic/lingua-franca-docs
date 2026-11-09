@@ -61,7 +61,7 @@ def generated(compiler, temp, evidence, case, wait, slow):
         print((evidence / f"{case}-build.log").read_text(errors="replace")[-6000:], flush=True)
     for file in root.rglob("*.c"):
         if "src-gen" in file.parts or "fed-gen" in file.parts:
-            if file.name.startswith("CMakeCCompilerId"):
+            if "reactor-uc" in file.relative_to(root).parts or "CMakeFiles" in file.parts:
                 continue
             dest = evidence / "generated-c" / case / file.relative_to(root)
             dest.parent.mkdir(parents=True, exist_ok=True)
