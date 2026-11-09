@@ -14,7 +14,7 @@ Material under review, in `perkusic/lingua-franca-docs`:
 | Item | Where |
 |---|---|
 | A. Validation example (code, build, results) | `micro-lf/validation/` — `Validate3.ulf`, `sensor.c`, `fusion.c`, `CMakeLists.txt`, `run.sh`, `README.md` |
-| B. Project definition | `micro-lf/project-definition.md` (a Markdown export of the Claude Doc "micro-LF on FPGA — Project Definition"; the owner adds it before the run). If the file is missing, review A and C only and say so. |
+| B. Project definition | `micro-lf/project-definition.md` (a Markdown snapshot of the Claude Doc "micro-LF on FPGA — Project Definition", revision 31; its five diagrams appear as placeholders, and their content is described in the surrounding text and tables) |
 | C. Consistency sources | `hw-rti/HW-RTI_project_specification.html`, `program/implementation_guide.html`, `micro-lf/micro_lf_fpga_design_note.html`, `tutorial/lingua_franca_tutorial.html` (Lesson 16, Section 5.3) |
 
 Ground truth for runtime behaviour: `lf-lang/reactor-uc` at commit
