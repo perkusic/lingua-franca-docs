@@ -7,21 +7,28 @@ known through a later message, and a late message handled by the `tardy` handler
 
 | File | What it is |
 |---|---|
-| `Validate3.ulf` | the program in micro-LF syntax (not compiled here: `ulfc` needs Maven Central to build) |
-| `sensor.c`, `fusion.c` | the same federates written by hand against `lf-lang/reactor-uc` at commit `df7cfea`, with the macros the generator emits |
+| `Validate3.ulf` | the micro-LF program, compiled and tested on Linux with the pinned uLFC |
+| `sensor.c`, `fusion.c` | hand-written reference against `lf-lang/reactor-uc` at commit `df7cfea`; see the review for differences from generated C |
 | `CMakeLists.txt` | builds `sensor_a`, `sensor_b`, `sensor_b_slow`, `fusion_w30`, `fusion_w100` and a sweep `fusion_w55` … `fusion_w70` |
 | `run.sh` | starts fusion, then the two sensors, and prints the fusion log |
+| `reproduce.py` | runs all cases, keeps per-process logs, and compares process exits and logical traces against the reference outcomes |
 
 ## Build and run (Linux)
 
-    git clone --recurse-submodules https://github.com/lf-lang/reactor-uc.git
-    cd reactor-uc && git checkout df7cfea && git submodule update --init && cd ..
-    export REACTOR_UC_PATH=$PWD/reactor-uc
-    cmake -B build -S validation && cmake --build build
-    cd build
-    ../validation/run.sh fusion_w30  sensor_b         # V1
-    ../validation/run.sh fusion_w30  sensor_b_slow    # V2
-    ../validation/run.sh fusion_w100 sensor_b_slow    # V3
+From the `lingua-franca-docs` repository root, with JDK 17, CMake, a C compiler and Python 3:
+
+    git clone https://github.com/lf-lang/reactor-uc.git ../reactor-uc
+    git -C ../reactor-uc checkout --detach df7cfeae7083509621b8f5080c066051112e2500
+    git -C ../reactor-uc submodule update --init --recursive
+    export REACTOR_UC_PATH="$(cd ../reactor-uc && pwd)"
+    cmake -S micro-lf/validation -B build/validation && cmake --build build/validation
+    python3 micro-lf/validation/reproduce.py manual build/validation evidence
+    "$REACTOR_UC_PATH/ulf/gradlew" -p "$REACTOR_UC_PATH/ulf" assemble :cli:lfc:assemble
+    python3 micro-lf/validation/reproduce.py generated "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" evidence
+
+The sweep compares against the reference host's outcomes. A different classification around 60–61 ms
+requires inspecting the per-process logs; that boundary is not a portable timing guarantee.
+The independent Linux measurements and the explanation of tag 500 are in [REVIEW_codex.md](REVIEW_codex.md).
 
 ## Results (9 November 2026)
 

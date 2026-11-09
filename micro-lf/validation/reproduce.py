@@ -12,6 +12,24 @@ from pathlib import Path
 
 CASES = [("V1", 30, False, 1), ("V2", 30, True, 1), ("V3", 100, True, 1)]
 CASES += [(f"W{w}", w, True, 3) for w in (55, 59, 60, 61, 62, 65, 70)]
+REACTION = re.compile(
+    r"fusion:\s*(?:(TARDY) )?tag \((\d+) ms, (\d+)\), "
+    r"a (present|absent)\s*, b (present|absent)\s*, lag (-?\d+) us"
+)
+
+
+def matches_reference(fusion, wait, slow):
+    """Compare the logical observations to the reference host, ignoring lag."""
+    tardy = slow and wait <= 60
+    expected = []
+    for tag in (0, 100, 150, 200, 300, 400, 450, 500):
+        expected.append((False, tag, 0, tag % 100 == 0, tag % 150 == 0 and not (tag == 300 and tardy)))
+        if tag == 300 and tardy:
+            expected.append((True, 300, 1, False, True))
+    actual = [(bool(late), int(tag), int(microstep), a == "present", b == "present")
+              for late, tag, microstep, a, b, _ in REACTION.findall(fusion)]
+    summary = f"fusion: 8 reactions, {int(tardy)} tardy, sum a 21, sum b 10: PASS"
+    return actual == expected and summary in fusion
 
 
 def run(executables, logdir, stagger):
@@ -100,9 +118,12 @@ def main():
                 statuses = run(programs, logdir, args.mode != "generated")
                 fusion = (logdir / "fusion.log").read_text(errors="replace")
                 lines = [line for line in fusion.splitlines() if line.startswith("fusion:")]
-                result = {"case": case, "run": attempt, "exit": statuses, "fusion": lines}
+                reference = None if args.mode == "trace" else matches_reference(fusion, wait, slow)
+                result = {"case": case, "run": attempt, "exit": statuses,
+                          "reference_match": reference, "fusion": lines}
                 print(json.dumps(result), flush=True)
-                if statuses != [0, 0, 0] or not any(line.endswith(": PASS") for line in lines):
+                if (statuses != [0, 0, 0] or reference is False
+                        or not any(line.endswith(": PASS") for line in lines)):
                     failures.append(f"{case}-{attempt}")
     if failures:
         print(f"Unsuccessful runs: {', '.join(failures)}", flush=True)
