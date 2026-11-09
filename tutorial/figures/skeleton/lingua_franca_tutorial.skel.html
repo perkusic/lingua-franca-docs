@@ -2050,8 +2050,9 @@ connection (opening of <a href="#s5">Lesson&nbsp;5</a>); the micro-LF compiler a
 positions and no <code>@absent_after</code>. The names STA (&ldquo;safe to advance&rdquo;), STAA (&ldquo;safe to assume
 absent&rdquo;) and STP (&ldquo;safe to process&rdquo;) used earlier in <a href="#s5">Lesson&nbsp;5</a> and in older literature are historical
 terminology; <code>reactor-uc</code> retains STP only in identifiers and log messages.</p>
-<p><strong>Logical and physical time.</strong> The rule relates the two times at one point: a tag with time t is
-committed when the physical clock reads t&nbsp;+&nbsp;W. Whether that is safe depends on quantities that the runtime
+<p><strong>Logical and physical time.</strong> In ordinary timed execution the scheduler first waits for t.
+If a connected input still requires a finite wait, t&nbsp;+&nbsp;W is its acquisition deadline;
+an interruption can lead to an earlier decision after the scheduler reevaluates the inputs. Whether that is safe depends on quantities that the runtime
 neither measures nor checks: the residual clock-synchronization error between sender and receiver, the transmission
 delay, the lag between the sender&rsquo;s physical time and the tags at which it sends, and the connection&rsquo;s
 <code>after</code> delay. <code>reactor-uc</code> derives no bound from them; W is the programmer&rsquo;s choice.
@@ -2061,14 +2062,14 @@ delay, the lag between the sender&rsquo;s physical time and the tags at which it
 The condition after&nbsp;+&nbsp;W&nbsp;&gt;&nbsp;E&nbsp;+&nbsp;L&nbsp;+&nbsp;D is therefore sufficient, and W&nbsp;=&nbsp;0
 gives back the inequality of <a href="#s5">Lesson&nbsp;5</a>.)</p>
 <p><strong>When the assumption fails.</strong> A message whose tag is at or before the federate&rsquo;s current tag
-cannot be scheduled. The runtime then logs a safe-to-process violation and schedules the event at the current time
-with the microstep increased by one, keeping the original tag as the event&rsquo;s intended tag<sup class="c"><a href="#ref49">[49]</a></sup>. At that later
-tag, a reaction that the port triggers, or that reads it, runs its <code>tardy</code> handler instead of its body when
+cannot be scheduled at its intended tag. For a past-tag rejection, the runtime logs a safe-to-process violation
+and tries again at the current logical tag with its microstep increased by one, keeping the original intended tag<sup class="c"><a href="#ref49">[49]</a></sup>. If the retry succeeds, a reaction at the new tag that the port triggers, or that reads it, runs its <code>tardy</code> handler instead of its body when
 the port&rsquo;s value carries a different intended tag; a reaction without a handler runs its body on the late value
 at the later tag, and the runtime logs a warning. Preallocation imposes further bounds: when the payload buffer of a connection is full, the incoming message is
-dropped, an error is logged and <code>last_known_tag</code> is left unchanged; when the message cannot be deserialized,
-or the event queue is full, the event is dropped as well, but <code>last_known_tag</code> still advances to its tag, so
-the input counts as resolved at that tag although its value was lost. The violation is therefore
+dropped, an error is logged and <code>last_known_tag</code> is left unchanged. After allocation, a deserialization
+failure or a nonfatal scheduling rejection can advance <code>last_known_tag</code> without admitting the event.
+In the dynamic scheduler, an event-queue insertion failure instead fails runtime validation and terminates the process
+(<a href="https://github.com/lf-lang/reactor-uc/blob/df7cfeae7083509621b8f5080c066051112e2500/src/federated.c#L207-L258"><code>src/federated.c</code></a> and <a href="https://github.com/lf-lang/reactor-uc/blob/df7cfeae7083509621b8f5080c066051112e2500/src/schedulers/dynamic/scheduler.c#L409-L444"><code>src/schedulers/dynamic/scheduler.c</code></a>, <code>lf-lang/reactor-uc</code> on GitHub, commit <code>df7cfeae7083509621b8f5080c066051112e2500</code>, 7 September 2026). The violation is therefore
 detected, and the program determines its consequence; it is not prevented. Centralized coordination aims at
 prevention: no grant is issued while the logical evidence leaves room for an earlier message, so its failure mode is
 waiting, a loss of liveness, rather than a late value. Both rest on assumptions &mdash; centralized coordination on

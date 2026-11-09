@@ -1,0 +1,61 @@
+name: Micro LF validation review
+
+on:
+  push:
+    branches: [codex/review-micro-lf]
+    paths:
+      - 'micro-lf/validation/**'
+      - '.github/workflows/micro-lf-validation-review.yml'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Fetch pinned runtime and compiler
+        run: |
+          git clone https://github.com/lf-lang/reactor-uc.git "$RUNNER_TEMP/reactor-uc"
+          git -C "$RUNNER_TEMP/reactor-uc" checkout --detach df7cfeae7083509621b8f5080c066051112e2500
+          git -C "$RUNNER_TEMP/reactor-uc" submodule update --init --recursive
+          echo "REACTOR_UC_PATH=$RUNNER_TEMP/reactor-uc" >> "$GITHUB_ENV"
+      - name: Record environment
+        run: |
+          mkdir -p evidence
+          { uname -a; nproc; gcc --version; cmake --version; java -version; git -C "$REACTOR_UC_PATH" log -1 --format='%H %as'; git -C "$REACTOR_UC_PATH" submodule status; } 2>&1 | tee evidence/environment.txt
+      - name: Build and measure hand written C
+        run: |
+          cmake -S micro-lf/validation -B "$RUNNER_TEMP/manual"
+          cmake --build "$RUNNER_TEMP/manual" -j 2
+          python3 micro-lf/validation/reproduce.py manual "$RUNNER_TEMP/manual" evidence | tee evidence/manual-summary.txt
+      - name: Trace the last data tag with debug logging
+        run: |
+          cp -R micro-lf/validation "$RUNNER_TEMP/trace-src"
+          sed -i 's/LF_LOG_LEVEL_ALL=LF_LOG_LEVEL_WARN/LF_LOG_LEVEL_ALL=LF_LOG_LEVEL_DEBUG/' "$RUNNER_TEMP/trace-src/CMakeLists.txt"
+          cmake -S "$RUNNER_TEMP/trace-src" -B "$RUNNER_TEMP/trace"
+          cmake --build "$RUNNER_TEMP/trace" -j 2 --target sensor_a sensor_b_slow fusion_w100
+          python3 micro-lf/validation/reproduce.py trace "$RUNNER_TEMP/trace" evidence
+      - name: Build matched uLFC
+        run: |
+          "$REACTOR_UC_PATH/ulf/gradlew" -p "$REACTOR_UC_PATH/ulf" assemble :cli:lfc:assemble --console=plain --no-daemon
+      - name: Compile and measure generated code
+        run: |
+          python3 micro-lf/validation/reproduce.py generated "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" evidence | tee evidence/generated-summary.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: micro-lf-review-evidence
+          path: evidence/
