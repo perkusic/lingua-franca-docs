@@ -2,8 +2,7 @@
 // Two sensors with periods of 100 ms and 150 ms feed one fusion federate.
 // V1: as written. V2: sensor B slow at its third firing (see the commented line).
 // V3: as V2 with @maxwait(100 ms) on fusion.
-// Syntax follows the reactor-uc tests at df7cfea; this file has not been compiled
-// (ulfc could not be built here). sensor.c and fusion.c are its hand-written C equivalent.
+// Use uLFC from reactor-uc df7cfea. sensor.c and fusion.c are the hand-written reference.
 target uC
 
 reactor Sensor(period: time = 100 ms, slow_at: int = 0, slow_by: time = 0 ms) {
@@ -23,33 +22,41 @@ reactor Fusion {
   input a: int
   input b: int
   state count: int = 0
-  state tardy: int = 0
+  state tardy_count: int = 0
   state sum_a: int = 0
   state sum_b: int = 0
   reaction(a, b) {=
     self->count++;
     if (lf_is_present(a)) self->sum_a += a->value;
     if (lf_is_present(b)) self->sum_b += b->value;
-    printf("fusion: tag %lld ms, a %s, b %s, lag %lld us\n",
+    tag_t now = env->scheduler->current_tag(env->scheduler);
+    printf("fusion: tag (%lld ms, %u), a %s, b %s, lag %lld us\n",
            (long long)(env->get_elapsed_logical_time(env) / MSEC(1)),
+           (unsigned)now.microstep,
            lf_is_present(a) ? "present" : "absent",
            lf_is_present(b) ? "present" : "absent",
            (long long)((env->get_physical_time(env) - env->get_logical_time(env)) / USEC(1)));
   =} tardy {=
-    self->tardy++;
+    self->tardy_count++;
     if (lf_is_present(a)) self->sum_a += a->value;
     if (lf_is_present(b)) self->sum_b += b->value;
-    printf("fusion: TARDY message handled at %lld ms\n",
-           (long long)(env->get_elapsed_logical_time(env) / MSEC(1)));
+    tag_t now = env->scheduler->current_tag(env->scheduler);
+    printf("fusion: TARDY tag (%lld ms, %u), a %s, b %s, lag %lld us\n",
+           (long long)(env->get_elapsed_logical_time(env) / MSEC(1)),
+           (unsigned)now.microstep,
+           lf_is_present(a) ? "present" : "absent",
+           lf_is_present(b) ? "present" : "absent",
+           (long long)((env->get_physical_time(env) - env->get_logical_time(env)) / USEC(1)));
   =}
   reaction(shutdown) {=
     int ok = self->count == 8 && self->sum_a == 21 && self->sum_b == 10;
     printf("fusion: %d reactions, %d tardy, sum a %d, sum b %d: %s\n",
-           self->count, self->tardy, self->sum_a, self->sum_b, ok ? "PASS" : "FAIL");
+           self->count, self->tardy_count, self->sum_a, self->sum_b, ok ? "PASS" : "FAIL");
   =}
 }
 
 @platform("native")
+@clock_sync("off")
 @timeout(550 ms)
 federated reactor {
   sa = new Sensor(period = 100 ms)
