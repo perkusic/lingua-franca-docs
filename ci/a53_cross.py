@@ -39,7 +39,7 @@ def cross_build(case_root, case):
     return built
 
 for case, wait, slow, _ in R.CASES:
-    reps = 3 if case in ("V1", "V2", "V3") else 1
+    reps = 5 if case in ("V1", "V2", "V3") else 1
     with tempfile.TemporaryDirectory() as t:
         native = R.generated(lfc, Path(t), evidence, case, wait, slow)
         built = cross_build(Path(t) / case, case)

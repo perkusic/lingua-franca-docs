@@ -35,9 +35,15 @@ jobs:
           { echo "runner: $(uname -srm)"; aarch64-linux-gnu-gcc --version | head -1; qemu-aarch64 --version | head -1; cmake --version | head -1; java -version 2>&1 | head -1
             echo "reactor-uc: $(git -C ../reactor-uc rev-parse HEAD)"; echo "Validate3.ulf from: $(git rev-parse origin/codex/review-micro-lf)"; } > "$OUT/env.txt"
           set +e; python3 ci/a53_cross.py rv "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" ci/aarch64-linux-gnu.cmake "$OUT" | tee "$OUT/run.log"; echo "${PIPESTATUS[0]}" > "$OUT/exit_status"
+      - name: Same with @buffer(4) on both federated connections
+        run: |
+          mkdir -p rvb && cp rv/reproduce.py rvb/
+          sed -E 's/^(  )(s[ab]\.out -> fusion\.[ab])$/\1@buffer(4)\n\1\2/' rv/Validate3.ulf > rvb/Validate3.ulf
+          OUT=ci-results/a53-cross-buffer4; rm -rf "$OUT"; mkdir -p "$OUT"; diff rv/Validate3.ulf rvb/Validate3.ulf > "$OUT/source.diff"
+          set +e; python3 ci/a53_cross.py rvb "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" ci/aarch64-linux-gnu.cmake "$OUT" | tee "$OUT/run.log"; echo "${PIPESTATUS[0]}" > "$OUT/exit_status"
       - name: Commit evidence
         if: always()
         run: |
           git config user.name perkusic; git config user.email perkusic@dee.ufcg.edu.br
           git add -f ci-results && git commit -q -m "CI evidence: micro-LF generated federates cross-compiled for aarch64 and run under qemu [skip ci]" && git push -q origin HEAD:ci/a53-cross || true
-          test "$(cat ci-results/a53-cross/exit_status 2>/dev/null)" = 0
+          test "$(cat ci-results/a53-cross-buffer4/exit_status 2>/dev/null)" = 0
