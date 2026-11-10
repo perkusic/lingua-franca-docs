@@ -617,4 +617,4 @@ Documentation (unversioned; semantics must be aligned with a pinned commit befor
 11. Lingua Franca, *Distributed Execution* (nightly): <https://www.lf-lang.org/docs/next/writing-reactors/distributed-execution/>.
 12. Lingua Franca 0.8.0, *Distributed Execution* (earlier STP-offset terminology): <https://www.lf-lang.org/docs/0.8.0/writing-reactors/distributed-execution/>.
 
-Link durability: every source link is pinned to a full commit hash, so it stays valid while the repository exists; GitHub pages for a deleted or rewritten repository would not. For long-term reference, archive the commits above in Software Heritage and add their identifiers to the source manifest at M-A0.
+Link durability: every source link is pinned to a full commit hash, so it stays valid while the repository exists; GitHub pages for a deleted or rewritten repository would not. For long-term reference, archive the commits of references 7 to 10 in Software Heritage and add their identifiers to the source manifest at M-A0.
