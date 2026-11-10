@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate the validation federates with the pinned uLFC, cross-compile each generated
-project for aarch64 (the ZCU106 A53 cores), and run them under qemu-aarch64.
+project for aarch64 as static executables (the ZCU106 A53 cores), and run them under qemu-aarch64.
 
 Usage: a53_cross.py <reproduce.py dir> <lfc> <toolchain file> <evidence dir>
 Logical results are compared with the reference outcomes of reproduce.py; lags under
@@ -23,11 +23,11 @@ def cross_build(case_root, case):
         src = inc.parent
         if "reactor-uc" in src.parts or "CMakeFiles" in src.parts:
             continue
-        b = src.parent / "build-aarch64"
-        log = evidence / f"{case}-cross-{src.parent.name}.log"
+        b = src.parent / f"build-aarch64-{src.name}"
+        log = evidence / f"{case}-cross-{src.name}.log"
         with log.open("wb") as h:
             r1 = subprocess.run(["cmake", "-S", str(src), "-B", str(b), "-DCMAKE_BUILD_TYPE=Release",
-                                 f"-DCMAKE_TOOLCHAIN_FILE={toolchain}"], stdout=h, stderr=subprocess.STDOUT)
+                                 f"-DCMAKE_TOOLCHAIN_FILE={toolchain}", "-DCMAKE_EXE_LINKER_FLAGS=-static"], stdout=h, stderr=subprocess.STDOUT)
             r2 = subprocess.run(["cmake", "--build", str(b), "--parallel", "4"], stdout=h, stderr=subprocess.STDOUT) if r1.returncode == 0 else r1
         if r2.returncode:
             raise RuntimeError(f"cross build failed for {src}; see {log.name}")
@@ -49,7 +49,7 @@ for case, wait, slow, _ in R.CASES:
                 raise RuntimeError(f"no aarch64 binary named {npath.name}: {sorted(built)}")
             arm, src, info = built[npath.name]
             wrapper = Path(t) / f"run_{npath.name}.sh"
-            wrapper.write_text(f"#!/bin/sh\nexec qemu-aarch64 -L {QEMU_LIB} {arm}\n")
+            wrapper.write_text(f"#!/bin/sh\nexec qemu-aarch64 {arm}\n")
             wrapper.chmod(0o755)
             programs.append((name, wrapper))
             if case == "V1":
