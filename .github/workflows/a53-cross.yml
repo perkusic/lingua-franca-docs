@@ -1,0 +1,43 @@
+name: a53-cross
+on:
+  push:
+    branches: [ci/a53-cross]
+    paths: [ci/**, .github/workflows/a53-cross.yml]
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  cross:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Install cross compiler and emulator
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq gcc-aarch64-linux-gnu qemu-user file cmake
+      - name: Pinned runtime and compiler (reactor-uc df7cfea)
+        run: |
+          git clone -q https://github.com/lf-lang/reactor-uc.git ../reactor-uc
+          git -C ../reactor-uc checkout -q --detach df7cfeae7083509621b8f5080c066051112e2500
+          git -C ../reactor-uc submodule update -q --init --recursive
+          echo "REACTOR_UC_PATH=$(cd ../reactor-uc && pwd)" >> "$GITHUB_ENV"
+      - name: Build uLFC
+        run: ../reactor-uc/ulf/gradlew -q -p ../reactor-uc/ulf assemble :cli:lfc:assemble
+      - name: Generate, cross-compile for aarch64, run under qemu
+        run: |
+          mkdir -p rv && for f in reproduce.py Validate3.ulf; do git show origin/codex/review-micro-lf:micro-lf/validation/$f > rv/$f; done
+          OUT=ci-results/a53-cross; rm -rf "$OUT"; mkdir -p "$OUT"
+          { echo "runner: $(uname -srm)"; aarch64-linux-gnu-gcc --version | head -1; qemu-aarch64 --version | head -1; cmake --version | head -1; java -version 2>&1 | head -1
+            echo "reactor-uc: $(git -C ../reactor-uc rev-parse HEAD)"; echo "Validate3.ulf from: $(git rev-parse origin/codex/review-micro-lf)"; } > "$OUT/env.txt"
+          set +e; python3 ci/a53_cross.py rv "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" ci/aarch64-linux-gnu.cmake "$OUT" | tee "$OUT/run.log"; echo "${PIPESTATUS[0]}" > "$OUT/exit_status"
+      - name: Commit evidence
+        if: always()
+        run: |
+          git config user.name perkusic; git config user.email perkusic@dee.ufcg.edu.br
+          git add -f ci-results && git commit -q -m "CI evidence: micro-LF generated federates cross-compiled for aarch64 and run under qemu [skip ci]" && git push -q origin HEAD:ci/a53-cross || true
+          test "$(cat ci-results/a53-cross/exit_status 2>/dev/null)" = 0
