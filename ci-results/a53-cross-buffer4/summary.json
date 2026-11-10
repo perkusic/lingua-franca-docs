@@ -1,0 +1,472 @@
+[
+ {
+  "case": "V1",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3762 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30198 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30165 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30142 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 968 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30142 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30135 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 348 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V1",
+  "run": 2,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2992 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30207 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30169 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30134 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 911 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30156 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30110 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 330 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V1",
+  "run": 3,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2896 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30210 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30144 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30568 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 479 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30125 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30115 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 326 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V1",
+  "run": 4,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3016 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30199 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30151 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30584 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 463 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30142 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30109 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 327 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V1",
+  "run": 5,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3807 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30172 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30144 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30132 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 674 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30147 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30103 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 324 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V2",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3037 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30190 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30156 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30139 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 30148 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61029 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30125 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30109 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 362 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V2",
+  "run": 2,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3712 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30166 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30130 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30568 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 30138 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61090 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30137 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30140 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 341 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V2",
+  "run": 3,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3047 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30172 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30143 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30118 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 30124 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61068 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30124 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30105 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 359 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V2",
+  "run": 4,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3697 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30192 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30174 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30586 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 30120 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61037 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30137 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30133 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 338 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V2",
+  "run": 5,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2953 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 30189 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 30160 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 30564 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 30141 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61080 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 30161 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 30131 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 346 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V3",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3215 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50551 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50444 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 100190 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60836 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50409 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50378 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 409 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V3",
+  "run": 2,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3647 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50547 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50380 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 100212 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60959 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50450 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50331 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 351 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V3",
+  "run": 3,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2978 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50447 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50434 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 100221 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60815 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50381 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50333 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 353 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V3",
+  "run": 4,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2651 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50565 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50459 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 100188 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60844 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50427 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50344 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 377 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "V3",
+  "run": 5,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3606 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50536 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50458 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 100198 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60859 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50415 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50375 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 406 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W55",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3189 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50526 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50418 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 55172 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 55158 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61109 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50407 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50397 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 430 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W59",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3706 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50554 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50443 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 59145 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 59180 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61121 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50449 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50327 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 346 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W60",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3438 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50523 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50471 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 60157 us",
+   "fusion: tag (300 ms, 0), a present, b absent, lag 60154 us",
+   "fusion: TARDY tag (300 ms, 1), a absent, b present, lag 61005 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50474 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50385 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 417 us",
+   "fusion: 8 reactions, 1 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W61",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2872 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50545 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50477 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 61155 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60815 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50454 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50353 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 373 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W62",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3144 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50531 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50426 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 62161 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60849 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50407 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50315 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 335 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W65",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 3642 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50482 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50404 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 65155 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60858 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50407 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50372 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 402 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ },
+ {
+  "case": "W70",
+  "run": 1,
+  "exit": [
+   0,
+   0,
+   0
+  ],
+  "reference_match": true,
+  "fusion": [
+   "fusion: tag (0 ms, 0), a present, b present, lag 2853 us",
+   "fusion: tag (100 ms, 0), a present, b absent, lag 50479 us",
+   "fusion: tag (150 ms, 0), a absent, b present, lag 50376 us",
+   "fusion: tag (200 ms, 0), a present, b absent, lag 70166 us",
+   "fusion: tag (300 ms, 0), a present, b present, lag 60776 us",
+   "fusion: tag (400 ms, 0), a present, b absent, lag 50433 us",
+   "fusion: tag (450 ms, 0), a absent, b present, lag 50398 us",
+   "fusion: tag (500 ms, 0), a present, b absent, lag 418 us",
+   "fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS"
+  ]
+ }
+]

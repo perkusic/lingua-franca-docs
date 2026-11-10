@@ -6,7 +6,7 @@
 -- Detecting C compile features - done
 -- Configuring done (0.2s)
 -- Generating done (0.0s)
--- Build files have been written to: /tmp/tmpbbxv0w2c/W60/src-gen/Validate3/build-aarch64-sb
+-- Build files have been written to: /tmp/tmpq1vv9qhy/W60/src-gen/Validate3/build-aarch64-sb
 [  2%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_common.c.o
 [  5%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_encode.c.o
 [  8%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_decode.c.o
@@ -31,8 +31,8 @@
 [ 61%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/scheduler.c.o
 [ 64%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/serialization.c.o
 [ 67%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/shutdown_coordinator.c.o
-[ 70%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/startup_coordinator.c.o
-[ 73%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/tag.c.o
+[ 70%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/tag.c.o
+[ 73%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/startup_coordinator.c.o
 [ 76%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/timer.c.o
 [ 79%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/trigger.c.o
 [ 82%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/util.c.o

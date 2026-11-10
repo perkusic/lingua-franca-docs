@@ -1,0 +1,79 @@
+[32m(1794304794753283521) [INFO] [NET] [32m(1794304794753540271) [INFO] [NET] TcpIpChannel: [client] Connected to server on 127.0.0.1:1026TcpIpChannel: [client] Connected to server on 127.0.0.1:1024[0m[0m
+
+[32m(1794304795006604821) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
+[32m(1794304795007453075) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
+[32m(1794304795007774758) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
+[32m(1794304795009558769) [INFO] [FED] Handle: Handshake Response Tag System Event[0m
+[32m(1794304795009630216) [INFO] [FED] Handle: Handshake Response Tag System Event[0m
+[32m(1794304795059970270) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304795060280907) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304795060321478) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304795060609430) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304795060622340) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304795060639786) [INFO] [FED] Start time negotiation completed Starting at 1794304795260021848[0m
+[32m(1794304795261666711) [INFO] [FED] Allocated payload for input 0x4c5e80 (pool payload_size=4)[0m
+[32m(1794304795261875099) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795261899451) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795261916571) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795262108860) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795260021848,0)[0m
+[32m(1794304795262242956) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795260021848,0)[0m
+[32m(1794304795262563588) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b46440ec58 for tag: (0,5004928)[0m
+[32m(1794304795262585732) [INFO] [FED]   payload first int = 1[0m
+[32m(1794304795262742507) [INFO] [FED] FederatedInputConnection 0x4c5e80 preparing downstream port 0x18e6a6b46440ec58 for tag: (0,5004928)[0m
+[32m(1794304795262764821) [INFO] [FED]   payload first int = 1[0m
+fusion: tag (0 ms, 0), a present, b present, lag 2978 us
+[32m(1794304795360404947) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795360421242) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795360442744) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795360021848,0)[0m
+[32m(1794304795410332716) [INFO] [FED] Allocated payload for input 0x4c5e80 (pool payload_size=4)[0m
+[32m(1794304795410347409) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795410368019) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795410021848,0)[0m
+[32m(1794304795410435390) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b46a36cd58 for tag: (0,5004928)[0m
+[32m(1794304795410446557) [INFO] [FED]   payload first int = 2[0m
+fusion: tag (100 ms, 0), a present, b absent, lag 50447 us
+[32m(1794304795460333276) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795460348669) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795460374347) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795460021848,0)[0m
+[32m(1794304795460413481) [INFO] [FED] FederatedInputConnection 0x4c5e80 preparing downstream port 0x18e6a6b46d31bdd8 for tag: (0,4998176)[0m
+[32m(1794304795460421873) [INFO] [FED]   payload first int = 2[0m
+fusion: tag (150 ms, 0), a absent, b present, lag 50434 us
+[32m(1794304795560195259) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b4702cae58 for tag: (0,4998176)[0m
+[32m(1794304795560222010) [INFO] [FED]   payload first int = 3[0m
+fusion: tag (200 ms, 0), a present, b absent, lag 100221 us
+[32m(1794304795560380408) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795560842081) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795560863904) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795560021848,0)[0m
+[32m(1794304795620703388) [INFO] [FED] Allocated payload for input 0x4c5e80 (pool payload_size=4)[0m
+[32m(1794304795620717960) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795620738270) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795560021848,0)[0m
+[32m(1794304795620798801) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b476228f58 for tag: (0,5004928)[0m
+[32m(1794304795620810138) [INFO] [FED]   payload first int = 4[0m
+[32m(1794304795620823758) [INFO] [FED] FederatedInputConnection 0x4c5e80 preparing downstream port 0x18e6a6b476228f58 for tag: (0,5004928)[0m
+[32m(1794304795620829767) [INFO] [FED]   payload first int = 3[0m
+fusion: tag (300 ms, 0), a present, b present, lag 60815 us
+[32m(1794304795660306511) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795660318850) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795660335965) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795660021848,0)[0m
+[32m(1794304795710281798) [INFO] [FED] Allocated payload for input 0x4c5e80 (pool payload_size=4)[0m
+[32m(1794304795710296591) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795710316000) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795710021848,0)[0m
+[32m(1794304795710370732) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b47c187058 for tag: (0,5004928)[0m
+[32m(1794304795710385744) [INFO] [FED]   payload first int = 5[0m
+fusion: tag (400 ms, 0), a present, b absent, lag 50381 us
+[33m(1794304795715515481) [WARN] [NET] TcpIpChannel: [client] Other federate closed socket[0m
+[33m(1794304795726040632) [WARN] [NET] TcpIpChannel: [client] Connect to 127.0.0.1:1026 failed with errno=111. Will only print one error.[0m
+[32m(1794304795760261971) [INFO] [FED] Allocated payload for input 0x4c4420 (pool payload_size=4)[0m
+[32m(1794304795760279047) [INFO] [FED] Deserialization returned 0 for conn 0[0m
+[32m(1794304795760307239) [INFO] [FED] First schedule_at returned 0 for desired tag: (1794304795760021848,0)[0m
+[32m(1794304795760337474) [INFO] [FED] FederatedInputConnection 0x4c5e80 preparing downstream port 0x18e6a6b47f1360d8 for tag: (0,4998176)[0m
+[32m(1794304795760346748) [INFO] [FED]   payload first int = 4[0m
+fusion: tag (450 ms, 0), a absent, b present, lag 50333 us
+[32m(1794304795760364215) [INFO] [FED] FederatedInputConnection 0x4c4420 preparing downstream port 0x18e6a6b4820e5158 for tag: (0,4998176)[0m
+[32m(1794304795760369983) [INFO] [FED]   payload first int = 6[0m
+fusion: tag (500 ms, 0), a present, b absent, lag 353 us
+[33m(1794304795765191632) [WARN] [NET] TcpIpChannel: [client] Other federate closed socket[0m
+[33m(1794304795775366317) [WARN] [NET] TcpIpChannel: [client] Connect to 127.0.0.1:1024 failed with errno=111. Will only print one error.[0m
+[32m(1794304795810216175) [INFO] [SCHED] Scheduler terminating at tag (1794304795810021848,0)[0m
+fusion: 8 reactions, 0 tardy, sum a 21, sum b 10: PASS
+[32m(1794304795810436967) [INFO] [ENV] Reactor shutting down, freeing federated environment.[0m
+[32m(1794304795815643408) [INFO] [ENV] All Network Channels freed. Exiting.[0m

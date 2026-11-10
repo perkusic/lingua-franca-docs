@@ -1,0 +1,46 @@
+-- The C compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/aarch64-linux-gnu-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (0.2s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/tmpjq4d9ll3/V2/src-gen/Validate3/build-aarch64-sa
+[  2%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_common.c.o
+[  5%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_encode.c.o
+[  8%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_decode.c.o
+[ 11%] Linking C static library libnanopb.a
+[ 11%] Built target nanopb
+[ 14%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/external/proto/message.pb.c.o
+[ 17%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/action.c.o
+[ 20%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/builtin_triggers.c.o
+[ 23%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/clock_synchronization.c.o
+[ 26%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/connection.c.o
+[ 29%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/environment.c.o
+[ 32%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/event.c.o
+[ 35%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/federated.c.o
+[ 38%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/logging.c.o
+[ 41%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/network_channel.c.o
+[ 44%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/physical_clock.c.o
+[ 47%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/platform.c.o
+[ 50%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/port.c.o
+[ 52%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/queues.c.o
+[ 55%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/reaction.c.o
+[ 58%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/reactor.c.o
+[ 61%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/scheduler.c.o
+[ 64%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/serialization.c.o
+[ 67%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/shutdown_coordinator.c.o
+[ 70%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/startup_coordinator.c.o
+[ 73%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/tag.c.o
+[ 76%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/timer.c.o
+[ 79%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/trigger.c.o
+[ 82%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/util.c.o
+[ 85%] Linking C static library libreactor-uc.a
+[ 85%] Built target reactor-uc
+[ 88%] Building C object CMakeFiles/Validate3_sa.dir/lf_federate.c.o
+[ 91%] Building C object CMakeFiles/Validate3_sa.dir/Validate3/Sensor.c.o
+[ 94%] Building C object CMakeFiles/Validate3_sa.dir/lf_start.c.o
+[ 97%] Building C object CMakeFiles/Validate3_sa.dir/lf_main.c.o
+[100%] Linking C executable Validate3_sa
+[100%] Built target Validate3_sa
