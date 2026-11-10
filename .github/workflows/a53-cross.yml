@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p rvb && cp rv/reproduce.py rvb/
           sed -E 's/^(  )(s[ab]\.out -> fusion\.[ab])$/\1@buffer(4)\n\1\2/' rv/Validate3.ulf > rvb/Validate3.ulf
-          OUT=ci-results/a53-cross-buffer4; rm -rf "$OUT"; mkdir -p "$OUT"; diff rv/Validate3.ulf rvb/Validate3.ulf > "$OUT/source.diff"
+          OUT=ci-results/a53-cross-buffer4; rm -rf "$OUT"; mkdir -p "$OUT"; diff rv/Validate3.ulf rvb/Validate3.ulf > "$OUT/source.diff" || true
           set +e; python3 ci/a53_cross.py rvb "$REACTOR_UC_PATH/ulf/build/install/lf-cli/bin/lfc" ci/aarch64-linux-gnu.cmake "$OUT" | tee "$OUT/run.log"; echo "${PIPESTATUS[0]}" > "$OUT/exit_status"
       - name: Commit evidence
         if: always()
