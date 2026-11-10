@@ -1,18 +1,18 @@
-[32m(1794303943269246072) [INFO] [NET] TcpIpChannel: [server] Bind to 127.0.0.1:1024[0m
-[32m(1794303943279406240) [INFO] [NET] TcpIpChannel: [server] Connceted to client with address 127.0.0.1[0m
-[32m(1794303943531321452) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
-[32m(1794303943537602869) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
-[32m(1794303943538665855) [INFO] [FED] Handle: Handshake Response Tag System Event[0m
-[32m(1794303943588983406) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
-[32m(1794303943590142733) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
-[32m(1794303943590509049) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
-[32m(1794303943590532810) [INFO] [FED] Start time negotiation completed Starting at 1794303943789562867[0m
-[32m(1794303943791144958) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303943889773128) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303943989705912) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303944089735627) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303944189718089) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303944289696769) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
-[32m(1794303944289962000) [INFO] [SCHED] Scheduler terminating at tag (1794303944289562867,1)[0m
-[32m(1794303944290056122) [INFO] [ENV] Reactor shutting down, freeing federated environment.[0m
-[32m(1794303944296379033) [INFO] [ENV] All Network Channels freed. Exiting.[0m
+[32m(1794304360117936492) [INFO] [NET] TcpIpChannel: [server] Bind to 127.0.0.1:1024[0m
+[32m(1794304360123887910) [INFO] [NET] TcpIpChannel: [server] Connceted to client with address 127.0.0.1[0m
+[32m(1794304360375663794) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
+[32m(1794304360381548145) [INFO] [FED] Handle: Handshake Reqeust Tag System Event[0m
+[32m(1794304360382599925) [INFO] [FED] Handle: Handshake Response Tag System Event[0m
+[32m(1794304360432925460) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304360434617088) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304360434963958) [INFO] [FED] Handle: Start Time Proposal Tag System Event[0m
+[32m(1794304360434995207) [INFO] [FED] Start time negotiation completed Starting at 1794304360633591811[0m
+[32m(1794304360635485102) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304360733854798) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304360833768494) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304360933822155) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304361033796044) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304361133767921) [INFO] [FED] Flushing Network Channel FederatedOutputConnection[0m
+[32m(1794304361134078473) [INFO] [SCHED] Scheduler terminating at tag (1794304361133591811,1)[0m
+[32m(1794304361134240727) [INFO] [ENV] Reactor shutting down, freeing federated environment.[0m
+[32m(1794304361140575451) [INFO] [ENV] All Network Channels freed. Exiting.[0m

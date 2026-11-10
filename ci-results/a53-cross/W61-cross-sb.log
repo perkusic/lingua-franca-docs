@@ -6,9 +6,9 @@
 -- Detecting C compile features - done
 -- Configuring done (0.2s)
 -- Generating done (0.0s)
--- Build files have been written to: /tmp/tmpye2v_ehk/W61/src-gen/Validate3/build-aarch64-sb
-[  2%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_common.c.o
+-- Build files have been written to: /tmp/tmphh7zq3u7/W61/src-gen/Validate3/build-aarch64-sb
 [  5%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_encode.c.o
+[  5%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_common.c.o
 [  8%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_decode.c.o
 [ 11%] Linking C static library libnanopb.a
 [ 11%] Built target nanopb

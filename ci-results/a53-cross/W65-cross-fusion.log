@@ -6,15 +6,15 @@
 -- Detecting C compile features - done
 -- Configuring done (0.2s)
 -- Generating done (0.0s)
--- Build files have been written to: /tmp/tmpueofhwi1/W65/src-gen/Validate3/build-aarch64-fusion
+-- Build files have been written to: /tmp/tmp8kuheoly/W65/src-gen/Validate3/build-aarch64-fusion
 [  2%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_common.c.o
 [  5%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_encode.c.o
 [  8%] Building C object reactor-uc/CMakeFiles/nanopb.dir/external/nanopb/pb_decode.c.o
 [ 11%] Linking C static library libnanopb.a
 [ 11%] Built target nanopb
 [ 14%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/external/proto/message.pb.c.o
-[ 17%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/action.c.o
-[ 20%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/builtin_triggers.c.o
+[ 17%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/builtin_triggers.c.o
+[ 20%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/action.c.o
 [ 23%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/clock_synchronization.c.o
 [ 26%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/connection.c.o
 [ 29%] Building C object reactor-uc/CMakeFiles/reactor-uc.dir/src/environment.c.o
@@ -40,7 +40,7 @@
 [ 85%] Built target reactor-uc
 [ 88%] Building C object CMakeFiles/Validate3_fusion.dir/lf_federate.c.o
 [ 91%] Building C object CMakeFiles/Validate3_fusion.dir/Validate3/Fusion.c.o
-[ 97%] Building C object CMakeFiles/Validate3_fusion.dir/lf_start.c.o
+[ 94%] Building C object CMakeFiles/Validate3_fusion.dir/lf_start.c.o
 [ 97%] Building C object CMakeFiles/Validate3_fusion.dir/lf_main.c.o
 [100%] Linking C executable Validate3_fusion
 [100%] Built target Validate3_fusion
